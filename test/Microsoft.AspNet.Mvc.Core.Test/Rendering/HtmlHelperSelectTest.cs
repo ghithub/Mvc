@@ -4,11 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
+using Microsoft.AspNet.HtmlContent;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Testing;
 using Microsoft.Framework.Internal;
 using Microsoft.Framework.WebEncoders;
+using Microsoft.Framework.WebEncoders.Testing;
 using Moq;
 using Xunit;
 
@@ -101,21 +104,19 @@ namespace Microsoft.AspNet.Mvc.Rendering
                     {
                         SomeGroupedSomeSelectedSelectList,
                         "<select id=\"HtmlEncode[[Property1]]\" name=\"HtmlEncode[[Property1]]\"><optgroup label=\"HtmlEncode[[Group One]]\">" +
-                        Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
                         "</optgroup>" + Environment.NewLine +
-                        "<optgroup label=\"HtmlEncode[[Group Two]]\">" + Environment.NewLine +
+                        "<optgroup label=\"HtmlEncode[[Group Two]]\">" +
                         "<option value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "</optgroup>" + Environment.NewLine +
                         "<option value=\"HtmlEncode[[3]]\">HtmlEncode[[Three]]</option>" + Environment.NewLine +
                         "</select>",
                         "<select id=\"HtmlEncode[[Property1]]\" name=\"HtmlEncode[[Property1]]\"><optgroup label=\"HtmlEncode[[Group One]]\">" +
-                        Environment.NewLine +
                         "<option value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
                         "</optgroup>" + Environment.NewLine +
-                        "<optgroup label=\"HtmlEncode[[Group Two]]\">" + Environment.NewLine +
+                        "<optgroup label=\"HtmlEncode[[Group Two]]\">" +
                         "<option value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "</optgroup>" + Environment.NewLine +
                         "<option value=\"HtmlEncode[[3]]\">HtmlEncode[[Three]]</option>" + Environment.NewLine +
@@ -124,7 +125,6 @@ namespace Microsoft.AspNet.Mvc.Rendering
                     {
                         OneGroupSomeSelectedSelectList,
                         "<select id=\"HtmlEncode[[Property1]]\" name=\"HtmlEncode[[Property1]]\"><optgroup label=\"HtmlEncode[[Group One]]\">" +
-                        Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "<option value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
@@ -132,7 +132,6 @@ namespace Microsoft.AspNet.Mvc.Rendering
                         "</optgroup>" + Environment.NewLine +
                         "</select>",
                         "<select id=\"HtmlEncode[[Property1]]\" name=\"HtmlEncode[[Property1]]\"><optgroup label=\"HtmlEncode[[Group One]]\">" +
-                        Environment.NewLine +
                         "<option value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
@@ -143,7 +142,6 @@ namespace Microsoft.AspNet.Mvc.Rendering
                     {
                         OneDisabledGroupAllSelectedSelectList,
                         "<select id=\"HtmlEncode[[Property1]]\" name=\"HtmlEncode[[Property1]]\"><optgroup disabled=\"HtmlEncode[[disabled]]\" label=\"HtmlEncode[[Disabled Group]]\">" +
-                        Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
@@ -151,7 +149,6 @@ namespace Microsoft.AspNet.Mvc.Rendering
                         "</optgroup>" + Environment.NewLine +
                         "</select>",
                         "<select id=\"HtmlEncode[[Property1]]\" name=\"HtmlEncode[[Property1]]\"><optgroup disabled=\"HtmlEncode[[disabled]]\" label=\"HtmlEncode[[Disabled Group]]\">" +
-                        Environment.NewLine +
                         "<option value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
@@ -216,31 +213,28 @@ namespace Microsoft.AspNet.Mvc.Rendering
                     {
                         SomeGroupedSomeSelectedSelectList,
                         "<select id=\"HtmlEncode[[Property1]]\" multiple=\"HtmlEncode[[multiple]]\" name=\"HtmlEncode[[Property1]]\"><optgroup label=\"HtmlEncode[[Group One]]\">" +
-                        Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
                         "</optgroup>" + Environment.NewLine +
-                        "<optgroup label=\"HtmlEncode[[Group Two]]\">" + Environment.NewLine +
+                        "<optgroup label=\"HtmlEncode[[Group Two]]\">" +
                         "<option value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "</optgroup>" + Environment.NewLine +
                         "<option value=\"HtmlEncode[[3]]\">HtmlEncode[[Three]]</option>" + Environment.NewLine +
                         "</select>",
                         "<select id=\"HtmlEncode[[Property1]]\" multiple=\"HtmlEncode[[multiple]]\" name=\"HtmlEncode[[Property1]]\"><optgroup label=\"HtmlEncode[[Group One]]\">" +
-                        Environment.NewLine +
                         "<option value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
                         "</optgroup>" + Environment.NewLine +
-                        "<optgroup label=\"HtmlEncode[[Group Two]]\">" + Environment.NewLine +
+                        "<optgroup label=\"HtmlEncode[[Group Two]]\">" +
                         "<option value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "</optgroup>" + Environment.NewLine +
                         "<option value=\"HtmlEncode[[3]]\">HtmlEncode[[Three]]</option>" + Environment.NewLine +
                         "</select>",
                         "<select id=\"HtmlEncode[[Property1]]\" multiple=\"HtmlEncode[[multiple]]\" name=\"HtmlEncode[[Property1]]\"><optgroup label=\"HtmlEncode[[Group One]]\">" +
-                        Environment.NewLine +
                         "<option value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
                         "</optgroup>" + Environment.NewLine +
-                        "<optgroup label=\"HtmlEncode[[Group Two]]\">" + Environment.NewLine +
+                        "<optgroup label=\"HtmlEncode[[Group Two]]\">" +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "</optgroup>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[3]]\">HtmlEncode[[Three]]</option>" + Environment.NewLine +
@@ -249,7 +243,6 @@ namespace Microsoft.AspNet.Mvc.Rendering
                     {
                         OneGroupSomeSelectedSelectList,
                         "<select id=\"HtmlEncode[[Property1]]\" multiple=\"HtmlEncode[[multiple]]\" name=\"HtmlEncode[[Property1]]\"><optgroup label=\"HtmlEncode[[Group One]]\">" +
-                        Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "<option value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
@@ -257,7 +250,6 @@ namespace Microsoft.AspNet.Mvc.Rendering
                         "</optgroup>" + Environment.NewLine +
                         "</select>",
                         "<select id=\"HtmlEncode[[Property1]]\" multiple=\"HtmlEncode[[multiple]]\" name=\"HtmlEncode[[Property1]]\"><optgroup label=\"HtmlEncode[[Group One]]\">" +
-                        Environment.NewLine +
                         "<option value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
@@ -265,7 +257,6 @@ namespace Microsoft.AspNet.Mvc.Rendering
                         "</optgroup>" + Environment.NewLine +
                         "</select>",
                         "<select id=\"HtmlEncode[[Property1]]\" multiple=\"HtmlEncode[[multiple]]\" name=\"HtmlEncode[[Property1]]\"><optgroup label=\"HtmlEncode[[Group One]]\">" +
-                        Environment.NewLine +
                         "<option value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "<option value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
@@ -276,7 +267,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
                     {
                         OneDisabledGroupAllSelectedSelectList,
                         "<select id=\"HtmlEncode[[Property1]]\" multiple=\"HtmlEncode[[multiple]]\" name=\"HtmlEncode[[Property1]]\">" +
-                        "<optgroup disabled=\"HtmlEncode[[disabled]]\" label=\"HtmlEncode[[Disabled Group]]\">" + Environment.NewLine +
+                        "<optgroup disabled=\"HtmlEncode[[disabled]]\" label=\"HtmlEncode[[Disabled Group]]\">" +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
@@ -284,7 +275,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
                         "</optgroup>" + Environment.NewLine +
                         "</select>",
                         "<select id=\"HtmlEncode[[Property1]]\" multiple=\"HtmlEncode[[multiple]]\" name=\"HtmlEncode[[Property1]]\">" +
-                        "<optgroup disabled=\"HtmlEncode[[disabled]]\" label=\"HtmlEncode[[Disabled Group]]\">" + Environment.NewLine +
+                        "<optgroup disabled=\"HtmlEncode[[disabled]]\" label=\"HtmlEncode[[Disabled Group]]\">" +
                         "<option value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
@@ -292,7 +283,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
                         "</optgroup>" + Environment.NewLine +
                         "</select>",
                         "<select id=\"HtmlEncode[[Property1]]\" multiple=\"HtmlEncode[[multiple]]\" name=\"HtmlEncode[[Property1]]\">" +
-                        "<optgroup disabled=\"HtmlEncode[[disabled]]\" label=\"HtmlEncode[[Disabled Group]]\">" + Environment.NewLine +
+                        "<optgroup disabled=\"HtmlEncode[[disabled]]\" label=\"HtmlEncode[[Disabled Group]]\">" +
                         "<option value=\"HtmlEncode[[0]]\">HtmlEncode[[Zero]]</option>" + Environment.NewLine +
                         "<option selected=\"HtmlEncode[[selected]]\" value=\"HtmlEncode[[1]]\">HtmlEncode[[One]]</option>" + Environment.NewLine +
                         "<option value=\"HtmlEncode[[2]]\">HtmlEncode[[Two]]</option>" + Environment.NewLine +
@@ -323,7 +314,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.DropDownList("Property1", selectList, optionLabel: null, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedDisabled, selectList.Select(item => item.Disabled));
             Assert.Equal(savedGroup, selectList.Select(item => item.Group));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
@@ -347,7 +338,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.DropDownList("Property1", selectList: null, optionLabel: null, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -367,7 +358,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.DropDownList("Property1", selectList, optionLabel: null, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -390,7 +381,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
                 htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -414,7 +405,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
                 htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -438,7 +429,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
                 htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -463,7 +454,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
                 htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -491,7 +482,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
                 htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -514,7 +505,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.DropDownListFor(value => unrelated, selectList, optionLabel: null, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -538,7 +529,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.ListBox("Property1", selectList, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedDisabled, selectList.Select(item => item.Disabled));
             Assert.Equal(savedGroup, selectList.Select(item => item.Group));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
@@ -563,7 +554,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.ListBox("Property1", selectList, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -584,7 +575,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.ListBox("Property1", selectList, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -604,7 +595,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.ListBoxFor(value => value.Property1, selectList, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -625,7 +616,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.ListBoxFor(value => value.Property1, selectList, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -649,7 +640,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.ListBoxFor(value => unrelated, selectList, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -670,7 +661,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.ListBoxFor(value => value.Property1, selectList, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -698,7 +689,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
                 htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedDisabled, selectList.Select(item => item.Disabled));
             Assert.Equal(savedGroup, selectList.Select(item => item.Group));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
@@ -726,7 +717,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
                 htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -746,7 +737,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.DropDownListFor(value => value, selectList, optionLabel: null, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -766,7 +757,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.DropDownListFor(value => value, selectList, optionLabel: null, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -791,7 +782,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.ListBox(expression: string.Empty, selectList: selectList, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedDisabled, selectList.Select(item => item.Disabled));
             Assert.Equal(savedGroup, selectList.Select(item => item.Group));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
@@ -817,7 +808,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.ListBox(expression: string.Empty, selectList: selectList, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -838,7 +829,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.ListBoxFor(value => value, selectList, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
@@ -860,7 +851,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             var html = helper.ListBoxFor(value => value, selectList, htmlAttributes: null);
 
             // Assert
-            Assert.Equal(expectedHtml, html.ToString());
+            Assert.Equal(expectedHtml, DefaultTemplatesUtilities.HtmlContentToString(html));
             Assert.Equal(savedSelected, selectList.Select(item => item.Selected));
         }
 
