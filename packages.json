@@ -1,0 +1,61 @@
+{
+    "adx": { // Packages written by the ADX team and that ship on NuGet.org
+        "rules": [
+            "AssemblyHasDocumentFileRule",
+            "AssemblyHasVersionAttributesRule",
+            "AssemblyHasServicingAttributeRule",
+            //"AssemblyStrongNameRule", // Don't check strong names because aspnet50/aspnetcore50 don't use them
+            //"AuthenticodeSigningRule",
+            "PowerShellScriptIsSignedRule",
+            //"RequiredPackageMetadataRule", // TODO: Temporarily disabled
+            "SatellitePackageRule",
+            "StrictSemanticVersionValidationRule"
+        ],
+        "packages": {
+            "Microsoft.AspNet.JsonPatch": { },
+            "Microsoft.AspNet.Mvc": { },
+            "Microsoft.AspNet.Mvc.Abstractions": { },
+            "Microsoft.AspNet.Mvc.ApiExplorer": {
+                "SERVICING_ATTRIBUTE": {
+                    "lib\\dnx451\\Microsoft.AspNet.Mvc.ApiExplorer.dll": "Temporarily disabled",
+                    "lib\\dnxcore50\\Microsoft.AspNet.Mvc.ApiExplorer.dll": "Temporarily disabled"
+                }
+            },
+            "Microsoft.AspNet.Mvc.Core": { },
+            "Microsoft.AspNet.Mvc.Cors": { },
+            "Microsoft.AspNet.Mvc.DataAnnotations": { },
+            "Microsoft.AspNet.Mvc.Formatters.Json": {
+                "SERVICING_ATTRIBUTE": {
+                    "lib\\dnx451\\Microsoft.AspNet.Mvc.Formatters.Json.dll": "Temporarily disabled",
+                    "lib\\dnxcore50\\Microsoft.AspNet.Mvc.Formatters.Json.dll": "Temporarily disabled"
+                }
+            },
+            "Microsoft.AspNet.Mvc.Formatters.Xml": { },
+            "Microsoft.AspNet.Mvc.Localization": {
+                "SERVICING_ATTRIBUTE": {
+                    "lib\\dnx451\\Microsoft.AspNet.Mvc.Localization.dll": "Temporarily disabled",
+                    "lib\\dnxcore50\\Microsoft.AspNet.Mvc.Localization.dll": "Temporarily disabled"
+                }
+            },
+            "Microsoft.AspNet.Mvc.Razor": { },
+            "Microsoft.AspNet.Mvc.Razor.Host": { },
+            "Microsoft.AspNet.Mvc.TagHelpers": { },
+            "Microsoft.AspNet.Mvc.ViewFeatures": { },
+            "Microsoft.AspNet.Mvc.WebApiCompatShim": { },
+            "Microsoft.AspNet.PageExecutionInstrumentation.Interfaces": { }
+        }
+    },
+    "Default": {
+        "rules": [
+            "AssemblyHasDocumentFileRule",
+            "AssemblyHasVersionAttributesRule",
+            "AssemblyHasServicingAttributeRule",
+            // "AssemblyStrongNameRule", // Don't check strong names because aspnet50/aspnetcore50 don't use them
+            // "AuthenticodeSigningRule",
+            // "PowerShellScriptIsSignedRule",
+            // "RequiredPackageMetadataRule", // TODO: Temporarily disabled
+            "SatellitePackageRule",
+            "StrictSemanticVersionValidationRule"
+        ]
+    }
+}
