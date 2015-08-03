@@ -36,7 +36,7 @@ namespace Microsoft.AspNet.Mvc.Razor.Compilation
             IOptions<RazorViewEngineOptions> optionsAccessor)
             : this(razorFileInfoCollections,
                   loadContextAccessor.GetLoadContext(RazorHostAssembly),
-                  optionsAccessor.Options.FileProvider)
+                  optionsAccessor.Value.FileProvider)
         {
         }
 

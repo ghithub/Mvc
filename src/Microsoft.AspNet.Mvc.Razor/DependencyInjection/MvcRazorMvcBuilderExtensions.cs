@@ -87,7 +87,7 @@ namespace Microsoft.Framework.DependencyInjection
             services.TryAdd(ServiceDescriptor.Singleton<IChunkTreeCache>(serviceProvider =>
             {
                 var cachedFileProvider = serviceProvider.GetRequiredService<IOptions<RazorViewEngineOptions>>();
-                return new DefaultChunkTreeCache(cachedFileProvider.Options.FileProvider);
+                return new DefaultChunkTreeCache(cachedFileProvider.Value.FileProvider);
             }));
 
             // The host is designed to be discarded after consumption and is very inexpensive to initialize.

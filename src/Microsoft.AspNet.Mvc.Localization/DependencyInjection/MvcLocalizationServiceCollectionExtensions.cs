@@ -39,8 +39,7 @@ namespace Microsoft.Framework.DependencyInjection
                 options =>
                 {
                     options.ViewLocationExpanders.Add(new LanguageViewLocationExpander(format));
-                },
-                DefaultOrder.DefaultFrameworkSortOrder);
+                });
 
             services.TryAdd(ServiceDescriptor.Singleton<IHtmlLocalizerFactory, HtmlLocalizerFactory>());
             services.TryAdd(ServiceDescriptor.Transient(typeof(IHtmlLocalizer<>), typeof(HtmlLocalizer<>)));
