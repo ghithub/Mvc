@@ -4,6 +4,7 @@
         "../Microsoft.AspNet.Mvc.Razor.Host.Test/TestFileInfo.cs",
         "../Microsoft.AspNet.Mvc.Razor.Host.Test/TestFileTrigger.cs"
     ],
+    "resource": "Precompilation/Files/*.cs",
     "dependencies": {
         "Microsoft.AspNet.Mvc.DataAnnotations": "6.0.0-*",
         "Microsoft.AspNet.Mvc.Formatters.Xml": "6.0.0-*",

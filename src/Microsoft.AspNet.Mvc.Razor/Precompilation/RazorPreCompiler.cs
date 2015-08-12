@@ -35,7 +35,7 @@ namespace Microsoft.AspNet.Mvc.Razor.Precompilation
             FileProvider = fileProvider;
             CompilationSettings = compilationSettings;
             PreCompilationCache = precompilationCache;
-            TagHelperTypeResolver = new PrecompilationTagHelperTypeResolver(CompileContext, LoadContext);
+            TagHelperTypeResolver = new PrecompilationTagHelperTypeResolver(compileContext.Compilation);
         }
 
         /// <summary>
