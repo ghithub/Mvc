@@ -26,9 +26,19 @@ namespace Microsoft.AspNet.Mvc
         /// Use <see cref="AddService(ICollection{IFilterMetadata}, Type)"/> to register a service as a filter.
         /// </remarks>
         public static IFilterMetadata Add(
-            [NotNull] this ICollection<IFilterMetadata> filters,
-            [NotNull] Type filterType)
+            this ICollection<IFilterMetadata> filters,
+            Type filterType)
         {
+            if (filters == null)
+            {
+                throw new ArgumentNullException(nameof(filters));
+            }
+
+            if (filterType == null)
+            {
+                throw new ArgumentNullException(nameof(filterType));
+            }
+
             return Add(filters, filterType, order: 0);
         }
 
@@ -45,10 +55,20 @@ namespace Microsoft.AspNet.Mvc
         /// Use <see cref="AddService(ICollection{IFilterMetadata}, Type)"/> to register a service as a filter.
         /// </remarks>
         public static IFilterMetadata Add(
-            [NotNull] this ICollection<IFilterMetadata> filters,
-            [NotNull] Type filterType,
+            this ICollection<IFilterMetadata> filters,
+            Type filterType,
             int order)
         {
+            if (filters == null)
+            {
+                throw new ArgumentNullException(nameof(filters));
+            }
+
+            if (filterType == null)
+            {
+                throw new ArgumentNullException(nameof(filterType));
+            }
+
             if (!typeof(IFilterMetadata).IsAssignableFrom(filterType))
             {
                 var message = Resources.FormatTypeMustDeriveFromType(filterType.FullName, typeof(IFilterMetadata).FullName);
@@ -72,9 +92,19 @@ namespace Microsoft.AspNet.Mvc
         /// type activation.
         /// </remarks>
         public static IFilterMetadata AddService(
-            [NotNull] this ICollection<IFilterMetadata> filters,
-            [NotNull] Type filterType)
+            this ICollection<IFilterMetadata> filters,
+            Type filterType)
         {
+            if (filters == null)
+            {
+                throw new ArgumentNullException(nameof(filters));
+            }
+
+            if (filterType == null)
+            {
+                throw new ArgumentNullException(nameof(filterType));
+            }
+
             return AddService(filters, filterType, order: 0);
         }
 
@@ -91,10 +121,20 @@ namespace Microsoft.AspNet.Mvc
         /// type activation.
         /// </remarks>
         public static IFilterMetadata AddService(
-            [NotNull] this ICollection<IFilterMetadata> filters,
-            [NotNull] Type filterType,
+            this ICollection<IFilterMetadata> filters,
+            Type filterType,
             int order)
         {
+            if (filters == null)
+            {
+                throw new ArgumentNullException(nameof(filters));
+            }
+
+            if (filterType == null)
+            {
+                throw new ArgumentNullException(nameof(filterType));
+            }
+
             if (!typeof(IFilterMetadata).GetTypeInfo().IsAssignableFrom(filterType.GetTypeInfo()))
             {
                 var message = Resources.FormatTypeMustDeriveFromType(filterType.FullName, typeof(IFilterMetadata).FullName);

@@ -53,8 +53,13 @@ namespace Microsoft.AspNet.Mvc
         public MediaTypeHeaderValue ContentType { get; set; }
 
         /// <inheritdoc />
-        public override async Task ExecuteResultAsync([NotNull] ActionContext context)
+        public override async Task ExecuteResultAsync(ActionContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var viewEngine = ViewEngine ??
                              context.HttpContext.RequestServices.GetRequiredService<ICompositeViewEngine>();
 
@@ -64,10 +69,10 @@ namespace Microsoft.AspNet.Mvc
 
             var viewName = ViewName ?? context.ActionDescriptor.Name;
             var viewEngineResult = viewEngine.FindView(context, viewName);
-            if(!viewEngineResult.Success)
+            if (!viewEngineResult.Success)
             {
                 logger.LogError(
-                    "The view '{ViewName}' was not found. Searched locations: {SearchedViewLocations}", 
+                    "The view '{ViewName}' was not found. Searched locations: {SearchedViewLocations}",
                     viewName,
                     viewEngineResult.SearchedLocations);
             }

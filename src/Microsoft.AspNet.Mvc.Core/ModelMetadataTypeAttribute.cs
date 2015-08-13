@@ -16,8 +16,13 @@ namespace Microsoft.AspNet.Mvc
         /// Initializes a new instance of the <see cref="ModelMetadataTypeAttribute" /> class.
         /// </summary>
         /// <param name="type">The type of metadata class that is associated with a data model class.</param>
-        public ModelMetadataTypeAttribute([NotNull] Type type)
+        public ModelMetadataTypeAttribute(Type type)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
             MetadataType = type;
         }
 

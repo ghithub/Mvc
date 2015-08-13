@@ -26,10 +26,25 @@ namespace Microsoft.AspNet.Mvc
         /// The <see cref="Type"/> of the model to deserialize.
         /// </param>
         public InputFormatterContext(
-            [NotNull] HttpContext httpContext,
-            [NotNull] ModelStateDictionary modelState,
-            [NotNull] Type modelType)
+            HttpContext httpContext,
+            ModelStateDictionary modelState,
+            Type modelType)
         {
+            if (httpContext == null)
+            {
+                throw new ArgumentNullException(nameof(httpContext));
+            }
+
+            if (modelState == null)
+            {
+                throw new ArgumentNullException(nameof(modelState));
+            }
+
+            if (modelType == null)
+            {
+                throw new ArgumentNullException(nameof(modelType));
+            }
+
             HttpContext = httpContext;
             ModelState = modelState;
             ModelType = modelType;

@@ -13,9 +13,17 @@ namespace Microsoft.AspNet.Mvc
         private Exception _exception;
         private ExceptionDispatchInfo _exceptionDispatchInfo;
 
-        public ExceptionContext([NotNull] ActionContext actionContext, [NotNull] IList<IFilterMetadata> filters)
+        public ExceptionContext(ActionContext actionContext, IList<IFilterMetadata> filters)
             : base(actionContext, filters)
         {
+            if (actionContext == null)
+            {
+                throw new ArgumentNullException(nameof(actionContext));
+            }
+            if (filters == null)
+            {
+                throw new ArgumentNullException(nameof(filters));
+            }
         }
 
         public virtual Exception Exception

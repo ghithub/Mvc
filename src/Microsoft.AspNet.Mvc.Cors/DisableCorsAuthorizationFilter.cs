@@ -24,9 +24,14 @@ namespace Microsoft.AspNet.Mvc
         }
 
         /// <inheritdoc />
-        public Task OnAuthorizationAsync([NotNull] AuthorizationContext context)
+        public Task OnAuthorizationAsync(AuthorizationContext context)
         {
-            var accessControlRequestMethod = 
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            var accessControlRequestMethod =
                         context.HttpContext.Request.Headers.Get(CorsConstants.AccessControlRequestMethod);
             if (string.Equals(
                     context.HttpContext.Request.Method,

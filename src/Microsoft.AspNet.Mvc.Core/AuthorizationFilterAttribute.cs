@@ -16,23 +16,42 @@ namespace Microsoft.AspNet.Mvc
         public int Order { get; set; }
 
 #pragma warning disable 1998
-        public virtual async Task OnAuthorizationAsync([NotNull] AuthorizationContext context)
+        public virtual async Task OnAuthorizationAsync(AuthorizationContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             OnAuthorization(context);
         }
 #pragma warning restore 1998
 
-        public virtual void OnAuthorization([NotNull] AuthorizationContext context)
+        public virtual void OnAuthorization(AuthorizationContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
         }
 
-        protected virtual bool HasAllowAnonymous([NotNull] AuthorizationContext context)
+        protected virtual bool HasAllowAnonymous(AuthorizationContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             return context.Filters.Any(item => item is IAllowAnonymous);
         }
 
-        protected virtual void Fail([NotNull] AuthorizationContext context)
+        protected virtual void Fail(AuthorizationContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             context.Result = new HttpUnauthorizedResult();
         }
     }

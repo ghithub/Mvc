@@ -47,8 +47,13 @@ namespace Microsoft.AspNet.Mvc
         /// <remarks>
         /// This method synchronously calls and blocks on <see cref="ExecuteAsync(ViewComponentContext)"/>.
         /// </remarks>
-        public void Execute([NotNull] ViewComponentContext context)
+        public void Execute(ViewComponentContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var task = ExecuteAsync(context);
             task.GetAwaiter().GetResult();
         }
@@ -59,8 +64,13 @@ namespace Microsoft.AspNet.Mvc
         /// </summary>
         /// <param name="context">The <see cref="ViewComponentContext"/> for the current component execution.</param>
         /// <returns>A <see cref="Task"/> which will complete when view rendering is completed.</returns>
-        public async Task ExecuteAsync([NotNull] ViewComponentContext context)
+        public async Task ExecuteAsync(ViewComponentContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var viewEngine = ViewEngine ?? ResolveViewEngine(context);
             var viewData = ViewData ?? context.ViewData;
 

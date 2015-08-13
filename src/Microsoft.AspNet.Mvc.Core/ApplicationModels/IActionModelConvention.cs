@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.Framework.Internal;
 
 namespace Microsoft.AspNet.Mvc.ApplicationModels
@@ -22,6 +23,6 @@ namespace Microsoft.AspNet.Mvc.ApplicationModels
         /// Called to apply the convention to the <see cref="ActionModel"/>.
         /// </summary>
         /// <param name="action">The <see cref="ActionModel"/>.</param>
-        void Apply([NotNull] ActionModel action);
+        void Apply(ActionModel action);
     }
 }

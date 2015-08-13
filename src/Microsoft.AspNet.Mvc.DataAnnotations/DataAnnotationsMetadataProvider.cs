@@ -20,8 +20,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
         IValidationMetadataProvider
     {
         /// <inheritdoc />
-        public void GetBindingMetadata([NotNull] BindingMetadataProviderContext context)
+        public void GetBindingMetadata(BindingMetadataProviderContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var editableAttribute = context.Attributes.OfType<EditableAttribute>().FirstOrDefault();
             if (editableAttribute != null)
             {
@@ -30,8 +35,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
         }
 
         /// <inheritdoc />
-        public void GetDisplayMetadata([NotNull] DisplayMetadataProviderContext context)
+        public void GetDisplayMetadata(DisplayMetadataProviderContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var attributes = context.Attributes;
             var dataTypeAttribute = attributes.OfType<DataTypeAttribute>().FirstOrDefault();
             var displayAttribute = attributes.OfType<DisplayAttribute>().FirstOrDefault();
@@ -205,8 +215,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
         }
 
         /// <inheritdoc />
-        public void GetValidationMetadata([NotNull] ValidationMetadataProviderContext context)
+        public void GetValidationMetadata(ValidationMetadataProviderContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             // RequiredAttribute marks a property as required by validation - this means that it
             // must have a non-null value on the model during validation.
             var requiredAttribute = context.Attributes.OfType<RequiredAttribute>().FirstOrDefault();

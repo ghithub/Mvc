@@ -24,9 +24,13 @@ namespace Microsoft.AspNet.Mvc
         /// the provided <paramref name="contentType"/>.
         /// </summary>
         /// <param name="contentType">The Content-Type header of the response.</param>
-        protected FileResult([NotNull] string contentType)
+        protected FileResult(string contentType)
             : this(new MediaTypeHeaderValue(contentType))
         {
+            if (contentType == null)
+            {
+                throw new ArgumentNullException(nameof(contentType));
+            }
         }
 
         /// <summary>
@@ -34,8 +38,13 @@ namespace Microsoft.AspNet.Mvc
         /// the provided <paramref name="contentType"/>.
         /// </summary>
         /// <param name="contentType">The Content-Type header of the response.</param>
-        protected FileResult([NotNull] MediaTypeHeaderValue contentType)
+        protected FileResult(MediaTypeHeaderValue contentType)
         {
+            if (contentType == null)
+            {
+                throw new ArgumentNullException(nameof(contentType));
+            }
+
             ContentType = contentType;
         }
 
@@ -54,8 +63,13 @@ namespace Microsoft.AspNet.Mvc
         }
 
         /// <inheritdoc />
-        public override Task ExecuteResultAsync([NotNull] ActionContext context)
+        public override Task ExecuteResultAsync(ActionContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var response = context.HttpContext.Response;
             response.ContentType = ContentType.ToString();
 

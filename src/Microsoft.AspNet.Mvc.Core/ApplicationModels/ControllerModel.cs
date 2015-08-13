@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,9 +14,19 @@ namespace Microsoft.AspNet.Mvc.ApplicationModels
                      " Routes: {AttributeRoutes.Count}, Filters: {Filters.Count}")]
     public class ControllerModel
     {
-        public ControllerModel([NotNull] TypeInfo controllerType,
-                               [NotNull] IReadOnlyList<object> attributes)
+        public ControllerModel(TypeInfo controllerType,
+                               IReadOnlyList<object> attributes)
         {
+            if (controllerType == null)
+            {
+                throw new ArgumentNullException(nameof(controllerType));
+            }
+
+            if (attributes == null)
+            {
+                throw new ArgumentNullException(nameof(attributes));
+            }
+
             ControllerType = controllerType;
 
             Actions = new List<ActionModel>();
@@ -29,8 +40,13 @@ namespace Microsoft.AspNet.Mvc.ApplicationModels
             ControllerProperties = new List<PropertyModel>();
         }
 
-        public ControllerModel([NotNull] ControllerModel other)
+        public ControllerModel(ControllerModel other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             ControllerName = other.ControllerName;
             ControllerType = other.ControllerType;
 

@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
@@ -185,13 +186,22 @@ namespace Microsoft.AspNet.Mvc
 
         private class NullTempDataProvider : ITempDataProvider
         {
-            public IDictionary<string, object> LoadTempData([NotNull]HttpContext context)
+            public IDictionary<string, object> LoadTempData(HttpContext context)
             {
+                if (context == null)
+                {
+                    throw new ArgumentNullException(nameof(context));
+                }
+
                 return null;
             }
 
-            public void SaveTempData([NotNull]HttpContext context, IDictionary<string, object> values)
+            public void SaveTempData(HttpContext context, IDictionary<string, object> values)
             {
+                if (context == null)
+                {
+                    throw new ArgumentNullException(nameof(context));
+                }
             }
         }
 
@@ -204,13 +214,22 @@ namespace Microsoft.AspNet.Mvc
                 _data = data;
             }
 
-            public IDictionary<string, object> LoadTempData([NotNull]HttpContext context)
+            public IDictionary<string, object> LoadTempData(HttpContext context)
             {
+                if (context == null)
+                {
+                    throw new ArgumentNullException(nameof(context));
+                }
+
                 return _data;
             }
 
-            public void SaveTempData([NotNull]HttpContext context, IDictionary<string, object> values)
+            public void SaveTempData(HttpContext context, IDictionary<string, object> values)
             {
+                if (context == null)
+                {
+                    throw new ArgumentNullException(nameof(context));
+                }
             }
         }
 

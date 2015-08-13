@@ -16,8 +16,13 @@ namespace Microsoft.AspNet.Mvc
     public class StreamOutputFormatter : IOutputFormatter
     {
         /// <inheritdoc />
-        public bool CanWriteResult([NotNull] OutputFormatterContext context, MediaTypeHeaderValue contentType)
+        public bool CanWriteResult(OutputFormatterContext context, MediaTypeHeaderValue contentType)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             // Ignore the passed in content type, if the object is a Stream.
             if (context.Object is Stream)
             {
@@ -29,8 +34,13 @@ namespace Microsoft.AspNet.Mvc
         }
 
         /// <inheritdoc />
-        public async Task WriteAsync([NotNull] OutputFormatterContext context)
+        public async Task WriteAsync(OutputFormatterContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             using (var valueAsStream = ((Stream)context.Object))
             {
                 var response = context.HttpContext.Response;

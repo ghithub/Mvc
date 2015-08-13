@@ -20,8 +20,13 @@ namespace Microsoft.AspNet.Mvc
         private INotifier _notifier;
         private ILogger _logger;
 
-        public VirtualPathData GetVirtualPath([NotNull] VirtualPathContext context)
+        public VirtualPathData GetVirtualPath(VirtualPathContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             // The contract of this method is to check that the values coming in from the route are valid;
             // that they match an existing action, setting IsBound = true if the values are OK.
             var actionSelector = context.Context.RequestServices.GetRequiredService<IActionSelector>();
@@ -31,8 +36,13 @@ namespace Microsoft.AspNet.Mvc
             return null;
         }
 
-        public async Task RouteAsync([NotNull] RouteContext context)
+        public async Task RouteAsync(RouteContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var services = context.HttpContext.RequestServices;
 
             // Verify if AddMvc was done before calling UseMvc
@@ -75,7 +85,7 @@ namespace Microsoft.AspNet.Mvc
                 {
                     _notifier.Notify(
                         "Microsoft.AspNet.Mvc.ActionSelected",
-                        new { actionDescriptor, httpContext = context.HttpContext, routeData = context.RouteData});
+                        new { actionDescriptor, httpContext = context.HttpContext, routeData = context.RouteData });
                 }
 
                 using (_logger.BeginScope("ActionId: {ActionId}", actionDescriptor.Id))

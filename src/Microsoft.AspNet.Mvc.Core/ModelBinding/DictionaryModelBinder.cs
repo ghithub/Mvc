@@ -21,8 +21,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
     public class DictionaryModelBinder<TKey, TValue> : CollectionModelBinder<KeyValuePair<TKey, TValue>>
     {
         /// <inheritdoc />
-        public override async Task<ModelBindingResult> BindModelAsync([NotNull] ModelBindingContext bindingContext)
+        public override async Task<ModelBindingResult> BindModelAsync(ModelBindingContext bindingContext)
         {
+            if (bindingContext == null)
+            {
+                throw new ArgumentNullException(nameof(bindingContext));
+            }
+
             var result = await base.BindModelAsync(bindingContext);
             if (result == null || !result.IsModelSet)
             {

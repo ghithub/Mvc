@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using Microsoft.Framework.Internal;
 
@@ -15,8 +16,18 @@ namespace Microsoft.AspNet.Mvc
             get { return _comparer; }
         }
 
-        public int Compare([NotNull] FilterItem x, [NotNull] FilterItem y)
+        public int Compare(FilterItem x, FilterItem y)
         {
+            if (x == null)
+            {
+                throw new ArgumentNullException(nameof(x));
+            }
+
+            if (y == null)
+            {
+                throw new ArgumentNullException(nameof(y));
+            }
+
             return FilterDescriptorOrderComparer.Comparer.Compare(x.Descriptor, y.Descriptor);
         }
     }

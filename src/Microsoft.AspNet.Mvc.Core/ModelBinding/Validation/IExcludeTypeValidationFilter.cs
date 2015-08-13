@@ -16,6 +16,6 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Validation
         /// </summary>
         /// <param name="type">The <see cref="Type"/> for which the check is to be performed.</param>
         /// <returns>True if the type is to be excluded. False otherwise.</returns>
-        bool IsTypeExcluded([NotNull] Type type);
+        bool IsTypeExcluded(Type type);
     }
 }

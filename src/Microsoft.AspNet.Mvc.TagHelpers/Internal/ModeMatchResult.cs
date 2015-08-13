@@ -41,12 +41,22 @@ namespace Microsoft.AspNet.Mvc.TagHelpers.Internal
         /// <param name="uniqueId">The value of <see cref="TagHelperContext.UniqueId"/>.</param>
         /// <param name="viewPath">The path to the view the <see cref="ITagHelper"/> is on.</param>
         public void LogDetails<TTagHelper>(
-            [NotNull] ILogger logger,
-            [NotNull] TTagHelper tagHelper,
+            ILogger logger,
+            TTagHelper tagHelper,
             string uniqueId,
             string viewPath)
             where TTagHelper : ITagHelper
         {
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
+
+            if (tagHelper == null)
+            {
+                throw new ArgumentNullException(nameof(tagHelper));
+            }
+
             if (logger.IsEnabled(LogLevel.Warning) && PartiallyMatchedAttributes.Any())
             {
                 // Build the list of partial matches that contain attributes not appearing in at least one full match

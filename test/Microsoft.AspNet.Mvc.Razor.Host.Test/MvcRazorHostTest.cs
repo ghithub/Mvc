@@ -486,8 +486,13 @@ namespace Microsoft.AspNet.Mvc.Razor
 
             public string InheritedChunkTreePagePath { get; private set; }
 
-            public override IReadOnlyList<ChunkTree> GetInheritedChunkTrees([NotNull] string pagePath)
+            public override IReadOnlyList<ChunkTree> GetInheritedChunkTrees(string pagePath)
             {
+                if (pagePath == null)
+                {
+                    throw new ArgumentNullException(nameof(pagePath));
+                }
+
                 InheritedChunkTreePagePath = pagePath;
 
                 return new ChunkTree[0];

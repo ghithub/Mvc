@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Razor.Runtime.TagHelpers;
 using Microsoft.Framework.Internal;
@@ -19,6 +20,6 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// </summary>
         /// <param name="helper">The <typeparamref name="TTagHelper"/> to initialize.</param>
         /// <param name="context">The <see cref="ViewContext"/> for the executing view.</param>
-        void Initialize([NotNull] TTagHelper helper, [NotNull] ViewContext context);
+        void Initialize(TTagHelper helper, ViewContext context);
     }
 }

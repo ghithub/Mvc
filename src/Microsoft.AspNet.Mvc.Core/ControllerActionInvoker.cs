@@ -20,18 +20,18 @@ namespace Microsoft.AspNet.Mvc.Core
         private readonly IControllerActionArgumentBinder _argumentBinder;
 
         public ControllerActionInvoker(
-            [NotNull] ActionContext actionContext,
-            [NotNull] IReadOnlyList<IFilterProvider> filterProviders,
-            [NotNull] IControllerFactory controllerFactory,
-            [NotNull] ControllerActionDescriptor descriptor,
-            [NotNull] IReadOnlyList<IInputFormatter> inputFormatters,
-            [NotNull] IReadOnlyList<IOutputFormatter> outputFormatters,
-            [NotNull] IControllerActionArgumentBinder controllerActionArgumentBinder,
-            [NotNull] IReadOnlyList<IModelBinder> modelBinders,
-            [NotNull] IReadOnlyList<IModelValidatorProvider> modelValidatorProviders,
-            [NotNull] IReadOnlyList<IValueProviderFactory> valueProviderFactories,
-            [NotNull] IScopedInstance<ActionBindingContext> actionBindingContextAccessor,
-            [NotNull] ILoggerFactory loggerFactory,
+            ActionContext actionContext,
+            IReadOnlyList<IFilterProvider> filterProviders,
+            IControllerFactory controllerFactory,
+            ControllerActionDescriptor descriptor,
+            IReadOnlyList<IInputFormatter> inputFormatters,
+            IReadOnlyList<IOutputFormatter> outputFormatters,
+            IControllerActionArgumentBinder controllerActionArgumentBinder,
+            IReadOnlyList<IModelBinder> modelBinders,
+            IReadOnlyList<IModelValidatorProvider> modelValidatorProviders,
+            IReadOnlyList<IValueProviderFactory> valueProviderFactories,
+            IScopedInstance<ActionBindingContext> actionBindingContextAccessor,
+            ILoggerFactory loggerFactory,
             int maxModelValidationErrors)
             : base(
                   actionContext,
@@ -45,6 +45,66 @@ namespace Microsoft.AspNet.Mvc.Core
                   loggerFactory,
                   maxModelValidationErrors)
         {
+            if (actionContext == null)
+            {
+                throw new ArgumentNullException(nameof(actionContext));
+            }
+
+            if (filterProviders == null)
+            {
+                throw new ArgumentNullException(nameof(filterProviders));
+            }
+
+            if (controllerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(controllerFactory));
+            }
+
+            if (descriptor == null)
+            {
+                throw new ArgumentNullException(nameof(descriptor));
+            }
+
+            if (inputFormatters == null)
+            {
+                throw new ArgumentNullException(nameof(inputFormatters));
+            }
+
+            if (outputFormatters == null)
+            {
+                throw new ArgumentNullException(nameof(outputFormatters));
+            }
+
+            if (controllerActionArgumentBinder == null)
+            {
+                throw new ArgumentNullException(nameof(controllerActionArgumentBinder));
+            }
+
+            if (modelBinders == null)
+            {
+                throw new ArgumentNullException(nameof(modelBinders));
+            }
+
+            if (modelValidatorProviders == null)
+            {
+                throw new ArgumentNullException(nameof(modelValidatorProviders));
+            }
+
+            if (valueProviderFactories == null)
+            {
+                throw new ArgumentNullException(nameof(valueProviderFactories));
+            }
+
+            if (actionBindingContextAccessor == null)
+            {
+                throw new ArgumentNullException(nameof(actionBindingContextAccessor));
+            }
+
+            if (loggerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(loggerFactory));
+            }
+
             _descriptor = descriptor;
             _controllerFactory = controllerFactory;
             _argumentBinder = controllerActionArgumentBinder;
@@ -92,8 +152,13 @@ namespace Microsoft.AspNet.Mvc.Core
         }
 
         // Marking as internal for Unit Testing purposes.
-        internal static IActionResult CreateActionResult([NotNull] Type declaredReturnType, object actionReturnValue)
+        internal static IActionResult CreateActionResult(Type declaredReturnType, object actionReturnValue)
         {
+            if (declaredReturnType == null)
+            {
+                throw new ArgumentNullException(nameof(declaredReturnType));
+            }
+
             // optimize common path
             var actionResult = actionReturnValue as IActionResult;
             if (actionResult != null)

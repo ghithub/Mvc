@@ -17,8 +17,13 @@ namespace Microsoft.AspNet.Mvc.Formatters.Xml
         /// <param name="declaredType">The declared type of the object that needs to be wrapped.</param>
         /// <param name="isSerialization"><see langword="true"/> if the wrapper provider is invoked during
         /// serialization, otherwise <see langword="false"/>.</param>
-        public WrapperProviderContext([NotNull] Type declaredType, bool isSerialization)
+        public WrapperProviderContext(Type declaredType, bool isSerialization)
         {
+            if (declaredType == null)
+            {
+                throw new ArgumentNullException(nameof(declaredType));
+            }
+
             DeclaredType = declaredType;
             IsSerialization = isSerialization;
         }

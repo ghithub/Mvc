@@ -28,11 +28,21 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// <param name="values">The key value pairs to wrap.</param>
         /// <param name="culture">The culture to return with ValueProviderResult instances.</param>
         public ReadableStringCollectionValueProvider(
-            [NotNull] BindingSource bindingSource,
-            [NotNull] IReadableStringCollection values, 
+            BindingSource bindingSource,
+            IReadableStringCollection values,
             CultureInfo culture)
             : base(bindingSource)
         {
+            if (bindingSource == null)
+            {
+                throw new ArgumentNullException(nameof(bindingSource));
+            }
+
+            if (values == null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
+
             _values = values;
             _culture = culture;
         }
@@ -45,11 +55,21 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// <param name="values">The delegate that provides the key value pairs to wrap.</param>
         /// <param name="culture">The culture to return with ValueProviderResult instances.</param>
         public ReadableStringCollectionValueProvider(
-            [NotNull] BindingSource bindingSource,
-            [NotNull] Func<Task<IReadableStringCollection>> valuesFactory,
+            BindingSource bindingSource,
+            Func<Task<IReadableStringCollection>> valuesFactory,
             CultureInfo culture)
             : base(bindingSource)
         {
+            if (bindingSource == null)
+            {
+                throw new ArgumentNullException(nameof(bindingSource));
+            }
+
+            if (valuesFactory == null)
+            {
+                throw new ArgumentNullException(nameof(valuesFactory));
+            }
+
             _valuesFactory = valuesFactory;
             _culture = culture;
         }
@@ -70,15 +90,25 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         }
 
         /// <inheritdoc />
-        public virtual async Task<IDictionary<string, string>> GetKeysFromPrefixAsync([NotNull] string prefix)
+        public virtual async Task<IDictionary<string, string>> GetKeysFromPrefixAsync(string prefix)
         {
+            if (prefix == null)
+            {
+                throw new ArgumentNullException(nameof(prefix));
+            }
+
             var prefixContainer = await GetPrefixContainerAsync();
             return prefixContainer.GetKeysFromPrefix(prefix);
         }
 
         /// <inheritdoc />
-        public override async Task<ValueProviderResult> GetValueAsync([NotNull] string key)
+        public override async Task<ValueProviderResult> GetValueAsync(string key)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
             var collection = await GetValueCollectionAsync();
             var values = collection.GetValues(key);
 

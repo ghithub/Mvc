@@ -1971,7 +1971,7 @@ namespace Microsoft.AspNet.Mvc
             {
                 actionDescriptor.MethodInfo = typeof(ControllerActionInvokerTest).GetMethod("ActionMethod");
             }
-            
+
             var httpContext = new Mock<HttpContext>(MockBehavior.Loose);
             var httpRequest = new DefaultHttpContext().Request;
             var httpResponse = new DefaultHttpContext().Response;
@@ -2243,8 +2243,13 @@ namespace Microsoft.AspNet.Mvc
                 _expectedMaxAllowedErrors = maxAllowedErrors;
             }
 
-            public void OnAuthorization([NotNull]AuthorizationContext context)
+            public void OnAuthorization(AuthorizationContext context)
             {
+                if (context == null)
+                {
+                    throw new ArgumentNullException(nameof(context));
+                }
+
                 Assert.NotNull(context.ModelState.MaxAllowedErrors);
                 Assert.Equal(_expectedMaxAllowedErrors, context.ModelState.MaxAllowedErrors);
             }

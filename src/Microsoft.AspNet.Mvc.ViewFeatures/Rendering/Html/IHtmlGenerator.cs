@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNet.Html.Abstractions;
 using Microsoft.AspNet.Mvc.ModelBinding;
@@ -23,7 +24,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
         string FormatValue(object value, string format);
 
         TagBuilder GenerateActionLink(
-            [NotNull] string linkText,
+            string linkText,
             string actionName,
             string controllerName,
             string protocol,
@@ -37,7 +38,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </summary>
         /// <param name="viewContext">The <see cref="ViewContext"/> instance for the current scope.</param>
         /// <returns>An <see cref="IHtmlContent"/> instance for the &lt;input type="hidden".../&gt; element.</returns>
-        IHtmlContent GenerateAntiforgery([NotNull] ViewContext viewContext);
+        IHtmlContent GenerateAntiforgery(ViewContext viewContext);
 
         /// <summary>
         /// Generate a &lt;input type="checkbox".../&gt; element. 
@@ -54,7 +55,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// A <see cref="TagBuilder"/> instance for the &lt;input type="checkbox".../&gt; element.
         /// </returns>
         TagBuilder GenerateCheckBox(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             ModelExplorer modelExplorer,
             string expression,
             bool? isChecked,
@@ -66,7 +67,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// checkbox was present on the page when the request was submitted.
         /// </summary>
         TagBuilder GenerateHiddenForCheckbox(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             ModelExplorer modelExplorer,
             string expression);
 
@@ -92,7 +93,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// A <see cref="TagBuilder"/> instance for the &lt;/form&gt; element.
         /// </returns>
         TagBuilder GenerateForm(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             string actionName,
             string controllerName,
             object routeValues,
@@ -120,14 +121,14 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// A <see cref="TagBuilder"/> instance for the &lt;/form&gt; element.
         /// </returns>
         TagBuilder GenerateRouteForm(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             string routeName,
             object routeValues,
             string method,
             object htmlAttributes);
 
         TagBuilder GenerateHidden(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             ModelExplorer modelExplorer,
             string expression,
             object value,
@@ -135,21 +136,21 @@ namespace Microsoft.AspNet.Mvc.Rendering
             object htmlAttributes);
 
         TagBuilder GenerateLabel(
-            [NotNull] ViewContext viewContext,
-            [NotNull] ModelExplorer modelExplorer,
+            ViewContext viewContext,
+            ModelExplorer modelExplorer,
             string expression,
             string labelText,
             object htmlAttributes);
 
         TagBuilder GeneratePassword(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             ModelExplorer modelExplorer,
             string expression,
             object value,
             object htmlAttributes);
 
         TagBuilder GenerateRadioButton(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             ModelExplorer modelExplorer,
             string expression,
             object value,
@@ -157,7 +158,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             object htmlAttributes);
 
         TagBuilder GenerateRouteLink(
-            [NotNull] string linkText,
+            string linkText,
             string routeName,
             string protocol,
             string hostName,
@@ -200,7 +201,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         TagBuilder GenerateSelect(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             ModelExplorer modelExplorer,
             string optionLabel,
             string expression,
@@ -249,7 +250,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         TagBuilder GenerateSelect(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             ModelExplorer modelExplorer,
             string optionLabel,
             string expression,
@@ -259,7 +260,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             object htmlAttributes);
 
         TagBuilder GenerateTextArea(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             ModelExplorer modelExplorer,
             string expression,
             int rows,
@@ -267,7 +268,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
             object htmlAttributes);
 
         TagBuilder GenerateTextBox(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             ModelExplorer modelExplorer,
             string expression,
             object value,
@@ -275,14 +276,14 @@ namespace Microsoft.AspNet.Mvc.Rendering
             object htmlAttributes);
 
         TagBuilder GenerateValidationMessage(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             string expression,
             string message,
             string tag,
             object htmlAttributes);
 
         TagBuilder GenerateValidationSummary(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             bool excludePropertyErrors,
             string message,
             string headerTag,
@@ -293,7 +294,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// implementations.
         /// </remarks>
         IEnumerable<ModelClientValidationRule> GetClientValidationRules(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             ModelExplorer modelExplorer,
             string expression);
 
@@ -332,7 +333,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// See <see cref="GenerateSelect"/> for information about how the return value may be used.
         /// </remarks>
         IReadOnlyCollection<string> GetCurrentValues(
-            [NotNull] ViewContext viewContext,
+            ViewContext viewContext,
             ModelExplorer modelExplorer,
             string expression,
             bool allowMultiple);

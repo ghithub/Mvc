@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -28,8 +28,18 @@ namespace Microsoft.AspNet.Mvc
         {
         }
 
-        public HttpResponseStreamWriter([NotNull] Stream stream, [NotNull] Encoding encoding, int bufferSize)
+        public HttpResponseStreamWriter(Stream stream, Encoding encoding, int bufferSize)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            if (encoding == null)
+            {
+                throw new ArgumentNullException(nameof(encoding));
+            }
+
             _stream = stream;
             Encoding = encoding;
             _encoder = encoding.GetEncoder();

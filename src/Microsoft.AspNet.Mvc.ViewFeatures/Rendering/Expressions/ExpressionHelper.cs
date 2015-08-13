@@ -20,8 +20,13 @@ namespace Microsoft.AspNet.Mvc.Rendering.Expressions
             return string.Equals(expression, "model", StringComparison.OrdinalIgnoreCase) ? string.Empty : expression;
         }
 
-        public static string GetExpressionText([NotNull] LambdaExpression expression)
+        public static string GetExpressionText(LambdaExpression expression)
         {
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             // Split apart the expression string for property/field accessors to create its name
             var nameParts = new Stack<string>();
             var part = expression.Body;
@@ -90,9 +95,19 @@ namespace Microsoft.AspNet.Mvc.Rendering.Expressions
         }
 
         private static string GetIndexerInvocation(
-            [NotNull] Expression expression,
-            [NotNull] ParameterExpression[] parameters)
+            Expression expression,
+            ParameterExpression[] parameters)
         {
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             var converted = Expression.Convert(expression, typeof(object));
             var fakeParameter = Expression.Parameter(typeof(object), null);
             var lambda = Expression.Lambda<Func<object, object>>(converted, fakeParameter);

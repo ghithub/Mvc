@@ -52,8 +52,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
             return valueProviderResult;
         }
 
-        private static bool IsCompatibleWith([NotNull] Type type, object value)
+        private static bool IsCompatibleWith(Type type, object value)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
             if (value == null)
             {
                 return !type.GetTypeInfo().IsValueType || Nullable.GetUnderlyingType(type) != null;

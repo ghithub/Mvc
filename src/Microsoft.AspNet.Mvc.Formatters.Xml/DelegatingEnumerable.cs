@@ -39,8 +39,13 @@ namespace Microsoft.AspNet.Mvc.Formatters.Xml
         /// </summary>
         /// <param name="source">The <see cref="IEnumerable{T}"/> instance to get the enumerator from.</param>
         /// <param name="elementWrapperProvider">The wrapper provider for wrapping individual elements.</param>
-        public DelegatingEnumerable([NotNull] IEnumerable<TDeclared> source, IWrapperProvider elementWrapperProvider)
+        public DelegatingEnumerable(IEnumerable<TDeclared> source, IWrapperProvider elementWrapperProvider)
         {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
             _source = source;
             _wrapperProvider = elementWrapperProvider;
         }

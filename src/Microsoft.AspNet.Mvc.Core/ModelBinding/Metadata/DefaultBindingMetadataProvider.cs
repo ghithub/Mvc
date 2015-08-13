@@ -15,8 +15,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
     public class DefaultBindingMetadataProvider : IBindingMetadataProvider
     {
         /// <inheritdoc />
-        public void GetBindingMetadata([NotNull] BindingMetadataProviderContext context)
+        public void GetBindingMetadata(BindingMetadataProviderContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             // BinderModelName
             foreach (var binderModelNameAttribute in context.Attributes.OfType<IModelNameProvider>())
             {
@@ -62,7 +67,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
                 var bindingBehavior = context.PropertyAttributes.OfType<BindingBehaviorAttribute>().FirstOrDefault();
                 if (bindingBehavior == null)
                 {
-                    bindingBehavior = 
+                    bindingBehavior =
                         context.Key.ContainerType.GetTypeInfo()
                         .GetCustomAttributes(typeof(BindingBehaviorAttribute), inherit: true)
                         .OfType<BindingBehaviorAttribute>()

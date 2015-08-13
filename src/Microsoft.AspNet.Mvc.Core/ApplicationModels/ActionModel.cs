@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,9 +14,19 @@ namespace Microsoft.AspNet.Mvc.ApplicationModels
                      " Route: {AttributeRouteModel?.Template}, Filters: {Filters.Count}")]
     public class ActionModel
     {
-        public ActionModel([NotNull] MethodInfo actionMethod,
-                           [NotNull] IReadOnlyList<object> attributes)
+        public ActionModel(MethodInfo actionMethod,
+                           IReadOnlyList<object> attributes)
         {
+            if (actionMethod == null)
+            {
+                throw new ArgumentNullException(nameof(actionMethod));
+            }
+
+            if (attributes == null)
+            {
+                throw new ArgumentNullException(nameof(attributes));
+            }
+
             ActionMethod = actionMethod;
 
             ApiExplorer = new ApiExplorerModel();
@@ -28,8 +39,13 @@ namespace Microsoft.AspNet.Mvc.ApplicationModels
             Properties = new Dictionary<object, object>();
         }
 
-        public ActionModel([NotNull] ActionModel other)
+        public ActionModel(ActionModel other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             ActionMethod = other.ActionMethod;
             ActionName = other.ActionName;
 

@@ -96,8 +96,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// <param name="isFromRequest">
         /// A value indicating whether or not the data comes from the HTTP request.
         /// </param>
-        public BindingSource([NotNull] string id, string displayName, bool isGreedy, bool isFromRequest)
+        public BindingSource(string id, string displayName, bool isGreedy, bool isFromRequest)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
             Id = id;
             DisplayName = displayName;
             IsGreedy = isGreedy;
@@ -158,8 +163,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// This distinction is important as the left-hand-side may be a composite, but the right
         /// may not.
         /// </remarks>
-        public virtual bool CanAcceptDataFrom([NotNull] BindingSource bindingSource)
+        public virtual bool CanAcceptDataFrom(BindingSource bindingSource)
         {
+            if (bindingSource == null)
+            {
+                throw new ArgumentNullException(nameof(bindingSource));
+            }
+
             if (bindingSource is CompositeBindingSource)
             {
                 var message = Resources.FormatBindingSource_CannotBeComposite(

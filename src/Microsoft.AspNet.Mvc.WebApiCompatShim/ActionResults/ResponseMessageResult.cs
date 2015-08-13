@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Net.Http;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.Internal;
@@ -16,9 +17,14 @@ namespace System.Web.Http
         /// Initializes a new instance of the <see cref="ResponseMessageResult"/> class.
         /// </summary>
         /// <param name="response">The response message.</param>
-        public ResponseMessageResult([NotNull] HttpResponseMessage response)
+        public ResponseMessageResult(HttpResponseMessage response)
             : base(response)
         {
+            if (response == null)
+            {
+                throw new ArgumentNullException(nameof(response));
+            }
+
             Response = response;
         }
 

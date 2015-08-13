@@ -37,8 +37,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// case-sensitive file systems.
         /// </para>
         /// </remarks>
-        public static IHtmlContent Display([NotNull] this IHtmlHelper htmlHelper, string expression)
+        public static IHtmlContent Display(this IHtmlHelper htmlHelper, string expression)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Display(expression, templateName: null, htmlFieldName: null, additionalViewData: null);
         }
 
@@ -73,10 +78,15 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent Display(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             object additionalViewData)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Display(
                 expression,
                 templateName: null,
@@ -111,10 +121,15 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent Display(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             string templateName)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Display(expression, templateName, htmlFieldName: null, additionalViewData: null);
         }
 
@@ -150,11 +165,16 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent Display(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             string templateName,
             object additionalViewData)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Display(
                 expression,
                 templateName,
@@ -193,11 +213,16 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent Display(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             string templateName,
             string htmlFieldName)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Display(expression, templateName, htmlFieldName, additionalViewData: null);
         }
 
@@ -221,9 +246,19 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent DisplayFor<TModel, TResult>(
-            [NotNull] this IHtmlHelper<TModel> htmlHelper,
-            [NotNull] Expression<Func<TModel, TResult>> expression)
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return htmlHelper.DisplayFor<TResult>(
                 expression,
                 templateName: null,
@@ -257,10 +292,20 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent DisplayFor<TModel, TResult>(
-            [NotNull] this IHtmlHelper<TModel> htmlHelper,
-            [NotNull] Expression<Func<TModel, TResult>> expression,
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression,
             object additionalViewData)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return htmlHelper.DisplayFor<TResult>(
                 expression,
                 templateName: null,
@@ -290,10 +335,20 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent DisplayFor<TModel, TResult>(
-            [NotNull] this IHtmlHelper<TModel> htmlHelper,
-            [NotNull] Expression<Func<TModel, TResult>> expression,
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression,
             string templateName)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return htmlHelper.DisplayFor<TResult>(
                 expression,
                 templateName,
@@ -328,11 +383,21 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent DisplayFor<TModel, TResult>(
-            [NotNull] this IHtmlHelper<TModel> htmlHelper,
-            [NotNull] Expression<Func<TModel, TResult>> expression,
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression,
             string templateName,
             object additionalViewData)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return htmlHelper.DisplayFor<TResult>(
                 expression,
                 templateName,
@@ -366,11 +431,21 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent DisplayFor<TModel, TResult>(
-            [NotNull] this IHtmlHelper<TModel> htmlHelper,
-            [NotNull] Expression<Func<TModel, TResult>> expression,
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression,
             string templateName,
             string htmlFieldName)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return htmlHelper.DisplayFor<TResult>(
                 expression,
                 templateName: templateName,
@@ -394,8 +469,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// case-sensitive file systems.
         /// </para>
         /// </remarks>
-        public static IHtmlContent DisplayForModel([NotNull] this IHtmlHelper htmlHelper)
+        public static IHtmlContent DisplayForModel(this IHtmlHelper htmlHelper)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Display(
                 expression: null,
                 templateName: null,
@@ -424,8 +504,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// case-sensitive file systems.
         /// </para>
         /// </remarks>
-        public static IHtmlContent DisplayForModel([NotNull] this IHtmlHelper htmlHelper, object additionalViewData)
+        public static IHtmlContent DisplayForModel(this IHtmlHelper htmlHelper, object additionalViewData)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Display(
                 expression: null,
                 templateName: null,
@@ -450,8 +535,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// case-sensitive file systems.
         /// </para>
         /// </remarks>
-        public static IHtmlContent DisplayForModel([NotNull] this IHtmlHelper htmlHelper, string templateName)
+        public static IHtmlContent DisplayForModel(this IHtmlHelper htmlHelper, string templateName)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Display(
                 expression: null,
                 templateName: templateName,
@@ -483,10 +573,15 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent DisplayForModel(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string templateName,
             object additionalViewData)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Display(
                 expression: null,
                 templateName: templateName,
@@ -517,10 +612,15 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent DisplayForModel(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string templateName,
             string htmlFieldName)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Display(
                 expression: null,
                 templateName: templateName,
@@ -556,11 +656,16 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent DisplayForModel(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string templateName,
             string htmlFieldName,
             object additionalViewData)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Display(
                 expression: null,
                 templateName: templateName,

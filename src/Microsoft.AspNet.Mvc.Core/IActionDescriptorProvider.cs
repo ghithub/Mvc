@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.Framework.Internal;
 
 namespace Microsoft.AspNet.Mvc.Core
@@ -28,8 +29,8 @@ namespace Microsoft.AspNet.Mvc.Core
         /// </remarks>
         int Order { get; }
 
-        void OnProvidersExecuting([NotNull] ActionDescriptorProviderContext context);
+        void OnProvidersExecuting(ActionDescriptorProviderContext context);
 
-        void OnProvidersExecuted([NotNull] ActionDescriptorProviderContext context);
+        void OnProvidersExecuted(ActionDescriptorProviderContext context);
     }
 }

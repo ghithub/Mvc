@@ -24,9 +24,19 @@ namespace Microsoft.AspNet.Mvc.TagHelpers.Internal
         /// <param name="modeInfos">The modes and their required attributes.</param>
         /// <returns>The <see cref="ModeMatchResult{TMode}"/>.</returns>
         public static ModeMatchResult<TMode> DetermineMode<TMode>(
-            [NotNull] TagHelperContext context,
-            [NotNull] IEnumerable<ModeAttributes<TMode>> modeInfos)
+            TagHelperContext context,
+            IEnumerable<ModeAttributes<TMode>> modeInfos)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (modeInfos == null)
+            {
+                throw new ArgumentNullException(nameof(modeInfos));
+            }
+
             // true == full match, false == partial match
             var matchedAttributes = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
             var result = new ModeMatchResult<TMode>();

@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.Framework.Internal;
 
 namespace Microsoft.AspNet.Mvc.ApiExplorer
@@ -28,8 +29,8 @@ namespace Microsoft.AspNet.Mvc.ApiExplorer
         /// </remarks>
         int Order { get; }
 
-        void OnProvidersExecuting([NotNull] ApiDescriptionProviderContext context);
+        void OnProvidersExecuting(ApiDescriptionProviderContext context);
 
-        void OnProvidersExecuted([NotNull] ApiDescriptionProviderContext context);
+        void OnProvidersExecuted(ApiDescriptionProviderContext context);
     }
 }

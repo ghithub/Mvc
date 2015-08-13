@@ -1,6 +1,7 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.DependencyInjection.Extensions;
 using Microsoft.Framework.Internal;
@@ -10,8 +11,13 @@ namespace Microsoft.Framework.DependencyInjection
 {
     public static class MvcDataAnnotationsMvcBuilderExtensions
     {
-        public static IMvcBuilder AddDataAnnotations([NotNull] this IMvcBuilder builder)
+        public static IMvcBuilder AddDataAnnotations(this IMvcBuilder builder)
         {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
             AddDataAnnotationsServices(builder.Services);
             return builder;
         }

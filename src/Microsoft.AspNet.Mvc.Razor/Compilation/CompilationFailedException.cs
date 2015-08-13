@@ -20,9 +20,14 @@ namespace Microsoft.AspNet.Mvc.Razor.Compilation
         /// <param name="compilationFailures"><see cref="CompilationFailure"/>s containing
         /// details of the compilation failure.</param>
         public CompilationFailedException(
-                [NotNull] IEnumerable<CompilationFailure> compilationFailures)
+                IEnumerable<CompilationFailure> compilationFailures)
             : base(FormatMessage(compilationFailures))
         {
+            if (compilationFailures == null)
+            {
+                throw new ArgumentNullException(nameof(compilationFailures));
+            }
+
             CompilationFailures = compilationFailures;
         }
 

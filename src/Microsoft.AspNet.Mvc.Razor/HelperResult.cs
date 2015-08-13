@@ -21,8 +21,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// </summary>
         /// <param name="action">The delegate to invoke when
         /// <see cref="WriteTo(TextWriter, IHtmlEncoder)"/> is called.</param>
-        public HelperResult([NotNull] Action<TextWriter> action)
+        public HelperResult(Action<TextWriter> action)
         {
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
             _action = action;
         }
 
@@ -39,8 +44,18 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// </summary>
         /// <param name="writer">The <see cref="TextWriter"/> instance to write to.</param>
         /// <param name="encoder">The <see cref="IHtmlEncoder"/> to encode the content.</param>
-        public virtual void WriteTo([NotNull] TextWriter writer, [NotNull] IHtmlEncoder encoder)
+        public virtual void WriteTo(TextWriter writer, IHtmlEncoder encoder)
         {
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if (encoder == null)
+            {
+                throw new ArgumentNullException(nameof(encoder));
+            }
+
             _action(writer);
         }
     }

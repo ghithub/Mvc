@@ -22,9 +22,13 @@ namespace Microsoft.AspNet.Mvc
         /// set of HTTP methods.
         /// <param name="httpMethods">The set of supported HTTP methods.</param>
         /// </summary>
-        public HttpMethodAttribute([NotNull] IEnumerable<string> httpMethods)
+        public HttpMethodAttribute(IEnumerable<string> httpMethods)
             : this(httpMethods, null)
         {
+            if (httpMethods == null)
+            {
+                throw new ArgumentNullException(nameof(httpMethods));
+            }
         }
 
         /// <summary>
@@ -33,8 +37,13 @@ namespace Microsoft.AspNet.Mvc
         /// </summary>
         /// <param name="httpMethods">The set of supported methods.</param>
         /// <param name="template">The route template. May not be null.</param>
-        public HttpMethodAttribute([NotNull] IEnumerable<string> httpMethods, string template)
+        public HttpMethodAttribute(IEnumerable<string> httpMethods, string template)
         {
+            if (httpMethods == null)
+            {
+                throw new ArgumentNullException(nameof(httpMethods));
+            }
+
             _httpMethods = httpMethods;
             Template = template;
         }

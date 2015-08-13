@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNet.Mvc.ApplicationModels;
@@ -16,10 +17,25 @@ namespace Microsoft.AspNet.Mvc.Core
         private readonly IEnumerable<IApplicationModelConvention> _conventions;
 
         public ControllerActionDescriptorProvider(
-            [NotNull] IControllerTypeProvider controllerTypeProvider,
-            [NotNull] IEnumerable<IApplicationModelProvider> applicationModelProviders,
-            [NotNull] IOptions<MvcOptions> optionsAccessor)
+            IControllerTypeProvider controllerTypeProvider,
+            IEnumerable<IApplicationModelProvider> applicationModelProviders,
+            IOptions<MvcOptions> optionsAccessor)
         {
+            if (controllerTypeProvider == null)
+            {
+                throw new ArgumentNullException(nameof(controllerTypeProvider));
+            }
+
+            if (applicationModelProviders == null)
+            {
+                throw new ArgumentNullException(nameof(applicationModelProviders));
+            }
+
+            if (optionsAccessor == null)
+            {
+                throw new ArgumentNullException(nameof(optionsAccessor));
+            }
+
             _controllerTypeProvider = controllerTypeProvider;
             _applicationModelProviders = applicationModelProviders.OrderBy(p => p.Order).ToArray();
             _conventions = optionsAccessor.Options.Conventions;
@@ -31,8 +47,13 @@ namespace Microsoft.AspNet.Mvc.Core
         }
 
         /// <inheritdoc />
-        public void OnProvidersExecuting ([NotNull] ActionDescriptorProviderContext context)
+        public void OnProvidersExecuting(ActionDescriptorProviderContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             foreach (var descriptor in GetDescriptors())
             {
                 context.Results.Add(descriptor);
@@ -40,8 +61,12 @@ namespace Microsoft.AspNet.Mvc.Core
         }
 
         /// <inheritdoc />
-        public void OnProvidersExecuted([NotNull] ActionDescriptorProviderContext context)
+        public void OnProvidersExecuted(ActionDescriptorProviderContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
         }
 
         internal protected IEnumerable<ControllerActionDescriptor> GetDescriptors()
@@ -61,7 +86,7 @@ namespace Microsoft.AspNet.Mvc.Core
                 _applicationModelProviders[i].OnProvidersExecuting(context);
             }
 
-            for (var i = _applicationModelProviders.Length - 1 ; i >= 0; i--)
+            for (var i = _applicationModelProviders.Length - 1; i >= 0; i--)
             {
                 _applicationModelProviders[i].OnProvidersExecuted(context);
             }

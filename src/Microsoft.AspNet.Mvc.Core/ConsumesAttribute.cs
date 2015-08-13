@@ -21,8 +21,13 @@ namespace Microsoft.AspNet.Mvc
         /// <summary>
         /// Creates a new instance of <see cref="ConsumesAttribute"/>.
         /// </summary>
-        public ConsumesAttribute([NotNull] string contentType, params string[] otherContentTypes)
+        public ConsumesAttribute(string contentType, params string[] otherContentTypes)
         {
+            if (contentType == null)
+            {
+                throw new ArgumentNullException(nameof(contentType));
+            }
+
             ContentTypes = GetContentTypes(contentType, otherContentTypes);
         }
 
@@ -35,8 +40,13 @@ namespace Microsoft.AspNet.Mvc
         public IList<MediaTypeHeaderValue> ContentTypes { get; set; }
 
         /// <inheritdoc />
-        public void OnResourceExecuting([NotNull] ResourceExecutingContext context)
+        public void OnResourceExecuting(ResourceExecutingContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             // Only execute if the current filter is the one which is closest to the action.
             // Ignore all other filters. This is to ensure we have a overriding behavior.
             if (IsApplicable(context.ActionDescriptor))
@@ -55,8 +65,12 @@ namespace Microsoft.AspNet.Mvc
         }
 
         /// <inheritdoc />
-        public void OnResourceExecuted([NotNull] ResourceExecutedContext context)
+        public void OnResourceExecuted(ResourceExecutedContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
         }
 
         public bool Accept(ActionConstraintContext context)

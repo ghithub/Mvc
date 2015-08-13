@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -21,8 +21,18 @@ namespace Microsoft.AspNet.Mvc.Localization
         /// </summary>
         /// <param name="localizerFactory">The <see cref="IStringLocalizerFactory"/>.</param>
         /// <param name="encoder">The <see cref="IHtmlEncoder"/>.</param>
-        public HtmlLocalizerFactory([NotNull] IStringLocalizerFactory localizerFactory, [NotNull] IHtmlEncoder encoder)
+        public HtmlLocalizerFactory(IStringLocalizerFactory localizerFactory, IHtmlEncoder encoder)
         {
+            if (localizerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(localizerFactory));
+            }
+
+            if (encoder == null)
+            {
+                throw new ArgumentNullException(nameof(encoder));
+            }
+
             _factory = localizerFactory;
             _encoder = encoder;
         }

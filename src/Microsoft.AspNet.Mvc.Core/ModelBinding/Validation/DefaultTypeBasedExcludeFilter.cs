@@ -17,8 +17,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Validation
         /// Creates a new instance of <see cref="DefaultTypeBasedExcludeFilter"/>.
         /// </summary>
         /// <param name="type">The type which needs to be excluded.</param>
-        public DefaultTypeBasedExcludeFilter([NotNull] Type type)
+        public DefaultTypeBasedExcludeFilter(Type type)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
             ExcludedType = type;
         }
 
@@ -28,8 +33,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Validation
         public Type ExcludedType { get; }
 
         /// <inheritdoc />
-        public bool IsTypeExcluded([NotNull] Type propertyType)
+        public bool IsTypeExcluded(Type propertyType)
         {
+            if (propertyType == null)
+            {
+                throw new ArgumentNullException(nameof(propertyType));
+            }
+
             return ExcludedType.GetTypeInfo().IsAssignableFrom(propertyType.GetTypeInfo());
         }
     }

@@ -11,8 +11,13 @@ namespace Microsoft.AspNet.Mvc.ViewComponents
     {
         private const string ViewComponentSuffix = "ViewComponent";
 
-        public static string GetComponentName([NotNull] TypeInfo componentType)
+        public static string GetComponentName(TypeInfo componentType)
         {
+            if (componentType == null)
+            {
+                throw new ArgumentNullException(nameof(componentType));
+            }
+
             var attribute = componentType.GetCustomAttribute<ViewComponentAttribute>();
             if (attribute != null && !string.IsNullOrEmpty(attribute.Name))
             {
@@ -30,8 +35,13 @@ namespace Microsoft.AspNet.Mvc.ViewComponents
             return GetShortNameByConvention(componentType);
         }
 
-        public static string GetComponentFullName([NotNull] TypeInfo componentType)
+        public static string GetComponentFullName(TypeInfo componentType)
         {
+            if (componentType == null)
+            {
+                throw new ArgumentNullException(nameof(componentType));
+            }
+
             var attribute = componentType.GetCustomAttribute<ViewComponentAttribute>();
             if (!string.IsNullOrEmpty(attribute?.Name))
             {
@@ -63,8 +73,13 @@ namespace Microsoft.AspNet.Mvc.ViewComponents
             }
         }
 
-        public static bool IsComponent([NotNull] TypeInfo typeInfo)
+        public static bool IsComponent(TypeInfo typeInfo)
         {
+            if (typeInfo == null)
+            {
+                throw new ArgumentNullException(nameof(typeInfo));
+            }
+
             if (!typeInfo.IsClass ||
                 !typeInfo.IsPublic ||
                 typeInfo.IsAbstract ||

@@ -22,8 +22,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
     public class CollectionModelBinder<TElement> : ICollectionModelBinder
     {
         /// <inheritdoc />
-        public virtual async Task<ModelBindingResult> BindModelAsync([NotNull] ModelBindingContext bindingContext)
+        public virtual async Task<ModelBindingResult> BindModelAsync(ModelBindingContext bindingContext)
         {
+            if (bindingContext == null)
+            {
+                throw new ArgumentNullException(nameof(bindingContext));
+            }
+
             ModelBindingHelper.ValidateBindingContext(bindingContext);
 
             var model = bindingContext.Model;
@@ -318,8 +323,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// <param name="sourceCollection">
         /// Collection of values retrieved from value providers. Or <c>null</c> if nothing was bound.
         /// </param>
-        protected virtual void CopyToModel([NotNull] object target, IEnumerable<TElement> sourceCollection)
+        protected virtual void CopyToModel(object target, IEnumerable<TElement> sourceCollection)
         {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+
             var targetCollection = target as ICollection<TElement>;
             Debug.Assert(targetCollection != null, "This binder is instantiated only for ICollection<T> model types.");
 

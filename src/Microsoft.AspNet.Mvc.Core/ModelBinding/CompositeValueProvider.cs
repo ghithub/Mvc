@@ -47,9 +47,19 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// created.
         /// </returns>
         public static CompositeValueProvider Create(
-            [NotNull] IEnumerable<IValueProviderFactory> factories,
-            [NotNull] ValueProviderFactoryContext context)
+            IEnumerable<IValueProviderFactory> factories,
+            ValueProviderFactoryContext context)
         {
+            if (factories == null)
+            {
+                throw new ArgumentNullException(nameof(factories));
+            }
+
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var composite = new CompositeValueProvider();
             foreach (var valueProvidersFactory in factories)
             {
@@ -113,14 +123,24 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         }
 
         /// <inheritdoc />
-        protected override void InsertItem(int index, [NotNull] IValueProvider item)
+        protected override void InsertItem(int index, IValueProvider item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
             base.InsertItem(index, item);
         }
 
         /// <inheritdoc />
-        protected override void SetItem(int index, [NotNull] IValueProvider item)
+        protected override void SetItem(int index, IValueProvider item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
             base.SetItem(index, item);
         }
 

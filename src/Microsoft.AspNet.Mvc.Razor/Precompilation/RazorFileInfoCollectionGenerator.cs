@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Globalization;
 using System.Text;
 using Microsoft.AspNet.Mvc.Razor.Compilation;
@@ -15,9 +16,19 @@ namespace Microsoft.AspNet.Mvc.Razor.Precompilation
     {
         private string _fileFormat;
 
-        public RazorFileInfoCollectionGenerator([NotNull] RazorFileInfoCollection fileInfoCollection,
-                                                [NotNull] CompilationSettings compilationSettings)
+        public RazorFileInfoCollectionGenerator(RazorFileInfoCollection fileInfoCollection,
+                                                CompilationSettings compilationSettings)
         {
+            if (fileInfoCollection == null)
+            {
+                throw new ArgumentNullException(nameof(fileInfoCollection));
+            }
+
+            if (compilationSettings == null)
+            {
+                throw new ArgumentNullException(nameof(compilationSettings));
+            }
+
             RazorFileInfoCollection = fileInfoCollection;
             CompilationSettings = compilationSettings;
         }
@@ -50,8 +61,13 @@ namespace Microsoft.AspNet.Mvc.Razor.Precompilation
             return syntaxTree;
         }
 
-        protected virtual string GenerateFile([NotNull] RazorFileInfo fileInfo)
+        protected virtual string GenerateFile(RazorFileInfo fileInfo)
         {
+            if (fileInfo == null)
+            {
+                throw new ArgumentNullException(nameof(fileInfo));
+            }
+
             return string.Format(FileFormat,
                                  fileInfo.RelativePath,
                                  fileInfo.FullTypeName);

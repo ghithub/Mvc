@@ -12,14 +12,28 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Validation
         private readonly Dictionary<string, object> _validationParameters =
             new Dictionary<string, object>(StringComparer.Ordinal);
 
-        public ModelClientValidationRule([NotNull] string errorMessage)
+        public ModelClientValidationRule(string errorMessage)
             : this(validationType: string.Empty, errorMessage: errorMessage)
         {
+            if (errorMessage == null)
+            {
+                throw new ArgumentNullException(nameof(errorMessage));
+            }
         }
 
-        public ModelClientValidationRule([NotNull] string validationType,
-                                         [NotNull] string errorMessage)
+        public ModelClientValidationRule(string validationType,
+                                         string errorMessage)
         {
+            if (validationType == null)
+            {
+                throw new ArgumentNullException(nameof(validationType));
+            }
+
+            if (errorMessage == null)
+            {
+                throw new ArgumentNullException(nameof(errorMessage));
+            }
+
             ValidationType = validationType;
             ErrorMessage = errorMessage;
         }

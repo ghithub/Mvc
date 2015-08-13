@@ -25,9 +25,19 @@ namespace Microsoft.AspNet.Mvc.Rendering
             get { return View != null; }
         }
 
-        public static ViewEngineResult NotFound([NotNull] string viewName,
-                                                [NotNull] IEnumerable<string> searchedLocations)
+        public static ViewEngineResult NotFound(string viewName,
+                                                IEnumerable<string> searchedLocations)
         {
+            if (viewName == null)
+            {
+                throw new ArgumentNullException(nameof(viewName));
+            }
+
+            if (searchedLocations == null)
+            {
+                throw new ArgumentNullException(nameof(searchedLocations));
+            }
+
             return new ViewEngineResult
             {
                 SearchedLocations = searchedLocations,
@@ -35,8 +45,18 @@ namespace Microsoft.AspNet.Mvc.Rendering
             };
         }
 
-        public static ViewEngineResult Found([NotNull] string viewName, [NotNull] IView view)
+        public static ViewEngineResult Found(string viewName, IView view)
         {
+            if (viewName == null)
+            {
+                throw new ArgumentNullException(nameof(viewName));
+            }
+
+            if (view == null)
+            {
+                throw new ArgumentNullException(nameof(view));
+            }
+
             return new ViewEngineResult
             {
                 View = view,

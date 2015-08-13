@@ -13,8 +13,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
     public static class UnobtrusiveValidationAttributesGenerator
     {
         public static IDictionary<string, object> GetValidationAttributes(
-            [NotNull] IEnumerable<ModelClientValidationRule> clientRules)
+            IEnumerable<ModelClientValidationRule> clientRules)
         {
+            if (clientRules == null)
+            {
+                throw new ArgumentNullException(nameof(clientRules));
+            }
+
             IDictionary<string, object> results = null;
 
             foreach (var rule in clientRules)

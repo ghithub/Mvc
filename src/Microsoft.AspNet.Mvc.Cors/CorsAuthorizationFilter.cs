@@ -46,8 +46,13 @@ namespace Microsoft.AspNet.Mvc
 
 
         /// <inheritdoc />
-        public async Task OnAuthorizationAsync([NotNull] AuthorizationContext context)
+        public async Task OnAuthorizationAsync(AuthorizationContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             // If this filter is not closest to the action, it is not applicable.
             if (!IsClosestToAction(context.Filters))
             {
@@ -62,7 +67,7 @@ namespace Microsoft.AspNet.Mvc
                 var result = _corsService.EvaluatePolicy(context.HttpContext, policy);
                 _corsService.ApplyResult(result, context.HttpContext.Response);
 
-                var accessControlRequestMethod = 
+                var accessControlRequestMethod =
                         httpContext.Request.Headers.Get(CorsConstants.AccessControlRequestMethod);
                 if (string.Equals(
                         request.Method,

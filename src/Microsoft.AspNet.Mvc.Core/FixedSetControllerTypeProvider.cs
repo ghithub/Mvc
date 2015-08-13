@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -25,8 +26,13 @@ namespace Microsoft.AspNet.Mvc
         /// Initializes a new instance of <see cref="FixedSetControllerTypeProvider"/>.
         /// </summary>
         /// <param name="controllerTypes">The sequence of controller <see cref="TypeInfo"/>.</param>
-        public FixedSetControllerTypeProvider([NotNull] IEnumerable<TypeInfo> controllerTypes)
+        public FixedSetControllerTypeProvider(IEnumerable<TypeInfo> controllerTypes)
         {
+            if (controllerTypes == null)
+            {
+                throw new ArgumentNullException(nameof(controllerTypes));
+            }
+
             ControllerTypes = new List<TypeInfo>(controllerTypes);
         }
 

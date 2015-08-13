@@ -24,9 +24,19 @@ namespace Microsoft.AspNet.Mvc.Razor.Compilation
         /// <param name="compiledContent">The generated C# content that was compiled.</param>
         /// <returns>An <see cref="UncachedCompilationResult"/> instance that indicates a successful
         /// compilation.</returns>
-        public static UncachedCompilationResult Successful([NotNull] Type type,
-                                                           [NotNull] string compiledContent)
+        public static UncachedCompilationResult Successful(Type type,
+                                                           string compiledContent)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (compiledContent == null)
+            {
+                throw new ArgumentNullException(nameof(compiledContent));
+            }
+
             return new UncachedCompilationResult
             {
                 CompiledType = type,

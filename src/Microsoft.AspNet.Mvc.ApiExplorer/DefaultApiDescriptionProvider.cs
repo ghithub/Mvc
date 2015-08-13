@@ -49,8 +49,13 @@ namespace Microsoft.AspNet.Mvc.ApiExplorer
         }
 
         /// <inheritdoc />
-        public void OnProvidersExecuting([NotNull] ApiDescriptionProviderContext context)
+        public void OnProvidersExecuting(ApiDescriptionProviderContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             foreach (var action in context.Actions.OfType<ControllerActionDescriptor>())
             {
                 var extensionData = action.GetProperty<ApiDescriptionActionData>();
@@ -65,8 +70,12 @@ namespace Microsoft.AspNet.Mvc.ApiExplorer
             }
         }
 
-        public void OnProvidersExecuted([NotNull] ApiDescriptionProviderContext context)
+        public void OnProvidersExecuted(ApiDescriptionProviderContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
         }
 
         private ApiDescription CreateApiDescription(

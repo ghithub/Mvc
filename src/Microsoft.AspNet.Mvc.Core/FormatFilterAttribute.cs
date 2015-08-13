@@ -19,8 +19,13 @@ namespace Microsoft.AspNet.Mvc
         /// </summary>
         /// <param name="serviceProvider">The <see cref="IServiceProvider"/>.</param>
         /// <returns>An instance of <see cref="FormatFilter"/>.</returns>
-        public IFilterMetadata CreateInstance([NotNull] IServiceProvider serviceProvider)
+        public IFilterMetadata CreateInstance(IServiceProvider serviceProvider)
         {
+            if (serviceProvider == null)
+            {
+                throw new ArgumentNullException(nameof(serviceProvider));
+            }
+
             return serviceProvider.GetRequiredService<FormatFilter>();
         }
     }

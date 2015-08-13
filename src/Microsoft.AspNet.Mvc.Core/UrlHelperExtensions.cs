@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.Framework.Internal;
 
 namespace Microsoft.AspNet.Mvc
@@ -11,8 +12,13 @@ namespace Microsoft.AspNet.Mvc
         /// Generates a fully qualified or absolute URL for an action method.
         /// </summary>
         /// <returns>The fully qualified or absolute URL to an action method.</returns>
-        public static string Action([NotNull] this IUrlHelper helper)
+        public static string Action(this IUrlHelper helper)
         {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+
             return helper.Action(
                 action: null,
                 controller: null,
@@ -27,8 +33,13 @@ namespace Microsoft.AspNet.Mvc
         /// </summary>
         /// <param name="action">The name of the action method.</param>
         /// <returns>The fully qualified or absolute URL to an action method.</returns>
-        public static string Action([NotNull] this IUrlHelper helper, string action)
+        public static string Action(this IUrlHelper helper, string action)
         {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+
             return helper.Action(action, controller: null, values: null, protocol: null, host: null, fragment: null);
         }
 
@@ -39,8 +50,13 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="action">The name of the action method.</param>
         /// <param name="values">An object that contains route values.</param>
         /// <returns>The fully qualified or absolute URL to an action method.</returns>
-        public static string Action([NotNull] this IUrlHelper helper, string action, object values)
+        public static string Action(this IUrlHelper helper, string action, object values)
         {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+
             return helper.Action(action, controller: null, values: values, protocol: null, host: null, fragment: null);
         }
 
@@ -51,8 +67,13 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="action">The name of the action method.</param>
         /// <param name="controller">The name of the controller.</param>
         /// <returns>The fully qualified or absolute URL to an action method.</returns>
-        public static string Action([NotNull] this IUrlHelper helper, string action, string controller)
+        public static string Action(this IUrlHelper helper, string action, string controller)
         {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+
             return helper.Action(action, controller, values: null, protocol: null, host: null, fragment: null);
         }
 
@@ -64,8 +85,13 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="controller">The name of the controller.</param>
         /// <param name="values">An object that contains route values.</param>
         /// <returns>The fully qualified or absolute URL to an action method.</returns>
-        public static string Action([NotNull] this IUrlHelper helper, string action, string controller, object values)
+        public static string Action(this IUrlHelper helper, string action, string controller, object values)
         {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+
             return helper.Action(action, controller, values, protocol: null, host: null, fragment: null);
         }
 
@@ -79,12 +105,17 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="protocol">The protocol for the URL, such as "http" or "https".</param>
         /// <returns>The fully qualified or absolute URL to an action method.</returns>
         public static string Action(
-            [NotNull] this IUrlHelper helper,
+            this IUrlHelper helper,
             string action,
             string controller,
             object values,
             string protocol)
         {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+
             return helper.Action(action, controller, values, protocol, host: null, fragment: null);
         }
 
@@ -99,13 +130,18 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="host">The host name for the URL.</param>
         /// <returns>The fully qualified or absolute URL to an action method.</returns>
         public static string Action(
-            [NotNull] this IUrlHelper helper,
+            this IUrlHelper helper,
             string action,
             string controller,
             object values,
             string protocol,
             string host)
         {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+
             return helper.Action(action, controller, values, protocol, host, fragment: null);
         }
 
@@ -121,7 +157,7 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="fragment">The fragment for the URL.</param>
         /// <returns>The fully qualified or absolute URL to an action method.</returns>
         public static string Action(
-            [NotNull] this IUrlHelper helper,
+            this IUrlHelper helper,
             string action,
             string controller,
             object values,
@@ -129,6 +165,11 @@ namespace Microsoft.AspNet.Mvc
             string host,
             string fragment)
         {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+
             return helper.Action(new UrlActionContext()
             {
                 Action = action,
@@ -145,8 +186,13 @@ namespace Microsoft.AspNet.Mvc
         /// </summary>
         /// <param name="values">An object that contains route values.</param>
         /// <returns>The fully qualified or absolute URL.</returns>
-        public static string RouteUrl([NotNull] this IUrlHelper helper, object values)
+        public static string RouteUrl(this IUrlHelper helper, object values)
         {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+
             return helper.RouteUrl(routeName: null, values: values, protocol: null, host: null, fragment: null);
         }
 
@@ -155,8 +201,13 @@ namespace Microsoft.AspNet.Mvc
         /// </summary>
         /// <param name="routeName">The name of the route that is used to generate URL.</param>
         /// <returns>The fully qualified or absolute URL.</returns>
-        public static string RouteUrl([NotNull] this IUrlHelper helper, string routeName)
+        public static string RouteUrl(this IUrlHelper helper, string routeName)
         {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+
             return helper.RouteUrl(routeName, values: null, protocol: null, host: null, fragment: null);
         }
 
@@ -167,8 +218,13 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="routeName">The name of the route that is used to generate URL.</param>
         /// <param name="values">An object that contains route values.</param>
         /// <returns>The fully qualified or absolute URL.</returns>
-        public static string RouteUrl([NotNull] this IUrlHelper helper, string routeName, object values)
+        public static string RouteUrl(this IUrlHelper helper, string routeName, object values)
         {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+
             return helper.RouteUrl(routeName, values, protocol: null, host: null, fragment: null);
         }
 
@@ -181,11 +237,16 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="protocol">The protocol for the URL, such as "http" or "https".</param>
         /// <returns>The fully qualified or absolute URL.</returns>
         public static string RouteUrl(
-            [NotNull] this IUrlHelper helper,
+            this IUrlHelper helper,
             string routeName,
             object values,
             string protocol)
         {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+
             return helper.RouteUrl(routeName, values, protocol, host: null, fragment: null);
         }
 
@@ -199,12 +260,17 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="host">The host name for the URL.</param>
         /// <returns>The fully qualified or absolute URL.</returns>
         public static string RouteUrl(
-            [NotNull] this IUrlHelper helper,
+            this IUrlHelper helper,
             string routeName,
             object values,
             string protocol,
             string host)
         {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+
             return helper.RouteUrl(routeName, values, protocol, host, fragment: null);
         }
 
@@ -219,13 +285,18 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="fragment">The fragment for the URL.</param>
         /// <returns>The fully qualified or absolute URL.</returns>
         public static string RouteUrl(
-            [NotNull] this IUrlHelper helper,
+            this IUrlHelper helper,
             string routeName,
             object values,
             string protocol,
             string host,
             string fragment)
         {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+
             return helper.RouteUrl(new UrlRouteContext()
             {
                 RouteName = routeName,

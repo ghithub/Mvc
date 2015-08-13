@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 #if NET45
@@ -150,9 +151,13 @@ namespace Microsoft.AspNet.Mvc.Razor
 
                 return _tagHelperDescriptorResolver;
             }
-            [param: NotNull]
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(TagHelperDescriptorResolver));
+                }
+
                 _tagHelperDescriptorResolver = value;
             }
         }
@@ -234,8 +239,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         }
 
         /// <inheritdoc />
-        public override RazorParser DecorateRazorParser([NotNull] RazorParser razorParser, string sourceFileName)
+        public override RazorParser DecorateRazorParser(RazorParser razorParser, string sourceFileName)
         {
+            if (razorParser == null)
+            {
+                throw new ArgumentNullException(nameof(razorParser));
+            }
+
             sourceFileName = _pathNormalizer.NormalizePath(sourceFileName);
 
             var inheritedChunkTrees = ChunkInheritanceUtility.GetInheritedChunkTrees(sourceFileName);
@@ -243,16 +253,31 @@ namespace Microsoft.AspNet.Mvc.Razor
         }
 
         /// <inheritdoc />
-        public override ParserBase DecorateCodeParser([NotNull] ParserBase incomingCodeParser)
+        public override ParserBase DecorateCodeParser(ParserBase incomingCodeParser)
         {
+            if (incomingCodeParser == null)
+            {
+                throw new ArgumentNullException(nameof(incomingCodeParser));
+            }
+
             return new MvcRazorCodeParser(_baseType);
         }
 
         /// <inheritdoc />
         public override CodeGenerator DecorateCodeGenerator(
-            [NotNull] CodeGenerator incomingGenerator,
-            [NotNull] CodeGeneratorContext context)
+            CodeGenerator incomingGenerator,
+            CodeGeneratorContext context)
         {
+            if (incomingGenerator == null)
+            {
+                throw new ArgumentNullException(nameof(incomingGenerator));
+            }
+
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             // Need the normalized path to resolve inherited chunks only. Full paths are needed for generated Razor
             // files checksum and line pragmas to enable DesignTime debugging.
             var normalizedPath = _pathNormalizer.NormalizePath(context.SourceFile);

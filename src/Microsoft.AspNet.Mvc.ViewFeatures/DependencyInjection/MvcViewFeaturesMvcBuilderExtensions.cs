@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -13,17 +13,32 @@ namespace Microsoft.Framework.DependencyInjection
 {
     public static class MvcViewFeaturesMvcBuilderExtensions
     {
-        public static IMvcBuilder AddViews([NotNull] this IMvcBuilder builder)
+        public static IMvcBuilder AddViews(this IMvcBuilder builder)
         {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
             builder.AddDataAnnotations();
             AddViewServices(builder.Services);
             return builder;
         }
 
         public static IMvcBuilder AddViews(
-            [NotNull] this IMvcBuilder builder,
-            [NotNull] Action<MvcViewOptions> setupAction)
+            this IMvcBuilder builder,
+            Action<MvcViewOptions> setupAction)
         {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            if (setupAction == null)
+            {
+                throw new ArgumentNullException(nameof(setupAction));
+            }
+
             builder.AddDataAnnotations();
             AddViewServices(builder.Services);
 
@@ -36,9 +51,19 @@ namespace Microsoft.Framework.DependencyInjection
         }
 
         public static IMvcBuilder ConfigureViews(
-            [NotNull] this IMvcBuilder builder,
-            [NotNull] Action<MvcViewOptions> setupAction)
+            this IMvcBuilder builder,
+            Action<MvcViewOptions> setupAction)
         {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            if (setupAction == null)
+            {
+                throw new ArgumentNullException(nameof(setupAction));
+            }
+
             builder.Services.Configure(setupAction);
             return builder;
         }

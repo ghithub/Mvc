@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -17,8 +18,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
     public class FormCollectionModelBinder : IModelBinder
     {
         /// <inheritdoc />
-        public async Task<ModelBindingResult> BindModelAsync([NotNull] ModelBindingContext bindingContext)
+        public async Task<ModelBindingResult> BindModelAsync(ModelBindingContext bindingContext)
         {
+            if (bindingContext == null)
+            {
+                throw new ArgumentNullException(nameof(bindingContext));
+            }
+
             if (bindingContext.ModelType != typeof(IFormCollection) &&
                 bindingContext.ModelType != typeof(FormCollection))
             {

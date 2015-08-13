@@ -14,13 +14,22 @@ namespace Microsoft.AspNet.Mvc
     public class SkipStatusCodePagesAttribute : Attribute, IResourceFilter
     {
         /// <inheritdoc />
-        public void OnResourceExecuted([NotNull]ResourceExecutedContext context)
+        public void OnResourceExecuted(ResourceExecutedContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
         }
 
         /// <inheritdoc />
-        public void OnResourceExecuting([NotNull]ResourceExecutingContext context)
+        public void OnResourceExecuting(ResourceExecutingContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var statusCodeFeature = context.HttpContext.GetFeature<IStatusCodePagesFeature>();
             if (statusCodeFeature != null)
             {

@@ -1,6 +1,7 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Linq;
 using Microsoft.AspNet.Cors.Core;
 using Microsoft.AspNet.Mvc.ApplicationModels;
@@ -10,15 +11,24 @@ namespace Microsoft.AspNet.Mvc
 {
     public class CorsApplicationModelProvider : IApplicationModelProvider
     {
-        public int Order {  get { return DefaultOrder.DefaultFrameworkSortOrder + 10; } }
+        public int Order { get { return DefaultOrder.DefaultFrameworkSortOrder + 10; } }
 
-        public void OnProvidersExecuted([NotNull]ApplicationModelProviderContext context)
+        public void OnProvidersExecuted(ApplicationModelProviderContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
             // Intentionally empty.
         }
 
-        public void OnProvidersExecuting([NotNull]ApplicationModelProviderContext context)
+        public void OnProvidersExecuting(ApplicationModelProviderContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             IEnableCorsAttribute enableCors;
             IDisableCorsAttribute disableCors;
 

@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Framework.Internal;
 
@@ -29,10 +30,20 @@ namespace Microsoft.AspNet.Mvc.Razor
         }
 
         /// <inheritdoc />
-        public IView GetView([NotNull] IRazorViewEngine viewEngine,
-                             [NotNull] IRazorPage page,
+        public IView GetView(IRazorViewEngine viewEngine,
+                             IRazorPage page,
                              bool isPartial)
         {
+            if (viewEngine == null)
+            {
+                throw new ArgumentNullException(nameof(viewEngine));
+            }
+
+            if (page == null)
+            {
+                throw new ArgumentNullException(nameof(page));
+            }
+
             var razorView = new RazorView(viewEngine, _pageActivator, _viewStartProvider, page, isPartial);
             return razorView;
         }

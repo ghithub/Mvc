@@ -8,6 +8,6 @@ namespace Microsoft.AspNet.Mvc
 {
     public interface IFilterFactory : IFilterMetadata
     {
-        IFilterMetadata CreateInstance([NotNull] IServiceProvider serviceProvider);
+        IFilterMetadata CreateInstance(IServiceProvider serviceProvider);
     }
 }

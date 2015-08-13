@@ -8,10 +8,25 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Validation
 {
     public class ClientModelValidationContext
     {
-        public ClientModelValidationContext([NotNull] ModelMetadata metadata,
-                                            [NotNull] IModelMetadataProvider metadataProvider,
-                                            [NotNull] IServiceProvider requestServices)
+        public ClientModelValidationContext(ModelMetadata metadata,
+                                            IModelMetadataProvider metadataProvider,
+                                            IServiceProvider requestServices)
         {
+            if (metadata == null)
+            {
+                throw new ArgumentNullException(nameof(metadata));
+            }
+
+            if (metadataProvider == null)
+            {
+                throw new ArgumentNullException(nameof(metadataProvider));
+            }
+
+            if (requestServices == null)
+            {
+                throw new ArgumentNullException(nameof(requestServices));
+            }
+
             ModelMetadata = metadata;
             MetadataProvider = metadataProvider;
             RequestServices = requestServices;

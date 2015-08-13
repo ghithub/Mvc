@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.Framework.Internal;
 
 namespace Microsoft.AspNet.Mvc
@@ -27,8 +28,13 @@ namespace Microsoft.AspNet.Mvc
         public int StatusCode { get; private set; }
 
         /// <inheritdoc />
-        public override void ExecuteResult([NotNull] ActionContext context)
+        public override void ExecuteResult(ActionContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             context.HttpContext.Response.StatusCode = StatusCode;
         }
     }

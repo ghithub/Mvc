@@ -25,8 +25,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
 
         /// <inheritdoc />
         protected async override Task<ModelBindingResult> BindModelCoreAsync(
-            [NotNull] ModelBindingContext bindingContext)
+            ModelBindingContext bindingContext)
         {
+            if (bindingContext == null)
+            {
+                throw new ArgumentNullException(nameof(bindingContext));
+            }
+
             // For compatibility with MVC 5.0 for top level object we want to consider an empty key instead of
             // the parameter name/a custom name. In all other cases (like when binding body to a property) we
             // consider the entire ModelName as a prefix.

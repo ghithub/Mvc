@@ -13,18 +13,36 @@ namespace Microsoft.AspNet.Mvc
     {
         public int Order { get; set; }
 
-        public virtual void OnActionExecuting([NotNull] ActionExecutingContext context)
+        public virtual void OnActionExecuting(ActionExecutingContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
         }
 
-        public virtual void OnActionExecuted([NotNull] ActionExecutedContext context)
+        public virtual void OnActionExecuted(ActionExecutedContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
         }
 
         public virtual async Task OnActionExecutionAsync(
-            [NotNull] ActionExecutingContext context,
-            [NotNull] ActionExecutionDelegate next)
+            ActionExecutingContext context,
+            ActionExecutionDelegate next)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (next == null)
+            {
+                throw new ArgumentNullException(nameof(next));
+            }
+
             OnActionExecuting(context);
             if (context.Result == null)
             {
@@ -32,18 +50,36 @@ namespace Microsoft.AspNet.Mvc
             }
         }
 
-        public virtual void OnResultExecuting([NotNull] ResultExecutingContext context)
+        public virtual void OnResultExecuting(ResultExecutingContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
         }
 
-        public virtual void OnResultExecuted([NotNull] ResultExecutedContext context)
+        public virtual void OnResultExecuted(ResultExecutedContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
         }
 
         public virtual async Task OnResultExecutionAsync(
-            [NotNull] ResultExecutingContext context,
-            [NotNull] ResultExecutionDelegate next)
+            ResultExecutingContext context,
+            ResultExecutionDelegate next)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (next == null)
+            {
+                throw new ArgumentNullException(nameof(next));
+            }
+
             OnResultExecuting(context);
             if (!context.Cancel)
             {

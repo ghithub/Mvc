@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.Framework.Internal;
 
 namespace Microsoft.AspNet.Mvc.Formatters.Xml
@@ -21,8 +22,13 @@ namespace Microsoft.AspNet.Mvc.Formatters.Xml
         /// <see cref="WrapperProviderContext.DeclaredType"/> is
         /// <see cref="Microsoft.AspNet.Mvc.SerializableError"/>; otherwise <c>null</c>.
         /// </returns>
-        public IWrapperProvider GetProvider([NotNull] WrapperProviderContext context)
+        public IWrapperProvider GetProvider(WrapperProviderContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             if (context.DeclaredType == typeof(SerializableError))
             {
                 return new SerializableErrorWrapperProvider();

@@ -53,8 +53,13 @@ namespace Microsoft.AspNet.Mvc
         };
 
         /// <inheritdoc />
-        public virtual IDictionary<string, object> LoadTempData([NotNull] HttpContext context)
+        public virtual IDictionary<string, object> LoadTempData(HttpContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             if (!IsSessionEnabled(context))
             {
                 // Session middleware is not enabled. No-op
@@ -151,8 +156,13 @@ namespace Microsoft.AspNet.Mvc
         }
 
         /// <inheritdoc />
-        public virtual void SaveTempData([NotNull] HttpContext context, IDictionary<string, object> values)
+        public virtual void SaveTempData(HttpContext context, IDictionary<string, object> values)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var hasValues = (values != null && values.Count > 0);
             if (hasValues)
             {

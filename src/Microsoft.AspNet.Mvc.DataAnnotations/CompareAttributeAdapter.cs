@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -10,14 +11,23 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Validation
 {
     public class CompareAttributeAdapter : DataAnnotationsClientModelValidator<CompareAttribute>
     {
-        public CompareAttributeAdapter([NotNull] CompareAttribute attribute)
+        public CompareAttributeAdapter(CompareAttribute attribute)
             : base(new CompareAttributeWrapper(attribute))
         {
+            if (attribute == null)
+            {
+                throw new ArgumentNullException(nameof(attribute));
+            }
         }
 
         public override IEnumerable<ModelClientValidationRule> GetClientValidationRules(
-            [NotNull] ClientModelValidationContext context)
+            ClientModelValidationContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var errorMessage = ((CompareAttributeWrapper)Attribute).FormatErrorMessage(context);
             var clientRule = new ModelClientValidationEqualToRule(errorMessage,
                                                             FormatPropertyForClientValidation(Attribute.OtherProperty));

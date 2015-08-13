@@ -29,8 +29,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         }
 
         /// <inheritdoc />
-        public string Get([NotNull] ViewLocationExpanderContext context)
+        public string Get(ViewLocationExpanderContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var cacheKey = GenerateKey(context);
             string result;
             _cache.TryGetValue(cacheKey, out result);
@@ -38,9 +43,19 @@ namespace Microsoft.AspNet.Mvc.Razor
         }
 
         /// <inheritdoc />
-        public void Set([NotNull] ViewLocationExpanderContext context,
-                        [NotNull] string value)
+        public void Set(ViewLocationExpanderContext context,
+                        string value)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             var cacheKey = GenerateKey(context);
             _cache.TryAdd(cacheKey, value);
         }

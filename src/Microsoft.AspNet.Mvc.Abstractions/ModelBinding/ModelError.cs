@@ -8,14 +8,23 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
 {
     public class ModelError
     {
-        public ModelError([NotNull]Exception exception)
+        public ModelError(Exception exception)
             : this(exception, errorMessage: null)
         {
+            if (exception == null)
+            {
+                throw new ArgumentNullException(nameof(exception));
+            }
         }
 
-        public ModelError([NotNull]Exception exception, string errorMessage)
+        public ModelError(Exception exception, string errorMessage)
             : this(errorMessage)
         {
+            if (exception == null)
+            {
+                throw new ArgumentNullException(nameof(exception));
+            }
+
             Exception = exception;
         }
 

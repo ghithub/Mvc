@@ -1,6 +1,7 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -27,8 +28,18 @@ namespace Microsoft.AspNet.Mvc.Localization
         /// </summary>
         /// <param name="localizer">The <see cref="IStringLocalizer"/> to read strings from.</param>
         /// <param name="encoder">The <see cref="IHtmlEncoder"/>.</param>
-        public HtmlLocalizer([NotNull] IStringLocalizer localizer, [NotNull] IHtmlEncoder encoder)
+        public HtmlLocalizer(IStringLocalizer localizer, IHtmlEncoder encoder)
         {
+            if (localizer == null)
+            {
+                throw new ArgumentNullException(nameof(localizer));
+            }
+
+            if (encoder == null)
+            {
+                throw new ArgumentNullException(nameof(encoder));
+            }
+
             _localizer = localizer;
             _encoder = encoder;
         }
@@ -45,7 +56,7 @@ namespace Microsoft.AspNet.Mvc.Localization
         /// </summary>
         /// <param name="culture">The <see cref="CultureInfo"/> to use.</param>
         /// <returns>A culture-specific <see cref="IHtmlLocalizer"/>.</returns>
-        public virtual IHtmlLocalizer WithCulture([NotNull] CultureInfo culture) =>
+        public virtual IHtmlLocalizer WithCulture(CultureInfo culture) =>
             new HtmlLocalizer(_localizer.WithCulture(culture), _encoder);
 
         /// <summary>
@@ -53,13 +64,13 @@ namespace Microsoft.AspNet.Mvc.Localization
         /// </summary>
         /// <param name="culture">The <see cref="CultureInfo"/> to use.</param>
         /// <returns>A culture-specific <see cref="IStringLocalizer"/>.</returns>
-        IStringLocalizer IStringLocalizer.WithCulture([NotNull] CultureInfo culture) => WithCulture(culture);
+        IStringLocalizer IStringLocalizer.WithCulture(CultureInfo culture) => WithCulture(culture);
 
         /// <inheritdoc />
-        public virtual LocalizedString GetString([NotNull] string key) => _localizer.GetString(key);
+        public virtual LocalizedString GetString(string key) => _localizer.GetString(key);
 
         /// <inheritdoc />
-        public virtual LocalizedString GetString([NotNull] string key, params object[] arguments) =>
+        public virtual LocalizedString GetString(string key, params object[] arguments) =>
             _localizer.GetString(key, arguments);
 
         /// <inheritdoc />
@@ -67,11 +78,16 @@ namespace Microsoft.AspNet.Mvc.Localization
             _localizer.GetAllStrings(includeAncestorCultures);
 
         /// <inheritdoc />
-        public virtual LocalizedHtmlString Html([NotNull] string key) => ToHtmlString(_localizer.GetString(key));
+        public virtual LocalizedHtmlString Html(string key) => ToHtmlString(_localizer.GetString(key));
 
         /// <inheritdoc />
-        public virtual LocalizedHtmlString Html([NotNull] string key, params object[] arguments)
+        public virtual LocalizedHtmlString Html(string key, params object[] arguments)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
             var stringValue = _localizer[key].Value;
 
             return ToHtmlString(new LocalizedString(key, EncodeArguments(stringValue, arguments)));
@@ -90,8 +106,18 @@ namespace Microsoft.AspNet.Mvc.Localization
         /// <param name="resourceString">The resourceString whose arguments need to be encoded.</param>
         /// <param name="arguments">The array of objects to encode.</param>
         /// <returns>The string with encoded arguments.</returns>
-        protected virtual string EncodeArguments([NotNull] string resourceString, [NotNull] object[] arguments)
+        protected virtual string EncodeArguments(string resourceString, object[] arguments)
         {
+            if (resourceString == null)
+            {
+                throw new ArgumentNullException(nameof(resourceString));
+            }
+
+            if (arguments == null)
+            {
+                throw new ArgumentNullException(nameof(arguments));
+            }
+
             var position = 0;
             var length = resourceString.Length;
             char currentCharacter;

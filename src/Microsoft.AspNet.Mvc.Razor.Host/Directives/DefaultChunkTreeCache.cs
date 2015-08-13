@@ -41,9 +41,19 @@ namespace Microsoft.AspNet.Mvc.Razor.Directives
 
         /// <inheritdoc />
         public ChunkTree GetOrAdd(
-            [NotNull] string pagePath,
-            [NotNull] Func<IFileInfo, ChunkTree> getChunkTree)
+            string pagePath,
+            Func<IFileInfo, ChunkTree> getChunkTree)
         {
+            if (pagePath == null)
+            {
+                throw new ArgumentNullException(nameof(pagePath));
+            }
+
+            if (getChunkTree == null)
+            {
+                throw new ArgumentNullException(nameof(getChunkTree));
+            }
+
             ChunkTree chunkTree;
             if (!_chunkTreeCache.TryGetValue(pagePath, out chunkTree))
             {

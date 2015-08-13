@@ -68,8 +68,18 @@ namespace Microsoft.AspNet.Mvc.Razor.Compilation
         }
 
         /// <inheritdoc />
-        public CompilationResult Compile([NotNull] RelativeFileInfo fileInfo, [NotNull] string compilationContent)
+        public CompilationResult Compile(RelativeFileInfo fileInfo, string compilationContent)
         {
+            if (fileInfo == null)
+            {
+                throw new ArgumentNullException(nameof(fileInfo));
+            }
+
+            if (compilationContent == null)
+            {
+                throw new ArgumentNullException(nameof(compilationContent));
+            }
+
             var assemblyName = Path.GetRandomFileName();
             var compilationSettings = _compilerOptionsProvider.GetCompilationSettings(_environment);
             var syntaxTree = SyntaxTreeGenerator.Generate(compilationContent,

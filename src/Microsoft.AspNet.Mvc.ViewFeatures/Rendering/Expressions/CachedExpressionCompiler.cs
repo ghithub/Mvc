@@ -17,8 +17,13 @@ namespace Microsoft.AspNet.Mvc.Rendering.Expressions
         // If the provided expression is particularly obscure and the system doesn't know
         // how to handle it, we'll just compile the expression as normal.
         public static Func<TModel, TResult> Process<TModel, TResult>(
-            [NotNull] Expression<Func<TModel, TResult>> expression)
+            Expression<Func<TModel, TResult>> expression)
         {
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return Compiler<TModel, TResult>.Compile(expression);
         }
 
@@ -32,8 +37,13 @@ namespace Microsoft.AspNet.Mvc.Rendering.Expressions
             private static readonly ConcurrentDictionary<MemberInfo, Func<object, TResult>> _constMemberAccessCache =
                 new ConcurrentDictionary<MemberInfo, Func<object, TResult>>();
 
-            public static Func<TModel, TResult> Compile([NotNull] Expression<Func<TModel, TResult>> expression)
+            public static Func<TModel, TResult> Compile(Expression<Func<TModel, TResult>> expression)
             {
+                if (expression == null)
+                {
+                    throw new ArgumentNullException(nameof(expression));
+                }
+
                 return CompileFromIdentityFunc(expression)
                        ?? CompileFromConstLookup(expression)
                        ?? CompileFromMemberAccess(expression)
@@ -41,8 +51,13 @@ namespace Microsoft.AspNet.Mvc.Rendering.Expressions
             }
 
             private static Func<TModel, TResult> CompileFromConstLookup(
-                [NotNull] Expression<Func<TModel, TResult>> expression)
+                Expression<Func<TModel, TResult>> expression)
             {
+                if (expression == null)
+                {
+                    throw new ArgumentNullException(nameof(expression));
+                }
+
                 var constantExpression = expression.Body as ConstantExpression;
                 if (constantExpression != null)
                 {
@@ -56,8 +71,13 @@ namespace Microsoft.AspNet.Mvc.Rendering.Expressions
             }
 
             private static Func<TModel, TResult> CompileFromIdentityFunc(
-                [NotNull] Expression<Func<TModel, TResult>> expression)
+                Expression<Func<TModel, TResult>> expression)
             {
+                if (expression == null)
+                {
+                    throw new ArgumentNullException(nameof(expression));
+                }
+
                 if (expression.Body == expression.Parameters[0])
                 {
                     // model => model
@@ -75,8 +95,13 @@ namespace Microsoft.AspNet.Mvc.Rendering.Expressions
             }
 
             private static Func<TModel, TResult> CompileFromMemberAccess(
-                [NotNull] Expression<Func<TModel, TResult>> expression)
+                Expression<Func<TModel, TResult>> expression)
             {
+                if (expression == null)
+                {
+                    throw new ArgumentNullException(nameof(expression));
+                }
+
                 // Performance tests show that on the x64 platform, special-casing static member and
                 // captured local variable accesses is faster than letting the fingerprinting system
                 // handle them. On the x86 platform, the fingerprinting system is faster, but only
@@ -118,8 +143,13 @@ namespace Microsoft.AspNet.Mvc.Rendering.Expressions
                 return null;
             }
 
-            private static Func<TModel, TResult> CompileSlow([NotNull] Expression<Func<TModel, TResult>> expression)
+            private static Func<TModel, TResult> CompileSlow(Expression<Func<TModel, TResult>> expression)
             {
+                if (expression == null)
+                {
+                    throw new ArgumentNullException(nameof(expression));
+                }
+
                 // fallback compilation system - just compile the expression directly
                 return expression.Compile();
             }

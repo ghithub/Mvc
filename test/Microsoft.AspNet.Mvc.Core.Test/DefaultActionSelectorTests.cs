@@ -812,8 +812,13 @@ namespace Microsoft.AspNet.Mvc
 
             public int Order { get; set; }
 
-            public bool Accept([NotNull]ActionConstraintContext context)
+            public bool Accept(ActionConstraintContext context)
             {
+                if (context == null)
+                {
+                    throw new ArgumentNullException(nameof(context));
+                }
+
                 return Pass;
             }
         }

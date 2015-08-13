@@ -11,8 +11,18 @@ namespace Microsoft.AspNet.Mvc.Razor.Precompilation
 {
     public static class RazorErrorExtensions
     {
-        public static Diagnostic ToDiagnostics([NotNull] this RazorError error, [NotNull] string filePath)
+        public static Diagnostic ToDiagnostics(this RazorError error, string filePath)
         {
+            if (error == null)
+            {
+                throw new ArgumentNullException(nameof(error));
+            }
+
+            if (filePath == null)
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
+
             var descriptor = new DiagnosticDescriptor(
                 id: "Razor",
                 title: "Razor parsing error",

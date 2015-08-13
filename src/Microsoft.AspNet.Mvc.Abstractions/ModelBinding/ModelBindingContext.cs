@@ -35,10 +35,25 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// <param name="modelMetadata">Model metadata of associated with the new <see cref="ModelBindingContext"/>.
         /// </param>
         public static ModelBindingContext GetChildModelBindingContext(
-            [NotNull] ModelBindingContext bindingContext,
-            [NotNull] string modelName,
-            [NotNull] ModelMetadata modelMetadata)
+            ModelBindingContext bindingContext,
+            string modelName,
+            ModelMetadata modelMetadata)
         {
+            if (bindingContext == null)
+            {
+                throw new ArgumentNullException(nameof(bindingContext));
+            }
+
+            if (modelName == null)
+            {
+                throw new ArgumentNullException(nameof(modelName));
+            }
+
+            if (modelMetadata == null)
+            {
+                throw new ArgumentNullException(nameof(modelMetadata));
+            }
+
             var modelBindingContext = new ModelBindingContext
             {
                 ModelName = modelName,
@@ -65,10 +80,15 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// <param name="modelName">An optional name of the model to be used.</param>
         /// <returns>A new instance of <see cref="ModelBindingContext"/>.</returns>
         public static ModelBindingContext GetModelBindingContext(
-            [NotNull] ModelMetadata metadata,
+            ModelMetadata metadata,
             BindingInfo bindingInfo,
             string modelName)
         {
+            if (metadata == null)
+            {
+                throw new ArgumentNullException(nameof(metadata));
+            }
+
             var binderModelName = bindingInfo?.BinderModelName ?? metadata.BinderModelName;
             var propertyPredicateProvider =
                 bindingInfo?.PropertyBindingPredicateProvider ?? metadata.PropertyBindingPredicateProvider;

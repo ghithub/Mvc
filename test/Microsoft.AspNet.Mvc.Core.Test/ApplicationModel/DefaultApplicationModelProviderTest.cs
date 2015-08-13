@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -728,10 +728,10 @@ namespace Microsoft.AspNet.Mvc.ApplicationModels
 
             // OrderBy is used because the order of the results may very depending on the platform / client.
             var action = Assert.Single(actions, a => a.AttributeRouteModel.Template == "Products");
-            Assert.Equal(new [] { "GET", "POST" }, action.HttpMethods.OrderBy(key => key, StringComparer.Ordinal));
+            Assert.Equal(new[] { "GET", "POST" }, action.HttpMethods.OrderBy(key => key, StringComparer.Ordinal));
 
             action = Assert.Single(actions, a => a.AttributeRouteModel.Template == "v2/Products");
-            Assert.Equal(new [] { "GET", "POST" }, action.HttpMethods.OrderBy(key => key, StringComparer.Ordinal));
+            Assert.Equal(new[] { "GET", "POST" }, action.HttpMethods.OrderBy(key => key, StringComparer.Ordinal));
         }
 
         [Fact]
@@ -1173,35 +1173,73 @@ namespace Microsoft.AspNet.Mvc.ApplicationModels
         public class SomeFiltersController : IAsyncActionFilter, IResultFilter
         {
             public Task OnActionExecutionAsync(
-                [NotNull] ActionExecutingContext context,
-                [NotNull] ActionExecutionDelegate next)
+                ActionExecutingContext context,
+                ActionExecutionDelegate next)
             {
+                if (context == null)
+                {
+                    throw new ArgumentNullException(nameof(context));
+                }
+
+                if (next == null)
+                {
+                    throw new ArgumentNullException(nameof(next));
+                }
+
                 return null;
             }
 
-            public void OnResultExecuted([NotNull] ResultExecutedContext context)
+            public void OnResultExecuted(ResultExecutedContext context)
             {
+                if (context == null)
+                {
+                    throw new ArgumentNullException(nameof(context));
+                }
             }
 
-            public void OnResultExecuting([NotNull]ResultExecutingContext context)
+            public void OnResultExecuting(ResultExecutingContext context)
             {
+                if (context == null)
+                {
+                    throw new ArgumentNullException(nameof(context));
+                }
             }
         }
 
         private class UnsupportedFiltersController : IExceptionFilter, IAuthorizationFilter, IAsyncResourceFilter
         {
-            public void OnAuthorization([NotNull]AuthorizationContext context)
+            public void OnAuthorization(AuthorizationContext context)
             {
+                if (context == null)
+                {
+                    throw new ArgumentNullException(nameof(context));
+                }
+
                 throw new NotImplementedException();
             }
 
-            public void OnException([NotNull]ExceptionContext context)
+            public void OnException(ExceptionContext context)
             {
+                if (context == null)
+                {
+                    throw new ArgumentNullException(nameof(context));
+                }
+
                 throw new NotImplementedException();
             }
 
-            public Task OnResourceExecutionAsync([NotNull]ResourceExecutingContext context, [NotNull]ResourceExecutionDelegate next)
+            public Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
             {
+                if (context == null)
+                {
+                    throw new ArgumentNullException(nameof(context));
+                }
+
+                if (next == null)
+                {
+                    throw new ArgumentNullException(nameof(next));
+                }
+
                 throw new NotImplementedException();
             }
         }

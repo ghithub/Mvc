@@ -27,7 +27,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
 
         public IDictionary<string, string> Attributes { get; private set; }
 
-        public IHtmlContent InnerHtml { get; [param: NotNull] set; } = HtmlString.Empty;
+        public IHtmlContent InnerHtml { get; set; } = HtmlString.Empty;
 
         public string TagName { get; private set; }
 
@@ -57,8 +57,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// Valid HTML 4.01 "id" attribute for an element with the given <paramref name="name"/>.
         /// </returns>
         /// <remarks>Valid "id" attributes are defined in http://www.w3.org/TR/html401/types.html#type-id</remarks>
-        public static string CreateSanitizedId(string name, [NotNull] string invalidCharReplacement)
+        public static string CreateSanitizedId(string name, string invalidCharReplacement)
         {
+            if (invalidCharReplacement == null)
+            {
+                throw new ArgumentNullException(nameof(invalidCharReplacement));
+            }
+
             if (string.IsNullOrEmpty(name))
             {
                 return string.Empty;
@@ -113,8 +118,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
             return stringBuffer.ToString();
         }
 
-        public void GenerateId(string name, [NotNull] string idAttributeDotReplacement)
+        public void GenerateId(string name, string idAttributeDotReplacement)
         {
+            if (idAttributeDotReplacement == null)
+            {
+                throw new ArgumentNullException(nameof(idAttributeDotReplacement));
+            }
+
             if (!Attributes.ContainsKey("id"))
             {
                 var sanitizedId = CreateSanitizedId(name, idAttributeDotReplacement);

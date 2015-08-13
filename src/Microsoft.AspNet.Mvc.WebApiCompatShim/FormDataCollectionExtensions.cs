@@ -80,8 +80,13 @@ namespace Microsoft.AspNet.Mvc.WebApiCompatShim
         }
 
         public static IEnumerable<KeyValuePair<string, string>> GetJQueryNameValuePairs(
-            [NotNull] this FormDataCollection formData)
+            this FormDataCollection formData)
         {
+            if (formData == null)
+            {
+                throw new ArgumentNullException(nameof(formData));
+            }
+
             var count = 0;
 
             foreach (var kv in formData)

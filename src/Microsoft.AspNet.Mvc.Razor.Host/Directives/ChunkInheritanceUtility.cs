@@ -30,10 +30,25 @@ namespace Microsoft.AspNet.Mvc.Razor.Directives
         /// </param>
         /// <param name="defaultInheritedChunks">Sequence of <see cref="Chunk"/>s inherited by default.</param>
         public ChunkInheritanceUtility(
-            [NotNull] MvcRazorHost razorHost,
-            [NotNull] IChunkTreeCache chunkTreeCache,
-            [NotNull] IReadOnlyList<Chunk> defaultInheritedChunks)
+            MvcRazorHost razorHost,
+            IChunkTreeCache chunkTreeCache,
+            IReadOnlyList<Chunk> defaultInheritedChunks)
         {
+            if (razorHost == null)
+            {
+                throw new ArgumentNullException(nameof(razorHost));
+            }
+
+            if (chunkTreeCache == null)
+            {
+                throw new ArgumentNullException(nameof(chunkTreeCache));
+            }
+
+            if (defaultInheritedChunks == null)
+            {
+                throw new ArgumentNullException(nameof(defaultInheritedChunks));
+            }
+
             _razorHost = razorHost;
             _defaultInheritedChunks = defaultInheritedChunks;
             _chunkTreeCache = chunkTreeCache;
@@ -48,8 +63,13 @@ namespace Microsoft.AspNet.Mvc.Razor.Directives
         /// <param name="pagePath">The path of the page to locate inherited chunks for.</param>
         /// <returns>A <see cref="IReadOnlyList{ChunkTree}"/> of parsed <c>_ViewImports</c>
         /// <see cref="ChunkTree"/>s.</returns>
-        public virtual IReadOnlyList<ChunkTree> GetInheritedChunkTrees([NotNull] string pagePath)
+        public virtual IReadOnlyList<ChunkTree> GetInheritedChunkTrees(string pagePath)
         {
+            if (pagePath == null)
+            {
+                throw new ArgumentNullException(nameof(pagePath));
+            }
+
             var inheritedChunkTrees = new List<ChunkTree>();
             var templateEngine = new RazorTemplateEngine(_razorHost);
             foreach (var viewImportsPath in ViewHierarchyUtility.GetViewImportsLocations(pagePath))
@@ -83,10 +103,20 @@ namespace Microsoft.AspNet.Mvc.Razor.Directives
         /// files.</param>
         /// <param name="defaultModel">The list of chunks to merge.</param>
         public void MergeInheritedChunkTrees(
-            [NotNull] ChunkTree chunkTree,
-            [NotNull] IReadOnlyList<ChunkTree> inheritedChunkTrees,
+            ChunkTree chunkTree,
+            IReadOnlyList<ChunkTree> inheritedChunkTrees,
             string defaultModel)
         {
+            if (chunkTree == null)
+            {
+                throw new ArgumentNullException(nameof(chunkTree));
+            }
+
+            if (inheritedChunkTrees == null)
+            {
+                throw new ArgumentNullException(nameof(inheritedChunkTrees));
+            }
+
             var mergerMappings = GetMergerMappings(chunkTree, defaultModel);
             IChunkMerger merger;
 

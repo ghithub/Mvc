@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -21,8 +21,13 @@ namespace Microsoft.Framework.DependencyInjection
 {
     public static class MvcCoreServiceCollectionExtensions
     {
-        public static IMvcBuilder AddMvcCore([NotNull] this IServiceCollection services)
+        public static IMvcBuilder AddMvcCore(this IServiceCollection services)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
             ConfigureDefaultServices(services);
 
             AddMvcCoreServices(services);
@@ -31,9 +36,19 @@ namespace Microsoft.Framework.DependencyInjection
         }
 
         public static IMvcBuilder AddMvcCore(
-            [NotNull] this IServiceCollection services,
-            [NotNull] Action<MvcOptions> setupAction)
+            this IServiceCollection services,
+            Action<MvcOptions> setupAction)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            if (setupAction == null)
+            {
+                throw new ArgumentNullException(nameof(setupAction));
+            }
+
             ConfigureDefaultServices(services);
 
             AddMvcCoreServices(services);
@@ -49,9 +64,19 @@ namespace Microsoft.Framework.DependencyInjection
         /// <param name="services">The services available in the application.</param>
         /// <param name="setupAction">The <see cref="MvcOptions"/> which need to be configured.</param>
         public static void ConfigureMvc(
-            [NotNull] this IServiceCollection services,
-            [NotNull] Action<MvcOptions> setupAction)
+            this IServiceCollection services,
+            Action<MvcOptions> setupAction)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            if (setupAction == null)
+            {
+                throw new ArgumentNullException(nameof(setupAction));
+            }
+
             services.Configure(setupAction);
         }
 
@@ -77,7 +102,7 @@ namespace Microsoft.Framework.DependencyInjection
             services.TryAddEnumerable(
                 ServiceDescriptor.Transient<IActionDescriptorProvider, ControllerActionDescriptorProvider>());
             services.TryAddSingleton<IActionDescriptorsCollectionProvider, DefaultActionDescriptorsCollectionProvider>();
-            
+
             //
             // Action Selection
             //

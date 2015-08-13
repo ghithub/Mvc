@@ -63,8 +63,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
         {
             private Dictionary<string, int> _ordering = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
-            public ErrorsOrderer([NotNull] ModelMetadata metadata)
+            public ErrorsOrderer(ModelMetadata metadata)
             {
+                if (metadata == null)
+                {
+                    throw new ArgumentNullException(nameof(metadata));
+                }
+
                 foreach (var data in metadata.Properties)
                 {
                     _ordering[data.PropertyName] = data.Order;

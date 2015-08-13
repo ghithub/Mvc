@@ -13,8 +13,13 @@ namespace Microsoft.Framework.DependencyInjection
 {
     public static class MvcServiceCollectionExtensions
     {
-        public static IServiceCollection AddMvc([NotNull] this IServiceCollection services)
+        public static IServiceCollection AddMvc(this IServiceCollection services)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
             var builder = services.AddMvcCore();
 
             builder.AddApiExplorer();
@@ -35,9 +40,19 @@ namespace Microsoft.Framework.DependencyInjection
         /// <param name="services">The services available in the application.</param>
         /// <param name="setupAction">The <see cref="MvcViewOptions"/> which need to be configured.</param>
         public static void ConfigureMvcViews(
-            [NotNull] this IServiceCollection services,
-            [NotNull] Action<MvcViewOptions> setupAction)
+            this IServiceCollection services,
+            Action<MvcViewOptions> setupAction)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            if (setupAction == null)
+            {
+                throw new ArgumentNullException(nameof(setupAction));
+            }
+
             services.Configure(setupAction);
         }
 
@@ -47,9 +62,19 @@ namespace Microsoft.Framework.DependencyInjection
         /// <param name="services">The services available in the application.</param>
         /// <param name="setupAction">The <see cref="MvcJsonOptions"/> which need to be configured.</param>
         public static void ConfigureMvcJson(
-            [NotNull] this IServiceCollection services,
-            [NotNull] Action<MvcJsonOptions> setupAction)
+            this IServiceCollection services,
+            Action<MvcJsonOptions> setupAction)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            if (setupAction == null)
+            {
+                throw new ArgumentNullException(nameof(setupAction));
+            }
+
             services.Configure(setupAction);
         }
 
@@ -62,9 +87,19 @@ namespace Microsoft.Framework.DependencyInjection
         /// <paramref name="services"/> and used for controller discovery.</param>
         /// <returns>The <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection WithControllersAsServices(
-           [NotNull] this IServiceCollection services,
-           [NotNull] IEnumerable<Type> controllerTypes)
+           this IServiceCollection services,
+           IEnumerable<Type> controllerTypes)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            if (controllerTypes == null)
+            {
+                throw new ArgumentNullException(nameof(controllerTypes));
+            }
+
             var controllerTypeProvider = new FixedSetControllerTypeProvider();
             foreach (var type in controllerTypes)
             {
@@ -86,9 +121,19 @@ namespace Microsoft.Framework.DependencyInjection
         /// <param name="controllerAssemblies">Assemblies to scan.</param>
         /// <returns>The <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection WithControllersAsServices(
-            [NotNull] this IServiceCollection services,
-            [NotNull] IEnumerable<Assembly> controllerAssemblies)
+            this IServiceCollection services,
+            IEnumerable<Assembly> controllerAssemblies)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            if (controllerAssemblies == null)
+            {
+                throw new ArgumentNullException(nameof(controllerAssemblies));
+            }
+
             var assemblyProvider = new FixedSetAssemblyProvider();
             foreach (var assembly in controllerAssemblies)
             {

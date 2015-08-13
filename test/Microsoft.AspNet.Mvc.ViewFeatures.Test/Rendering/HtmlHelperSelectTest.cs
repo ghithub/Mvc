@@ -379,7 +379,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
 
             // Act & Assert
             var ex = Assert.Throws<ArgumentException>(
-                "expression", 
+                "expression",
                 () => helper.DropDownList(null, selectList: null, optionLabel: null, htmlAttributes: null));
             Assert.Equal(expected, ex.Message);
         }
@@ -1561,7 +1561,7 @@ namespace Microsoft.AspNet.Mvc.Rendering
 
         private class TestHtmlHelper : HtmlHelper
         {
-            public TestHtmlHelper([NotNull] IModelMetadataProvider metadataProvider)
+            public TestHtmlHelper(IModelMetadataProvider metadataProvider)
                 : base(
                       new Mock<IHtmlGenerator>(MockBehavior.Strict).Object,
                       new Mock<ICompositeViewEngine>(MockBehavior.Strict).Object,
@@ -1570,6 +1570,10 @@ namespace Microsoft.AspNet.Mvc.Rendering
                       new Mock<IUrlEncoder>(MockBehavior.Strict).Object,
                       new Mock<IJavaScriptStringEncoder>(MockBehavior.Strict).Object)
             {
+                if (metadataProvider == null)
+                {
+                    throw new ArgumentNullException(nameof(metadataProvider));
+                }
             }
 
             public ModelMetadata Metadata { get; private set; }
@@ -1578,8 +1582,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
 
             public IEnumerable<SelectListItem> CopiedSelectListItems { get; private set; }
 
-            protected override IEnumerable<SelectListItem> GetEnumSelectList([NotNull] ModelMetadata metadata)
+            protected override IEnumerable<SelectListItem> GetEnumSelectList(ModelMetadata metadata)
             {
+                if (metadata == null)
+                {
+                    throw new ArgumentNullException(nameof(metadata));
+                }
+
                 Metadata = metadata;
                 SelectListItems = base.GetEnumSelectList(metadata);
                 if (SelectListItems != null)

@@ -24,8 +24,18 @@ namespace Microsoft.AspNet.Mvc
         /// </summary>
         /// <param name="context">The <see cref="IHttpContextAccessor"/> that provides the HttpContext.</param>
         /// <param name="provider">The <see cref="ITempDataProvider"/> used to Load and Save data.</param>
-        public TempDataDictionary([NotNull] IHttpContextAccessor context, [NotNull] ITempDataProvider provider)
+        public TempDataDictionary(IHttpContextAccessor context, ITempDataProvider provider)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+
             _provider = provider;
             _loaded = false;
             _contextAccessor = context;

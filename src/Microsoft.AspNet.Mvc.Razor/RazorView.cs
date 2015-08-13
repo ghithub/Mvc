@@ -66,8 +66,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         }
 
         /// <inheritdoc />
-        public virtual async Task RenderAsync([NotNull] ViewContext context)
+        public virtual async Task RenderAsync(ViewContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             _pageExecutionFeature = context.HttpContext.GetFeature<IPageExecutionListenerFeature>();
 
             // Partials don't execute _ViewStart pages, but may execute Layout pages if the Layout property

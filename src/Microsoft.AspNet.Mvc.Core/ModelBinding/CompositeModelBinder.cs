@@ -25,16 +25,26 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// Initializes a new instance of the CompositeModelBinder class.
         /// </summary>
         /// <param name="modelBinders">A collection of <see cref="IModelBinder"/> instances.</param>
-        public CompositeModelBinder([NotNull] IEnumerable<IModelBinder> modelBinders)
+        public CompositeModelBinder(IEnumerable<IModelBinder> modelBinders)
         {
+            if (modelBinders == null)
+            {
+                throw new ArgumentNullException(nameof(modelBinders));
+            }
+
             ModelBinders = new List<IModelBinder>(modelBinders);
         }
 
         /// <inheritdoc />
         public IReadOnlyList<IModelBinder> ModelBinders { get; }
 
-        public virtual async Task<ModelBindingResult> BindModelAsync([NotNull] ModelBindingContext bindingContext)
+        public virtual async Task<ModelBindingResult> BindModelAsync(ModelBindingContext bindingContext)
         {
+            if (bindingContext == null)
+            {
+                throw new ArgumentNullException(nameof(bindingContext));
+            }
+
             // Will there be a last chance (fallback) binding attempt?
             var isFirstChanceBinding = bindingContext.FallbackToEmptyPrefix &&
                 !string.IsNullOrEmpty(bindingContext.ModelName);

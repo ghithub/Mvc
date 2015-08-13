@@ -37,8 +37,13 @@ namespace Microsoft.AspNet.Mvc.TagHelpers.Internal
         /// <param name="fileProvider">The file provider.</param>
         /// <param name="cache">The cache.</param>
         /// <param name="requestPathBase">The request path base.</param>
-        public GlobbingUrlBuilder([NotNull] IFileProvider fileProvider, IMemoryCache cache, PathString requestPathBase)
+        public GlobbingUrlBuilder(IFileProvider fileProvider, IMemoryCache cache, PathString requestPathBase)
         {
+            if (fileProvider == null)
+            {
+                throw new ArgumentNullException(nameof(fileProvider));
+            }
+
             FileProvider = fileProvider;
             Cache = cache;
             RequestPathBase = requestPathBase;

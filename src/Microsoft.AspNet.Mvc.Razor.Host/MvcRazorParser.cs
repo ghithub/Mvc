@@ -33,12 +33,32 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// <param name="defaultInheritedChunks">The <see cref="IReadOnlyList{Chunk}"/> inherited by
         /// default by all Razor pages in the application.</param>
         public MvcRazorParser(
-            [NotNull] RazorParser parser,
-            [NotNull] IReadOnlyList<ChunkTree> inheritedChunkTrees,
-            [NotNull] IReadOnlyList<Chunk> defaultInheritedChunks,
-            [NotNull] string modelExpressionTypeName)
+            RazorParser parser,
+            IReadOnlyList<ChunkTree> inheritedChunkTrees,
+            IReadOnlyList<Chunk> defaultInheritedChunks,
+            string modelExpressionTypeName)
             : base(parser)
         {
+            if (parser == null)
+            {
+                throw new ArgumentNullException(nameof(parser));
+            }
+
+            if (inheritedChunkTrees == null)
+            {
+                throw new ArgumentNullException(nameof(inheritedChunkTrees));
+            }
+
+            if (defaultInheritedChunks == null)
+            {
+                throw new ArgumentNullException(nameof(defaultInheritedChunks));
+            }
+
+            if (modelExpressionTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(modelExpressionTypeName));
+            }
+
             // Construct tag helper descriptors from @addTagHelper, @removeTagHelper and @tagHelperPrefix chunks
             _viewImportsDirectiveDescriptors = GetTagHelperDirectiveDescriptors(
                 inheritedChunkTrees,
@@ -49,9 +69,19 @@ namespace Microsoft.AspNet.Mvc.Razor
 
         /// <inheritdoc />
         protected override IEnumerable<TagHelperDescriptor> GetTagHelperDescriptors(
-            [NotNull] Block documentRoot,
-            [NotNull] ErrorSink errorSink)
+            Block documentRoot,
+            ErrorSink errorSink)
         {
+            if (documentRoot == null)
+            {
+                throw new ArgumentNullException(nameof(documentRoot));
+            }
+
+            if (errorSink == null)
+            {
+                throw new ArgumentNullException(nameof(errorSink));
+            }
+
             var visitor = new ViewImportsTagHelperDirectiveSpanVisitor(
                 TagHelperDescriptorResolver,
                 _viewImportsDirectiveDescriptors,

@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using Microsoft.Framework.Internal;
 
@@ -18,9 +19,17 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// entries.</param>
         /// <param name="modelMetadata">The <see cref="ModelMetadata"/> for the <paramref name="model"/>.</param>
         /// <param name="model">The model object which is to be validated.</param>
-        public ModelValidationNode([NotNull] string key, [NotNull] ModelMetadata modelMetadata, object model)
-            : this (key, modelMetadata, model, new List<ModelValidationNode>())
+        public ModelValidationNode(string key, ModelMetadata modelMetadata, object model)
+            : this(key, modelMetadata, model, new List<ModelValidationNode>())
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (modelMetadata == null)
+            {
+                throw new ArgumentNullException(nameof(modelMetadata));
+            }
         }
 
         /// <summary>
@@ -32,11 +41,26 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// <param name="model">The model object which will be validated.</param>
         /// <param name="childNodes">A collection of child nodes.</param>
         public ModelValidationNode(
-            [NotNull] string key,
-            [NotNull] ModelMetadata modelMetadata,
+            string key,
+            ModelMetadata modelMetadata,
             object model,
-            [NotNull] IList<ModelValidationNode> childNodes)
+            IList<ModelValidationNode> childNodes)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            if (modelMetadata == null)
+            {
+                throw new ArgumentNullException(nameof(modelMetadata));
+            }
+
+            if (childNodes == null)
+            {
+                throw new ArgumentNullException(nameof(childNodes));
+            }
+
             Key = key;
             ModelMetadata = modelMetadata;
             ChildNodes = childNodes;

@@ -31,16 +31,31 @@ namespace Microsoft.AspNet.Mvc.Razor.Precompilation
         /// </summary>
         /// <param name="compileContext">The <see cref="BeforeCompileContext"/>.</param>
         /// <param name="loadContext">The <see cref="IAssemblyLoadContext"/>.</param>
-        public PrecompilationTagHelperTypeResolver([NotNull] BeforeCompileContext compileContext,
-                                                   [NotNull] IAssemblyLoadContext loadContext)
+        public PrecompilationTagHelperTypeResolver(BeforeCompileContext compileContext,
+                                                   IAssemblyLoadContext loadContext)
         {
+            if (compileContext == null)
+            {
+                throw new ArgumentNullException(nameof(compileContext));
+            }
+
+            if (loadContext == null)
+            {
+                throw new ArgumentNullException(nameof(loadContext));
+            }
+
             _compileContext = compileContext;
             _loadContext = loadContext;
         }
 
         /// <inheritdoc />
-        protected override IEnumerable<TypeInfo> GetExportedTypes([NotNull] AssemblyName assemblyName)
+        protected override IEnumerable<TypeInfo> GetExportedTypes(AssemblyName assemblyName)
         {
+            if (assemblyName == null)
+            {
+                throw new ArgumentNullException(nameof(assemblyName));
+            }
+
             var compilingAssemblyName = _compileContext.Compilation.AssemblyName;
             if (string.Equals(assemblyName.Name, compilingAssemblyName, StringComparison.Ordinal))
             {

@@ -1,6 +1,7 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.Framework.Internal;
 using Newtonsoft.Json;
 
@@ -24,6 +25,6 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// <param name="value">The value to serialize as JSON.</param>
         /// <param name="serializerSettings">The <see cref="JsonSerializerSettings"/> to be used by the serializer.</param>
         /// <returns>A new <see cref="HtmlString"/> containing the serialized JSON.</returns>
-        HtmlString Serialize(object value, [NotNull] JsonSerializerSettings serializerSettings);
+        HtmlString Serialize(object value, JsonSerializerSettings serializerSettings);
     }
 }

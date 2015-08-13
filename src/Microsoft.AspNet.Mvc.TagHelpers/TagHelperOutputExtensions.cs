@@ -27,10 +27,25 @@ namespace Microsoft.AspNet.Mvc.TagHelpers
         /// <see cref="TagHelperOutput.Attributes"/> does not contain an attribute with the given
         /// <paramref name="attributeName"/>.</remarks>
         public static void CopyHtmlAttribute(
-            [NotNull] this TagHelperOutput tagHelperOutput,
-            [NotNull] string attributeName,
-            [NotNull] TagHelperContext context)
+            this TagHelperOutput tagHelperOutput,
+            string attributeName,
+            TagHelperContext context)
         {
+            if (tagHelperOutput == null)
+            {
+                throw new ArgumentNullException(nameof(tagHelperOutput));
+            }
+
+            if (attributeName == null)
+            {
+                throw new ArgumentNullException(nameof(attributeName));
+            }
+
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             if (!tagHelperOutput.Attributes.ContainsName(attributeName))
             {
                 IEnumerable<IReadOnlyTagHelperAttribute> entries;
@@ -60,9 +75,19 @@ namespace Microsoft.AspNet.Mvc.TagHelpers
         /// <remarks>Existing <see cref="TagHelperOutput.Attributes"/> on the given <paramref name="tagHelperOutput"/>
         /// are not overridden; "class" attributes are merged with spaces.</remarks>
         public static void MergeAttributes(
-            [NotNull] this TagHelperOutput tagHelperOutput,
-            [NotNull] TagBuilder tagBuilder)
+            this TagHelperOutput tagHelperOutput,
+            TagBuilder tagBuilder)
         {
+            if (tagHelperOutput == null)
+            {
+                throw new ArgumentNullException(nameof(tagHelperOutput));
+            }
+
+            if (tagBuilder == null)
+            {
+                throw new ArgumentNullException(nameof(tagBuilder));
+            }
+
             foreach (var attribute in tagBuilder.Attributes)
             {
                 if (!tagHelperOutput.Attributes.ContainsName(attribute.Key))
@@ -92,9 +117,19 @@ namespace Microsoft.AspNet.Mvc.TagHelpers
         /// <param name="tagHelperOutput">The <see cref="TagHelperOutput"/> this method extends.</param>
         /// <param name="attributes">Attributes to remove.</param>
         public static void RemoveRange(
-            [NotNull] this TagHelperOutput tagHelperOutput,
-            [NotNull] IEnumerable<TagHelperAttribute> attributes)
+            this TagHelperOutput tagHelperOutput,
+            IEnumerable<TagHelperAttribute> attributes)
         {
+            if (tagHelperOutput == null)
+            {
+                throw new ArgumentNullException(nameof(tagHelperOutput));
+            }
+
+            if (attributes == null)
+            {
+                throw new ArgumentNullException(nameof(attributes));
+            }
+
             foreach (var attribute in attributes.ToArray())
             {
                 tagHelperOutput.Attributes.Remove(attribute);

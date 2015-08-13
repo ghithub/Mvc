@@ -24,12 +24,37 @@ namespace Microsoft.AspNet.Mvc.Razor.Precompilation
     public class RazorPreCompiler
     {
         public RazorPreCompiler(
-            [NotNull] BeforeCompileContext compileContext,
-            [NotNull] IAssemblyLoadContextAccessor loadContextAccessor,
-            [NotNull] IFileProvider fileProvider,
-            [NotNull] IMemoryCache precompilationCache,
-            [NotNull] CompilationSettings compilationSettings)
+            BeforeCompileContext compileContext,
+            IAssemblyLoadContextAccessor loadContextAccessor,
+            IFileProvider fileProvider,
+            IMemoryCache precompilationCache,
+            CompilationSettings compilationSettings)
         {
+            if (compileContext == null)
+            {
+                throw new ArgumentNullException(nameof(compileContext));
+            }
+
+            if (loadContextAccessor == null)
+            {
+                throw new ArgumentNullException(nameof(loadContextAccessor));
+            }
+
+            if (fileProvider == null)
+            {
+                throw new ArgumentNullException(nameof(fileProvider));
+            }
+
+            if (precompilationCache == null)
+            {
+                throw new ArgumentNullException(nameof(precompilationCache));
+            }
+
+            if (compilationSettings == null)
+            {
+                throw new ArgumentNullException(nameof(compilationSettings));
+            }
+
             CompileContext = compileContext;
             LoadContext = loadContextAccessor.GetLoadContext(GetType().GetTypeInfo().Assembly);
             FileProvider = fileProvider;
@@ -93,7 +118,7 @@ namespace Microsoft.AspNet.Mvc.Razor.Precompilation
                 var file = filesToProcess[index];
 
                 PrecompilationCacheEntry cacheEntry;
-                if(!PreCompilationCache.TryGetValue(file.RelativePath, out cacheEntry))
+                if (!PreCompilationCache.TryGetValue(file.RelativePath, out cacheEntry))
                 {
                     cacheEntry = GetCacheEntry(file);
                     PreCompilationCache.Set(
@@ -131,9 +156,19 @@ namespace Microsoft.AspNet.Mvc.Razor.Precompilation
         }
 
         protected virtual RazorFileInfoCollection GeneratePrecompiledAssembly(
-            [NotNull] IEnumerable<SyntaxTree> syntaxTrees,
-            [NotNull] IEnumerable<RazorFileInfo> razorFileInfos)
+            IEnumerable<SyntaxTree> syntaxTrees,
+            IEnumerable<RazorFileInfo> razorFileInfos)
         {
+            if (syntaxTrees == null)
+            {
+                throw new ArgumentNullException(nameof(syntaxTrees));
+            }
+
+            if (razorFileInfos == null)
+            {
+                throw new ArgumentNullException(nameof(razorFileInfos));
+            }
+
             var resourcePrefix = string.Join(".", CompileContext.Compilation.AssemblyName,
                                                   nameof(RazorPreCompiler),
                                                   Path.GetRandomFileName());
@@ -232,8 +267,13 @@ namespace Microsoft.AspNet.Mvc.Razor.Precompilation
             }
         }
 
-        protected virtual PrecompilationCacheEntry GetCacheEntry([NotNull] RelativeFileInfo fileInfo)
+        protected virtual PrecompilationCacheEntry GetCacheEntry(RelativeFileInfo fileInfo)
         {
+            if (fileInfo == null)
+            {
+                throw new ArgumentNullException(nameof(fileInfo));
+            }
+
             using (var stream = fileInfo.FileInfo.CreateReadStream())
             {
                 var host = GetRazorHost();

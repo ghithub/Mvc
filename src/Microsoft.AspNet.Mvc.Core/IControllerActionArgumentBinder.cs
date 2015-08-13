@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Framework.Internal;
@@ -21,8 +22,8 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="bindingContext">The <see cref="ActionBindingContext"/>.</param>
         /// <param name="controller">The controller object which contains the action.</param>
         Task<IDictionary<string, object>> BindActionArgumentsAsync(
-            [NotNull] ActionContext context, 
-            [NotNull] ActionBindingContext bindingContext,
-            [NotNull] object controller);
+            ActionContext context,
+            ActionBindingContext bindingContext,
+            object controller);
     }
 }

@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Diagnostics;
 using Microsoft.Framework.Internal;
 
@@ -10,14 +11,29 @@ namespace Microsoft.AspNet.Mvc
     [DebuggerDisplay("FilterItem: {Filter}")]
     public class FilterItem
     {
-        public FilterItem([NotNull] FilterDescriptor descriptor)
+        public FilterItem(FilterDescriptor descriptor)
         {
+            if (descriptor == null)
+            {
+                throw new ArgumentNullException(nameof(descriptor));
+            }
+
             Descriptor = descriptor;
         }
 
-        public FilterItem([NotNull] FilterDescriptor descriptor, [NotNull] IFilterMetadata filter)
+        public FilterItem(FilterDescriptor descriptor, IFilterMetadata filter)
             : this(descriptor)
         {
+            if (descriptor == null)
+            {
+                throw new ArgumentNullException(nameof(descriptor));
+            }
+
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
             Filter = filter;
         }
 

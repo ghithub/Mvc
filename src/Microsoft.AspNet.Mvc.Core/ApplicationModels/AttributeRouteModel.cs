@@ -19,16 +19,26 @@ namespace Microsoft.AspNet.Mvc.ApplicationModels
         {
         }
 
-        public AttributeRouteModel([NotNull] IRouteTemplateProvider templateProvider)
+        public AttributeRouteModel(IRouteTemplateProvider templateProvider)
         {
+            if (templateProvider == null)
+            {
+                throw new ArgumentNullException(nameof(templateProvider));
+            }
+
             Attribute = templateProvider;
             Template = templateProvider.Template;
             Order = templateProvider.Order;
             Name = templateProvider.Name;
         }
 
-        public AttributeRouteModel([NotNull] AttributeRouteModel other)
+        public AttributeRouteModel(AttributeRouteModel other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             Attribute = other.Attribute;
             Name = other.Name;
             Order = other.Order;

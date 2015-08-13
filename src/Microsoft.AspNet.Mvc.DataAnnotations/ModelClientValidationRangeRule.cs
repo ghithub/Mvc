@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.Framework.Internal;
 
 namespace Microsoft.AspNet.Mvc.ModelBinding.Validation
@@ -11,11 +12,26 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Validation
         private const string MinValidationParameter = "min";
         private const string MaxValidationParameter = "max";
 
-        public ModelClientValidationRangeRule([NotNull] string errorMessage,
-                                              [NotNull] object minValue,
-                                              [NotNull] object maxValue)
+        public ModelClientValidationRangeRule(string errorMessage,
+                                              object minValue,
+                                              object maxValue)
             : base(RangeValidationType, errorMessage)
         {
+            if (errorMessage == null)
+            {
+                throw new ArgumentNullException(nameof(errorMessage));
+            }
+
+            if (minValue == null)
+            {
+                throw new ArgumentNullException(nameof(minValue));
+            }
+
+            if (maxValue == null)
+            {
+                throw new ArgumentNullException(nameof(maxValue));
+            }
+
             ValidationParameters[MinValidationParameter] = minValue;
             ValidationParameters[MaxValidationParameter] = maxValue;
         }

@@ -19,8 +19,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// </summary>
         /// <param name="modelExplorer">The <see cref="ModelExplorer"/>.</param>
         /// <returns>A simple display string for the model.</returns>
-        public static string GetSimpleDisplayText([NotNull] this ModelExplorer modelExplorer)
+        public static string GetSimpleDisplayText(this ModelExplorer modelExplorer)
         {
+            if (modelExplorer == null)
+            {
+                throw new ArgumentNullException(nameof(modelExplorer));
+            }
+
             if (modelExplorer.Metadata.SimpleDisplayProperty != null)
             {
                 var propertyExplorer = modelExplorer.GetExplorerForProperty(

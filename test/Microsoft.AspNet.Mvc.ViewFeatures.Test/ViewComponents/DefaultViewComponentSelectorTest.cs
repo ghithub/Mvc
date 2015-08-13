@@ -186,8 +186,13 @@ namespace Microsoft.AspNet.Mvc.ViewComponents
 
             public Type[] AllowedTypes { get; private set; }
 
-            protected override bool IsViewComponentType([NotNull] TypeInfo typeInfo)
+            protected override bool IsViewComponentType(TypeInfo typeInfo)
             {
+                if (typeInfo == null)
+                {
+                    throw new ArgumentNullException(nameof(typeInfo));
+                }
+
                 return AllowedTypes.Contains(typeInfo.AsType());
             }
 

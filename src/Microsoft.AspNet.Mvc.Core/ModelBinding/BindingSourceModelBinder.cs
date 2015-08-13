@@ -33,8 +33,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// The <see cref="ModelBinding.BindingSource"/>. Must be a single-source (non-composite) with
         /// <see cref="ModelBinding.BindingSource.IsGreedy"/> equal to <c>true</c>.
         /// </param>
-        protected BindingSourceModelBinder([NotNull] BindingSource bindingSource)
+        protected BindingSourceModelBinder(BindingSource bindingSource)
         {
+            if (bindingSource == null)
+            {
+                throw new ArgumentNullException(nameof(bindingSource));
+            }
+
             // This class implements a pattern that's only useful for greedy model binders. If you need
             // to implement something non-greedy then don't use the base class.
             if (!bindingSource.IsGreedy)
@@ -64,7 +69,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// Other model binders will never run if this method is called. Return <c>null</c> to skip other model binders
         /// but allow higher-level handling e.g. falling back to empty prefix.
         /// </remarks>
-        protected abstract Task<ModelBindingResult> BindModelCoreAsync([NotNull] ModelBindingContext bindingContext);
+        protected abstract Task<ModelBindingResult> BindModelCoreAsync(ModelBindingContext bindingContext);
 
         /// <inheritdoc />
         public async Task<ModelBindingResult> BindModelAsync(ModelBindingContext context)

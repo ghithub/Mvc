@@ -33,8 +33,13 @@ namespace Microsoft.AspNet.Mvc.Core
             _logger = loggerFactory.CreateLogger<DefaultActionSelector>();
         }
 
-        public Task<ActionDescriptor> SelectAsync([NotNull] RouteContext context)
+        public Task<ActionDescriptor> SelectAsync(RouteContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var tree = _decisionTreeProvider.DecisionTree;
             var matchingRouteConstraints = tree.Select(context.RouteData.Values);
 
@@ -155,7 +160,7 @@ namespace Microsoft.AspNet.Mvc.Core
 
                                 _logger.LogVerbose(
                                     "Action '{ActionDisplayName}' with id '{ActionId}' did not match the " +
-                                    "constraint '{ActionConstraint}'", 
+                                    "constraint '{ActionConstraint}'",
                                     candidate.Action.DisplayName,
                                     candidate.Action.Id,
                                     constraint);
@@ -202,8 +207,13 @@ namespace Microsoft.AspNet.Mvc.Core
         // any link - this gives WebFX a chance to 'veto' the values provided by a route.
         //
         // This method does not take httpmethod or dynamic action constraints into account.
-        public virtual bool HasValidAction([NotNull] VirtualPathContext context)
+        public virtual bool HasValidAction(VirtualPathContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             if (context.ProvidedValues == null)
             {
                 // We need the route's values to be able to double check our work.

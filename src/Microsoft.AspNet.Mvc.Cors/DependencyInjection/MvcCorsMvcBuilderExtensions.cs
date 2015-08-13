@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -12,16 +12,31 @@ namespace Microsoft.Framework.DependencyInjection
 {
     public static class MvcCorsMvcBuilderExtensions
     {
-        public static IMvcBuilder AddCors([NotNull] this IMvcBuilder builder)
+        public static IMvcBuilder AddCors(this IMvcBuilder builder)
         {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
             AddCorsServices(builder.Services);
             return builder;
         }
 
         public static IMvcBuilder AddCors(
-            [NotNull] this IMvcBuilder builder,
-            [NotNull] Action<CorsOptions> setupAction)
+            this IMvcBuilder builder,
+            Action<CorsOptions> setupAction)
         {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            if (setupAction == null)
+            {
+                throw new ArgumentNullException(nameof(setupAction));
+            }
+
             AddCorsServices(builder.Services);
 
             if (setupAction != null)
@@ -33,9 +48,19 @@ namespace Microsoft.Framework.DependencyInjection
         }
 
         public static IMvcBuilder ConfigureCors(
-            [NotNull] this IMvcBuilder builder,
-            [NotNull] Action<CorsOptions> setupAction)
+            this IMvcBuilder builder,
+            Action<CorsOptions> setupAction)
         {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            if (setupAction == null)
+            {
+                throw new ArgumentNullException(nameof(setupAction));
+            }
+
             builder.Services.Configure(setupAction);
             return builder;
         }

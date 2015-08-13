@@ -41,8 +41,13 @@ namespace Microsoft.AspNet.Mvc
 
         public bool Permanent { get; set; }
 
-        public override void ExecuteResult([NotNull] ActionContext context)
+        public override void ExecuteResult(ActionContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var urlHelper = GetUrlHelper(context);
 
             var destinationUrl = urlHelper.Action(ActionName, ControllerName, RouteValues);

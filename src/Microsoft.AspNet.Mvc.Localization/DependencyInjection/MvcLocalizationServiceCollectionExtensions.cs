@@ -1,6 +1,7 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Linq;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Localization;
@@ -21,8 +22,13 @@ namespace Microsoft.Framework.DependencyInjection
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/>.</param>
         /// <returns>The <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection AddMvcLocalization([NotNull] this IServiceCollection services)
+        public static IServiceCollection AddMvcLocalization(this IServiceCollection services)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
             return AddMvcLocalization(services, LanguageViewLocationExpanderFormat.Suffix);
         }
 
@@ -33,9 +39,14 @@ namespace Microsoft.Framework.DependencyInjection
         /// <param name="format">The view format for localized views.</param>
         /// <returns>The <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddMvcLocalization(
-            [NotNull] this IServiceCollection services,
+            this IServiceCollection services,
             LanguageViewLocationExpanderFormat format)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
             services.Configure<RazorViewEngineOptions>(
                 options =>
                 {

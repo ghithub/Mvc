@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using Microsoft.Framework.Internal;
 
@@ -17,8 +18,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Validation
         /// <param name="providers">
         /// A collection of <see cref="IClientModelValidatorProvider"/> instances.
         /// </param>
-        public CompositeClientModelValidatorProvider([NotNull] IEnumerable<IClientModelValidatorProvider> providers)
+        public CompositeClientModelValidatorProvider(IEnumerable<IClientModelValidatorProvider> providers)
         {
+            if (providers == null)
+            {
+                throw new ArgumentNullException(nameof(providers));
+            }
+
             ValidatorProviders = new List<IClientModelValidatorProvider>(providers);
         }
 

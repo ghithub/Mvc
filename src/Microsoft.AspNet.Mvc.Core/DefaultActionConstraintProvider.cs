@@ -23,8 +23,13 @@ namespace Microsoft.AspNet.Mvc.ActionConstraints
         }
 
         /// <inheritdoc />
-        public void OnProvidersExecuting([NotNull] ActionConstraintProviderContext context)
+        public void OnProvidersExecuting(ActionConstraintProviderContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             foreach (var item in context.Results)
             {
                 ProvideConstraint(item, context.HttpContext.RequestServices);
@@ -32,8 +37,12 @@ namespace Microsoft.AspNet.Mvc.ActionConstraints
         }
 
         /// <inheritdoc />
-        public void OnProvidersExecuted([NotNull] ActionConstraintProviderContext context)
+        public void OnProvidersExecuted(ActionConstraintProviderContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
         }
 
         private void ProvideConstraint(ActionConstraintItem item, IServiceProvider services)

@@ -20,9 +20,19 @@ namespace Microsoft.Framework.DependencyInjection
         /// <param name="services">The services available in the application.</param>
         /// <param name="setupAction">An action to configure the <see cref="RazorViewEngineOptions"/>.</param>
         public static void ConfigureRazorViewEngine(
-            [NotNull] this IServiceCollection services,
-            [NotNull] Action<RazorViewEngineOptions> setupAction)
+            this IServiceCollection services,
+            Action<RazorViewEngineOptions> setupAction)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            if (setupAction == null)
+            {
+                throw new ArgumentNullException(nameof(setupAction));
+            }
+
             services.Configure(setupAction);
         }
 
@@ -38,10 +48,20 @@ namespace Microsoft.Framework.DependencyInjection
         /// <param name="initialize">An action to initialize the <typeparamref name="TTagHelper"/>.</param>
         /// <returns>The <see cref="IServiceCollection"/> instance this method extends.</returns>
         public static IServiceCollection InitializeTagHelper<TTagHelper>(
-            [NotNull] this IServiceCollection services,
-            [NotNull] Action<TTagHelper, ViewContext> initialize)
+            this IServiceCollection services,
+            Action<TTagHelper, ViewContext> initialize)
             where TTagHelper : ITagHelper
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            if (initialize == null)
+            {
+                throw new ArgumentNullException(nameof(initialize));
+            }
+
             var initializer = new TagHelperInitializer<TTagHelper>(initialize);
 
             services.AddInstance(typeof(ITagHelperInitializer<TTagHelper>), initializer);

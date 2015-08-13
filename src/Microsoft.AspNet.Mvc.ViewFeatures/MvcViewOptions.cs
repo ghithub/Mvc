@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNet.Mvc.ModelBinding.Validation;
 using Microsoft.AspNet.Mvc.Rendering;
@@ -13,10 +14,24 @@ namespace Microsoft.AspNet.Mvc
     /// </summary>
     public class MvcViewOptions
     {
+        private HtmlHelperOptions _htmlHelperOptions = new HtmlHelperOptions();
+
         /// <summary>
         /// Gets or sets programmatic configuration for the HTML helpers and <see cref="ViewContext"/>.
         /// </summary>
-        public HtmlHelperOptions HtmlHelperOptions { get;[param: NotNull] set; } = new HtmlHelperOptions();
+        public HtmlHelperOptions HtmlHelperOptions
+        {
+            get { return _htmlHelperOptions; }
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(HtmlHelperOptions));
+                }
+
+                _htmlHelperOptions = value;
+            }
+        }
 
         /// <summary>
         /// Gets a list <see cref="IViewEngine"/>s used by this application.

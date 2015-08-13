@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -21,17 +21,32 @@ namespace Microsoft.Framework.DependencyInjection
     {
         private static readonly Type RazorFileInfoCollectionType = typeof(RazorFileInfoCollection);
 
-        public static IMvcBuilder AddRazorViewEngine([NotNull] this IMvcBuilder builder)
+        public static IMvcBuilder AddRazorViewEngine(this IMvcBuilder builder)
         {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
             builder.AddViews();
             AddRazorViewEngineServices(builder.Services);
             return builder;
         }
 
         public static IMvcBuilder AddRazorViewEngine(
-            [NotNull] this IMvcBuilder builder,
-            [NotNull] Action<RazorViewEngineOptions> setupAction)
+            this IMvcBuilder builder,
+            Action<RazorViewEngineOptions> setupAction)
         {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            if (setupAction == null)
+            {
+                throw new ArgumentNullException(nameof(setupAction));
+            }
+
             builder.AddViews();
             AddRazorViewEngineServices(builder.Services);
 
@@ -44,9 +59,19 @@ namespace Microsoft.Framework.DependencyInjection
         }
 
         public static IMvcBuilder AddPrecompiledRazorViews(
-            [NotNull] this IMvcBuilder builder,
-            [NotNull] params Assembly[] assemblies)
+            this IMvcBuilder builder,
+            params Assembly[] assemblies)
         {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            if (assemblies == null)
+            {
+                throw new ArgumentNullException(nameof(assemblies));
+            }
+
             AddRazorViewEngine(builder);
 
             var razorFileInfos = GetFileInfoCollections(assemblies);
@@ -56,9 +81,19 @@ namespace Microsoft.Framework.DependencyInjection
         }
 
         public static IServiceCollection AddPrecompiledRazorViews(
-            [NotNull] this IServiceCollection collection,
-            [NotNull] params Assembly[] assemblies)
+            this IServiceCollection collection,
+            params Assembly[] assemblies)
         {
+            if (collection == null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+
+            if (assemblies == null)
+            {
+                throw new ArgumentNullException(nameof(assemblies));
+            }
+
             var razorFileInfos = GetFileInfoCollections(assemblies);
             collection.TryAddEnumerable(ServiceDescriptor.Instance(razorFileInfos));
 
@@ -66,9 +101,19 @@ namespace Microsoft.Framework.DependencyInjection
         }
 
         public static IMvcBuilder ConfigureRazorViewEngine(
-            [NotNull] this IMvcBuilder builder,
-            [NotNull] Action<RazorViewEngineOptions> setupAction)
+            this IMvcBuilder builder,
+            Action<RazorViewEngineOptions> setupAction)
         {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            if (setupAction == null)
+            {
+                throw new ArgumentNullException(nameof(setupAction));
+            }
+
             builder.Services.Configure(setupAction);
             return builder;
         }

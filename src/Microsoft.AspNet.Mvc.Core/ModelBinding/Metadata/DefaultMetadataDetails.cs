@@ -19,8 +19,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
         /// </summary>
         /// <param name="key">The <see cref="ModelMetadataIdentity"/>.</param>
         /// <param name="attributes">The set of model attributes.</param>
-        public DefaultMetadataDetails(ModelMetadataIdentity key, [NotNull] ModelAttributes attributes)
+        public DefaultMetadataDetails(ModelMetadataIdentity key, ModelAttributes attributes)
         {
+            if (attributes == null)
+            {
+                throw new ArgumentNullException(nameof(attributes));
+            }
+
             Key = key;
             ModelAttributes = attributes;
         }

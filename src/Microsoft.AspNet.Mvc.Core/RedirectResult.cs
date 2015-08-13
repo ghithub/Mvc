@@ -12,13 +12,22 @@ namespace Microsoft.AspNet.Mvc
     {
         private string _url;
 
-        public RedirectResult([NotNull] string url)
+        public RedirectResult(string url)
             : this(url, permanent: false)
         {
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
         }
 
-        public RedirectResult([NotNull] string url, bool permanent)
+        public RedirectResult(string url, bool permanent)
         {
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
+
             if (string.IsNullOrEmpty(url))
             {
                 throw new ArgumentException(Resources.ArgumentCannotBeNullOrEmpty, nameof(url));
@@ -49,8 +58,13 @@ namespace Microsoft.AspNet.Mvc
 
         public IUrlHelper UrlHelper { get; set; }
 
-        public override void ExecuteResult([NotNull] ActionContext context)
+        public override void ExecuteResult(ActionContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var urlHelper = GetUrlHelper(context);
 
             // IsLocalUrl is called to handle  Urls starting with '~/'.

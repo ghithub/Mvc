@@ -27,18 +27,38 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Validation
         /// types to exclude from validation.</param>
         /// <param name="modelMetadataProvider">The <see cref="IModelMetadataProvider"/>.</param>
         public DefaultObjectValidator(
-            [NotNull] IList<IExcludeTypeValidationFilter> excludeFilters,
-            [NotNull] IModelMetadataProvider modelMetadataProvider)
+            IList<IExcludeTypeValidationFilter> excludeFilters,
+            IModelMetadataProvider modelMetadataProvider)
         {
+            if (excludeFilters == null)
+            {
+                throw new ArgumentNullException(nameof(excludeFilters));
+            }
+
+            if (modelMetadataProvider == null)
+            {
+                throw new ArgumentNullException(nameof(modelMetadataProvider));
+            }
+
             _modelMetadataProvider = modelMetadataProvider;
             _excludeFilters = excludeFilters;
         }
 
         /// <inheritdoc />
         public void Validate(
-            [NotNull] ModelValidationContext modelValidationContext,
-            [NotNull] ModelValidationNode validationNode)
+            ModelValidationContext modelValidationContext,
+            ModelValidationNode validationNode)
         {
+            if (modelValidationContext == null)
+            {
+                throw new ArgumentNullException(nameof(modelValidationContext));
+            }
+
+            if (validationNode == null)
+            {
+                throw new ArgumentNullException(nameof(validationNode));
+            }
+
             var validationContext = new ValidationContext()
             {
                 ModelValidationContext = modelValidationContext,

@@ -596,7 +596,7 @@ Environment.NewLine;
                 "<input class=\"HtmlEncode[[text-box single-line]]\" data-val=\"HtmlEncode[[true]]\" " +
                 "data-val-required=\"HtmlEncode[[The DateTimeOffset field is required.]]\" id=\"HtmlEncode[[FieldPrefix]]\" " +
                 "name=\"HtmlEncode[[FieldPrefix]]\" type=\"HtmlEncode[[" +
-                dataTypeName + 
+                dataTypeName +
                 "]]\" value=\"HtmlEncode[[" + expected + "]]\" />");
 
             var offset = TimeSpan.FromHours(0);
@@ -649,7 +649,7 @@ Environment.NewLine;
                 "<input class=\"HtmlEncode[[text-box single-line]]\" data-val=\"HtmlEncode[[true]]\" " +
                 "data-val-required=\"HtmlEncode[[The DateTimeOffset field is required.]]\" id=\"HtmlEncode[[FieldPrefix]]\" " +
                 "name=\"HtmlEncode[[FieldPrefix]]\" type=\"HtmlEncode[[" +
-                dataTypeName + 
+                dataTypeName +
                 "]]\" value=\"HtmlEncode[[" + expected + "]]\" />");
 
             // Place DateTime-local value in current timezone.
@@ -707,7 +707,7 @@ Environment.NewLine;
                 "<input class=\"HtmlEncode[[text-box single-line]]\" data-val=\"HtmlEncode[[true]]\" " +
                 "data-val-required=\"HtmlEncode[[The DateTimeOffset field is required.]]\" id=\"HtmlEncode[[FieldPrefix]]\" " +
                 "name=\"HtmlEncode[[FieldPrefix]]\" type=\"HtmlEncode[[" +
-                dataTypeName + 
+                dataTypeName +
                 "]]\" value=\"HtmlEncode[[Formatted as 2000-01-02T03:04:05.0600000+00:00]]\" />");
 
             var offset = TimeSpan.FromHours(0);
@@ -844,8 +844,8 @@ Environment.NewLine;
             // Arrange
             var viewEngine = new Mock<ICompositeViewEngine>(MockBehavior.Strict);
             viewEngine
-                .Setup(v => v.FindPartialView(It.IsAny<ActionContext>(), 
-                                              It.Is<string>(view => String.Equals(view, 
+                .Setup(v => v.FindPartialView(It.IsAny<ActionContext>(),
+                                              It.Is<string>(view => String.Equals(view,
                                                                                   "EditorTemplates/String"))))
                 .Returns(ViewEngineResult.Found(string.Empty, new Mock<IView>().Object))
                 .Verifiable();
@@ -928,13 +928,18 @@ Environment.NewLine;
                 get { return _innerHelper.JavaScriptStringEncoder; }
             }
 
-            public void Contextualize([NotNull] ViewContext viewContext)
+            public void Contextualize(ViewContext viewContext)
             {
+                if (viewContext == null)
+                {
+                    throw new ArgumentNullException(nameof(viewContext));
+                }
+
                 (_innerHelper as ICanHasViewContext)?.Contextualize(viewContext);
             }
 
             public IHtmlContent ActionLink(
-                [NotNull] string linkText,
+                string linkText,
                 string actionName,
                 string controllerName,
                 string protocol,
@@ -943,6 +948,11 @@ Environment.NewLine;
                 object routeValues,
                 object htmlAttributes)
             {
+                if (linkText == null)
+                {
+                    throw new ArgumentNullException(nameof(linkText));
+                }
+
                 throw new NotImplementedException();
             }
 
@@ -1032,8 +1042,13 @@ Environment.NewLine;
                 throw new NotImplementedException();
             }
 
-            public string GenerateIdFromName([NotNull] string name)
+            public string GenerateIdFromName(string name)
             {
+                if (name == null)
+                {
+                    throw new ArgumentNullException(nameof(name));
+                }
+
                 throw new NotImplementedException();
             }
 
@@ -1049,8 +1064,13 @@ Environment.NewLine;
                 throw new NotImplementedException();
             }
 
-            public IEnumerable<SelectListItem> GetEnumSelectList([NotNull] Type enumType)
+            public IEnumerable<SelectListItem> GetEnumSelectList(Type enumType)
             {
+                if (enumType == null)
+                {
+                    throw new ArgumentNullException(nameof(enumType));
+                }
+
                 throw new NotImplementedException();
             }
 
@@ -1080,10 +1100,15 @@ Environment.NewLine;
             }
 
             public Task<IHtmlContent> PartialAsync(
-                [NotNull] string partialViewName,
+                string partialViewName,
                 object model,
                 ViewDataDictionary viewData)
             {
+                if (partialViewName == null)
+                {
+                    throw new ArgumentNullException(nameof(partialViewName));
+                }
+
                 throw new NotImplementedException();
             }
 
@@ -1107,13 +1132,18 @@ Environment.NewLine;
                 throw new NotImplementedException();
             }
 
-            public Task RenderPartialAsync([NotNull] string partialViewName, object model, ViewDataDictionary viewData)
+            public Task RenderPartialAsync(string partialViewName, object model, ViewDataDictionary viewData)
             {
+                if (partialViewName == null)
+                {
+                    throw new ArgumentNullException(nameof(partialViewName));
+                }
+
                 throw new NotImplementedException();
             }
 
             public IHtmlContent RouteLink(
-                [NotNull] string linkText,
+                string linkText,
                 string routeName,
                 string protocol,
                 string hostName,
@@ -1121,6 +1151,11 @@ Environment.NewLine;
                 object routeValues,
                 object htmlAttributes)
             {
+                if (linkText == null)
+                {
+                    throw new ArgumentNullException(nameof(linkText));
+                }
+
                 throw new NotImplementedException();
             }
 

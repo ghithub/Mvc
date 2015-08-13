@@ -43,8 +43,13 @@ namespace Microsoft.AspNet.Mvc.Razor.Compilation
         }
 
         /// <inheritdoc />
-        public CompilationResult Compile([NotNull] RelativeFileInfo file)
+        public CompilationResult Compile(RelativeFileInfo file)
         {
+            if (file == null)
+            {
+                throw new ArgumentNullException(nameof(file));
+            }
+
             GeneratorResults results;
             using (var inputStream = file.FileInfo.CreateReadStream())
             {

@@ -28,10 +28,25 @@ namespace Microsoft.AspNet.Mvc.TagHelpers.Internal
         /// <param name="applicationName">Name of the application.</param>
         /// <param name="cache"><see cref="IMemoryCache"/> where versioned urls of files are cached.</param>
         public FileVersionProvider(
-            [NotNull] IFileProvider fileProvider,
-            [NotNull] IMemoryCache cache,
-            [NotNull] PathString requestPathBase)
+            IFileProvider fileProvider,
+            IMemoryCache cache,
+            PathString requestPathBase)
         {
+            if (fileProvider == null)
+            {
+                throw new ArgumentNullException(nameof(fileProvider));
+            }
+
+            if (cache == null)
+            {
+                throw new ArgumentNullException(nameof(cache));
+            }
+
+            if (requestPathBase == null)
+            {
+                throw new ArgumentNullException(nameof(requestPathBase));
+            }
+
             _fileProvider = fileProvider;
             _cache = cache;
             _requestPathBase = requestPathBase;
@@ -45,8 +60,13 @@ namespace Microsoft.AspNet.Mvc.TagHelpers.Internal
         /// <remarks>
         /// The version query string is appended as with the key "v".
         /// </remarks>
-        public string AddFileVersionToPath([NotNull] string path)
+        public string AddFileVersionToPath(string path)
         {
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
             var resolvedPath = path;
 
             var queryStringOrFragmentStartIndex = path.IndexOfAny(new char[] { '?', '#' });
@@ -80,7 +100,7 @@ namespace Microsoft.AspNet.Mvc.TagHelpers.Internal
             }
 
             string value;
-            if(!_cache.TryGetValue(path, out value))
+            if (!_cache.TryGetValue(path, out value))
             {
                 value = QueryHelpers.AddQueryString(path, VersionKey, GetHashForFile(fileInfo));
                 _cache.Set(

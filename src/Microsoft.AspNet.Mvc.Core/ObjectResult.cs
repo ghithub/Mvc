@@ -40,7 +40,7 @@ namespace Microsoft.AspNet.Mvc
         public override async Task ExecuteResultAsync(ActionContext context)
         {
             var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<ObjectResult>>();
-                            
+
             // See if the list of content types added to this object result is valid.
             ThrowIfUnsupportedContentType();
             var formatters = GetDefaultFormatters(context);
@@ -65,7 +65,7 @@ namespace Microsoft.AspNet.Mvc
 
             logger.LogVerbose(
                 "Selected output formatter '{OutputFormatter}' and content type " +
-                "'{ContentType}' to write the response.", 
+                "'{ContentType}' to write the response.",
                 selectedFormatter.GetType().FullName,
                 formatterContext.SelectedContentType);
 
@@ -89,7 +89,7 @@ namespace Microsoft.AspNet.Mvc
             if (ContentTypes.Count == 1)
             {
                 logger.LogVerbose(
-                    "Skipped content negotiation as content type '{ContentType}' is explicitly set for the response.", 
+                    "Skipped content negotiation as content type '{ContentType}' is explicitly set for the response.",
                     ContentTypes[0]);
 
                 return SelectFormatterUsingAnyAcceptableContentType(formatterContext,
@@ -156,8 +156,8 @@ namespace Microsoft.AspNet.Mvc
                 {
                     // Filter and remove accept headers which cannot support any of the user specified content types.
                     var filteredAndSortedAcceptHeaders = sortedAcceptHeaderMediaTypes
-                                                                    .Where(acceptHeader => 
-                                                                        ContentTypes.Any(contentType => 
+                                                                    .Where(acceptHeader =>
+                                                                        ContentTypes.Any(contentType =>
                                                                             contentType.IsSubsetOf(acceptHeader)));
 
                     selectedFormatter = SelectFormatterUsingSortedAcceptHeaders(
@@ -327,8 +327,12 @@ namespace Microsoft.AspNet.Mvc
         /// <summary>
         /// This method is called before the formatter writes to the output stream.
         /// </summary>
-        protected virtual void OnFormatting([NotNull] ActionContext context)
+        protected virtual void OnFormatting(ActionContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
         }
     }
 }

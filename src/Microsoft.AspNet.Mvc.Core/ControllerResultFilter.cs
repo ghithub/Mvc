@@ -19,9 +19,19 @@ namespace Microsoft.AspNet.Mvc.Filters
 
         /// <inheritdoc />
         public async Task OnResultExecutionAsync(
-            [NotNull] ResultExecutingContext context,
-            [NotNull] ResultExecutionDelegate next)
+            ResultExecutingContext context,
+            ResultExecutionDelegate next)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (next == null)
+            {
+                throw new ArgumentNullException(nameof(next));
+            }
+
             var controller = context.Controller;
             if (controller == null)
             {

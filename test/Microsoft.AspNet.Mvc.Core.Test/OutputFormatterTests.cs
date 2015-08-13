@@ -338,8 +338,13 @@ namespace Microsoft.AspNet.Mvc.Test
                 SupportedEncodings.Add(Encoding.UTF8);
             }
 
-            public override Task WriteResponseBodyAsync([NotNull] OutputFormatterContext context)
+            public override Task WriteResponseBodyAsync(OutputFormatterContext context)
             {
+                if (context == null)
+                {
+                    throw new ArgumentNullException(nameof(context));
+                }
+
                 return Task.FromResult(true);
             }
         }

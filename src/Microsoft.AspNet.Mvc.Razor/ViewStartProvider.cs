@@ -19,8 +19,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         }
 
         /// <inheritdoc />
-        public IEnumerable<IRazorPage> GetViewStartPages([NotNull] string path)
+        public IEnumerable<IRazorPage> GetViewStartPages(string path)
         {
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
             var viewStartLocations = ViewHierarchyUtility.GetViewStartLocations(path);
             var viewStarts = viewStartLocations.Select(_pageFactory.CreateInstance)
                                                .Where(p => p != null)

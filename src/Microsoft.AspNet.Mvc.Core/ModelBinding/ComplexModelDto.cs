@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,9 +12,19 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
     // Describes a complex model, but uses a collection rather than individual properties as the data store.
     public class ComplexModelDto
     {
-        public ComplexModelDto([NotNull] ModelMetadata modelMetadata,
-                               [NotNull] IEnumerable<ModelMetadata> propertyMetadata)
+        public ComplexModelDto(ModelMetadata modelMetadata,
+                               IEnumerable<ModelMetadata> propertyMetadata)
         {
+            if (modelMetadata == null)
+            {
+                throw new ArgumentNullException(nameof(modelMetadata));
+            }
+
+            if (propertyMetadata == null)
+            {
+                throw new ArgumentNullException(nameof(propertyMetadata));
+            }
+
             ModelMetadata = modelMetadata;
             PropertyMetadata = new Collection<ModelMetadata>(propertyMetadata.ToList());
             Results = new Dictionary<ModelMetadata, ModelBindingResult>();

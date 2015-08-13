@@ -21,8 +21,13 @@ namespace Microsoft.AspNet.Mvc
         {
         }
 
-        public JsonInputFormatter([NotNull] JsonSerializerSettings serializerSettings)
+        public JsonInputFormatter(JsonSerializerSettings serializerSettings)
         {
+            if (serializerSettings == null)
+            {
+                throw new ArgumentNullException(nameof(serializerSettings));
+            }
+
             _serializerSettings = serializerSettings;
 
             SupportedEncodings.Add(UTF8EncodingWithoutBOM);
@@ -41,16 +46,25 @@ namespace Microsoft.AspNet.Mvc
             {
                 return _serializerSettings;
             }
-            [param: NotNull]
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(SerializerSettings));
+                }
+
                 _serializerSettings = value;
             }
         }
 
         /// <inheritdoc />
-        public override Task<object> ReadRequestBodyAsync([NotNull] InputFormatterContext context)
+        public override Task<object> ReadRequestBodyAsync(InputFormatterContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var type = context.ModelType;
             var request = context.HttpContext.Request;
             MediaTypeHeaderValue requestContentType = null;
@@ -102,10 +116,25 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="effectiveEncoding">The <see cref="Encoding"/> to use when reading.</param>
         /// <returns>The <see cref="JsonReader"/> used during deserialization.</returns>
         protected virtual JsonReader CreateJsonReader(
-            [NotNull] InputFormatterContext context,
-            [NotNull] Stream readStream,
-            [NotNull] Encoding effectiveEncoding)
+            InputFormatterContext context,
+            Stream readStream,
+            Encoding effectiveEncoding)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (readStream == null)
+            {
+                throw new ArgumentNullException(nameof(readStream));
+            }
+
+            if (effectiveEncoding == null)
+            {
+                throw new ArgumentNullException(nameof(effectiveEncoding));
+            }
+
             return new JsonTextReader(new StreamReader(readStream, effectiveEncoding));
         }
 

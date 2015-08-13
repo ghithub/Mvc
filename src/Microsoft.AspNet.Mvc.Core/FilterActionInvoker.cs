@@ -54,17 +54,62 @@ namespace Microsoft.AspNet.Mvc.Core
             "Request was short circuited at result filter '{ResultFilter}'.";
 
         public FilterActionInvoker(
-            [NotNull] ActionContext actionContext,
-            [NotNull] IReadOnlyList<IFilterProvider> filterProviders,
-            [NotNull] IReadOnlyList<IInputFormatter> inputFormatters,
-            [NotNull] IReadOnlyList<IOutputFormatter> outputFormatters,
-            [NotNull] IReadOnlyList<IModelBinder> modelBinders,
-            [NotNull] IReadOnlyList<IModelValidatorProvider> modelValidatorProviders,
-            [NotNull] IReadOnlyList<IValueProviderFactory> valueProviderFactories,
-            [NotNull] IScopedInstance<ActionBindingContext> actionBindingContextAccessor,
-            [NotNull] ILoggerFactory loggerFactory,
+            ActionContext actionContext,
+            IReadOnlyList<IFilterProvider> filterProviders,
+            IReadOnlyList<IInputFormatter> inputFormatters,
+            IReadOnlyList<IOutputFormatter> outputFormatters,
+            IReadOnlyList<IModelBinder> modelBinders,
+            IReadOnlyList<IModelValidatorProvider> modelValidatorProviders,
+            IReadOnlyList<IValueProviderFactory> valueProviderFactories,
+            IScopedInstance<ActionBindingContext> actionBindingContextAccessor,
+            ILoggerFactory loggerFactory,
             int maxModelValidationErrors)
         {
+            if (actionContext == null)
+            {
+                throw new ArgumentNullException(nameof(actionContext));
+            }
+
+            if (filterProviders == null)
+            {
+                throw new ArgumentNullException(nameof(filterProviders));
+            }
+
+            if (inputFormatters == null)
+            {
+                throw new ArgumentNullException(nameof(inputFormatters));
+            }
+
+            if (outputFormatters == null)
+            {
+                throw new ArgumentNullException(nameof(outputFormatters));
+            }
+
+            if (modelBinders == null)
+            {
+                throw new ArgumentNullException(nameof(modelBinders));
+            }
+
+            if (modelValidatorProviders == null)
+            {
+                throw new ArgumentNullException(nameof(modelValidatorProviders));
+            }
+
+            if (valueProviderFactories == null)
+            {
+                throw new ArgumentNullException(nameof(valueProviderFactories));
+            }
+
+            if (actionBindingContextAccessor == null)
+            {
+                throw new ArgumentNullException(nameof(actionBindingContextAccessor));
+            }
+
+            if (loggerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(loggerFactory));
+            }
+
             ActionContext = actionContext;
 
             _filterProviders = filterProviders;
@@ -110,8 +155,8 @@ namespace Microsoft.AspNet.Mvc.Core
         protected abstract Task<IActionResult> InvokeActionAsync(ActionExecutingContext actionExecutingContext);
 
         protected abstract Task<IDictionary<string, object>> BindActionArgumentsAsync(
-            [NotNull] ActionContext context,
-            [NotNull] ActionBindingContext bindingContext);
+            ActionContext context,
+            ActionBindingContext bindingContext);
 
         public virtual async Task InvokeAsync()
         {

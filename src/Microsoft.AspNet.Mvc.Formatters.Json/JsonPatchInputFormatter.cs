@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNet.JsonPatch;
@@ -18,9 +19,14 @@ namespace Microsoft.AspNet.Mvc
         {
         }
 
-        public JsonPatchInputFormatter([NotNull] JsonSerializerSettings serializerSettings)
+        public JsonPatchInputFormatter(JsonSerializerSettings serializerSettings)
             : base(serializerSettings)
         {
+            if (serializerSettings == null)
+            {
+                throw new ArgumentNullException(nameof(serializerSettings));
+            }
+
             // Clear all values and only include json-patch+json value.
             SupportedMediaTypes.Clear();
 
@@ -28,8 +34,13 @@ namespace Microsoft.AspNet.Mvc
         }
 
         /// <inheritdoc />
-        public async override Task<object> ReadRequestBodyAsync([NotNull] InputFormatterContext context)
+        public async override Task<object> ReadRequestBodyAsync(InputFormatterContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var jsonPatchDocument = (IJsonPatchDocument)(await base.ReadRequestBodyAsync(context));
             if (jsonPatchDocument != null && SerializerSettings.ContractResolver != null)
             {

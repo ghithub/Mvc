@@ -42,8 +42,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Validation
         /// <param name="modelMetadata">The <see cref="ModelMetadata"/> associated with the model annotated with
         /// <see cref="Attribute"/>.</param>
         /// <returns>Formatted error string.</returns>
-        protected virtual string GetErrorMessage([NotNull] ModelMetadata modelMetadata)
+        protected virtual string GetErrorMessage(ModelMetadata modelMetadata)
         {
+            if (modelMetadata == null)
+            {
+                throw new ArgumentNullException(nameof(modelMetadata));
+            }
+
             return Attribute.FormatErrorMessage(modelMetadata.GetDisplayName());
         }
     }

@@ -108,8 +108,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
 
             public bool WasBindModelCoreCalled { get; private set; }
 
-            protected override Task<ModelBindingResult> BindModelCoreAsync([NotNull] ModelBindingContext bindingContext)
+            protected override Task<ModelBindingResult> BindModelCoreAsync(ModelBindingContext bindingContext)
             {
+                if (bindingContext == null)
+                {
+                    throw new ArgumentNullException(nameof(bindingContext));
+                }
+
                 WasBindModelCoreCalled = true;
                 return Task.FromResult(
                     new ModelBindingResult(model: null, key: bindingContext.ModelName, isModelSet: _isModelSet));

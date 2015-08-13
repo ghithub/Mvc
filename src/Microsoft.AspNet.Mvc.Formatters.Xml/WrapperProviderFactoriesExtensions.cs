@@ -21,9 +21,19 @@ namespace Microsoft.AspNet.Mvc.Formatters.Xml
         /// <returns>An instance of <see cref="IWrapperProvider"/> if there is a wrapping provider for the
         /// supplied type, else null.</returns>
         public static IWrapperProvider GetWrapperProvider(
-            [NotNull] this IEnumerable<IWrapperProviderFactory> wrapperProviderFactories,
-            [NotNull] WrapperProviderContext wrapperProviderContext)
+            this IEnumerable<IWrapperProviderFactory> wrapperProviderFactories,
+            WrapperProviderContext wrapperProviderContext)
         {
+            if (wrapperProviderFactories == null)
+            {
+                throw new ArgumentNullException(nameof(wrapperProviderFactories));
+            }
+
+            if (wrapperProviderContext == null)
+            {
+                throw new ArgumentNullException(nameof(wrapperProviderContext));
+            }
+
             foreach (var wrapperProviderFactory in wrapperProviderFactories)
             {
                 var wrapperProvider = wrapperProviderFactory.GetProvider(wrapperProviderContext);

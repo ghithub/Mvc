@@ -14,11 +14,21 @@ namespace Microsoft.AspNet.Mvc
         private ExceptionDispatchInfo _exceptionDispatchInfo;
 
         public ActionExecutedContext(
-            [NotNull] ActionContext actionContext,
-            [NotNull] IList<IFilterMetadata> filters,
+            ActionContext actionContext,
+            IList<IFilterMetadata> filters,
             object controller)
             : base(actionContext, filters)
         {
+            if (actionContext == null)
+            {
+                throw new ArgumentNullException(nameof(actionContext));
+            }
+
+            if (filters == null)
+            {
+                throw new ArgumentNullException(nameof(filters));
+            }
+
             Controller = controller;
         }
 

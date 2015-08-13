@@ -19,8 +19,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// Creates a new <see cref="ModelPropertyCollection"/>.
         /// </summary>
         /// <param name="properties">The properties.</param>
-        public ModelPropertyCollection([NotNull] IEnumerable<ModelMetadata> properties)
+        public ModelPropertyCollection(IEnumerable<ModelMetadata> properties)
         {
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
             _properties = new List<ModelMetadata>(properties);
         }
 

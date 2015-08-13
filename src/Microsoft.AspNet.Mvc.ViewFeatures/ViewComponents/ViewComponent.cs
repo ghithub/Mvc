@@ -112,10 +112,13 @@ namespace Microsoft.AspNet.Mvc
 
                 return _url;
             }
-
-            [param: NotNull]
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(Url));
+                }
+
                 _url = value;
             }
         }
@@ -133,10 +136,13 @@ namespace Microsoft.AspNet.Mvc
 
                 return _viewComponentContext;
             }
-
-            [param: NotNull]
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(ViewComponentContext));
+                }
+
                 _viewComponentContext = value;
             }
         }
@@ -179,10 +185,13 @@ namespace Microsoft.AspNet.Mvc
 
                 return _viewEngine;
             }
-
-            [param: NotNull]
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(ViewEngine));
+                }
+
                 _viewEngine = value;
             }
         }
@@ -192,8 +201,13 @@ namespace Microsoft.AspNet.Mvc
         /// </summary>
         /// <param name="content">The content, will be HTML encoded before output.</param>
         /// <returns>A <see cref="ContentViewComponentResult"/>.</returns>
-        public ContentViewComponentResult Content([NotNull] string content)
+        public ContentViewComponentResult Content(string content)
         {
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+
             return new ContentViewComponentResult(content);
         }
 
@@ -216,8 +230,13 @@ namespace Microsoft.AspNet.Mvc
         /// <returns>A <see cref="JsonViewComponentResult"/>.</returns>
         /// <remarks>Callers should cache an instance of <see cref="JsonSerializerSettings"/> to avoid
         /// recreating cached data with each call.</remarks>
-        public JsonViewComponentResult Json(object value, [NotNull] JsonSerializerSettings serializerSettings)
+        public JsonViewComponentResult Json(object value, JsonSerializerSettings serializerSettings)
         {
+            if (serializerSettings == null)
+            {
+                throw new ArgumentNullException(nameof(serializerSettings));
+            }
+
             return new JsonViewComponentResult(value, serializerSettings);
         }
 

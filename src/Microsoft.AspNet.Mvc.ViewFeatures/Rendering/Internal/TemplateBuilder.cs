@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Globalization;
 using Microsoft.AspNet.Html.Abstractions;
 using Microsoft.AspNet.Mvc.ModelBinding;
@@ -21,15 +22,35 @@ namespace Microsoft.AspNet.Mvc.Rendering.Internal
         private bool _readOnly;
         private object _additionalViewData;
 
-        public TemplateBuilder([NotNull] IViewEngine viewEngine,
-                               [NotNull] ViewContext viewContext,
-                               [NotNull] ViewDataDictionary viewData,
-                               [NotNull] ModelExplorer modelExplorer,
+        public TemplateBuilder(IViewEngine viewEngine,
+                               ViewContext viewContext,
+                               ViewDataDictionary viewData,
+                               ModelExplorer modelExplorer,
                                string htmlFieldName,
                                string templateName,
                                bool readOnly,
                                object additionalViewData)
         {
+            if (viewEngine == null)
+            {
+                throw new ArgumentNullException(nameof(viewEngine));
+            }
+
+            if (viewContext == null)
+            {
+                throw new ArgumentNullException(nameof(viewContext));
+            }
+
+            if (viewData == null)
+            {
+                throw new ArgumentNullException(nameof(viewData));
+            }
+
+            if (modelExplorer == null)
+            {
+                throw new ArgumentNullException(nameof(modelExplorer));
+            }
+
             _viewEngine = viewEngine;
             _viewContext = viewContext;
             _viewData = viewData;

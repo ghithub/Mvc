@@ -191,8 +191,13 @@ namespace Microsoft.AspNet.Mvc
         /// </summary>
         /// <param name="context">The <see cref="ClientModelValidationContext"/> used to generate the URL.</param>
         /// <returns>The URL where the client should send a validation request.</returns>
-        protected virtual string GetUrl([NotNull] ClientModelValidationContext context)
+        protected virtual string GetUrl(ClientModelValidationContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var urlHelper = context.RequestServices.GetRequiredService<IUrlHelper>();
             var url = urlHelper.RouteUrl(new UrlRouteContext()
             {
@@ -229,8 +234,13 @@ namespace Microsoft.AspNet.Mvc
         /// Thrown if unable to generate a target URL for a validation request.
         /// </exception>
         public virtual IEnumerable<ModelClientValidationRule> GetClientValidationRules(
-            [NotNull] ClientModelValidationContext context)
+            ClientModelValidationContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             var metadata = context.ModelMetadata;
             var rule = new ModelClientValidationRemoteRule(
                 FormatErrorMessage(metadata.GetDisplayName()),

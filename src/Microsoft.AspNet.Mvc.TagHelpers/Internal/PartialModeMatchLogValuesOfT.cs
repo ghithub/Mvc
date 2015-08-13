@@ -29,8 +29,13 @@ namespace Microsoft.AspNet.Mvc.TagHelpers.Internal
         public PartialModeMatchLogValues(
             string uniqueId,
             string viewPath,
-            [NotNull] IEnumerable<ModeMatchAttributes<TMode>> partialMatches)
+            IEnumerable<ModeMatchAttributes<TMode>> partialMatches)
         {
+            if (partialMatches == null)
+            {
+                throw new ArgumentNullException(nameof(partialMatches));
+            }
+
             _uniqueId = uniqueId;
             _viewPath = viewPath;
             _partialMatches = partialMatches;

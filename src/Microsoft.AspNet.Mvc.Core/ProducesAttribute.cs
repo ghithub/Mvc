@@ -22,8 +22,13 @@ namespace Microsoft.AspNet.Mvc
         /// Initializes an instance of <see cref="ProducesAttribute"/>.
         /// </summary>
         /// <param name="type">The <see cref="Type"/> of object that is going to be written in the response.</param>
-        public ProducesAttribute([NotNull] Type type)
+        public ProducesAttribute(Type type)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
             Type = type;
             ContentTypes = new List<MediaTypeHeaderValue>();
         }
@@ -33,8 +38,13 @@ namespace Microsoft.AspNet.Mvc
         /// </summary>
         /// <param name="contentType">The allowed content type for a response.</param>
         /// <param name="additionalContentTypes">Additional allowed content types for a response.</param>
-        public ProducesAttribute([NotNull] string contentType, params string[] additionalContentTypes)
+        public ProducesAttribute(string contentType, params string[] additionalContentTypes)
         {
+            if (contentType == null)
+            {
+                throw new ArgumentNullException(nameof(contentType));
+            }
+
             ContentTypes = GetContentTypes(contentType, additionalContentTypes);
         }
 
@@ -42,8 +52,13 @@ namespace Microsoft.AspNet.Mvc
 
         public IList<MediaTypeHeaderValue> ContentTypes { get; set; }
 
-        public override void OnResultExecuting([NotNull] ResultExecutingContext context)
+        public override void OnResultExecuting(ResultExecutingContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             base.OnResultExecuting(context);
             var objectResult = context.Result as ObjectResult;
 

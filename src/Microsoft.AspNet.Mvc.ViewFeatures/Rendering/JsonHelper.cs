@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -20,8 +20,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// Initializes a new instance of <see cref="JsonHelper"/> that is backed by <paramref name="jsonOutputFormatter"/>.
         /// </summary>
         /// <param name="jsonOutputFormatter">The <see cref="JsonOutputFormatter"/> used to serialize JSON.</param>
-        public JsonHelper([NotNull] JsonOutputFormatter jsonOutputFormatter)
+        public JsonHelper(JsonOutputFormatter jsonOutputFormatter)
         {
+            if (jsonOutputFormatter == null)
+            {
+                throw new ArgumentNullException(nameof(jsonOutputFormatter));
+            }
+
             _jsonOutputFormatter = jsonOutputFormatter;
         }
 
@@ -32,8 +37,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
         }
 
         /// <inheritdoc />
-        public HtmlString Serialize(object value, [NotNull] JsonSerializerSettings serializerSettings)
+        public HtmlString Serialize(object value, JsonSerializerSettings serializerSettings)
         {
+            if (serializerSettings == null)
+            {
+                throw new ArgumentNullException(nameof(serializerSettings));
+            }
+
             var jsonOutputFormatter = new JsonOutputFormatter(serializerSettings);
 
             return SerializeInternal(jsonOutputFormatter, value);

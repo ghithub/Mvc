@@ -2056,8 +2056,13 @@ namespace Microsoft.AspNet.Mvc.Test
                 _isVisible = isVisible;
             }
 
-            public void Apply([NotNull] ApplicationModel application)
+            public void Apply(ApplicationModel application)
             {
+                if (application == null)
+                {
+                    throw new ArgumentNullException(nameof(application));
+                }
+
                 application.ApiExplorer.IsVisible = _isVisible;
             }
         }

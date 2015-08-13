@@ -89,8 +89,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// <see cref="RawValue"/> converted to the given <paramref name="type"/> using the given
         /// <paramref name="culture"/>. <c>null</c> if the conversion fails.
         /// </returns>
-        public virtual object ConvertTo([NotNull] Type type, CultureInfo culture)
+        public virtual object ConvertTo(Type type, CultureInfo culture)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
             var value = RawValue;
             if (value == null)
             {

@@ -63,9 +63,19 @@ namespace Microsoft.AspNet.Mvc.Razor.Compilation
 
         /// <inheritdoc />
         public CompilerCacheResult GetOrAdd(
-            [NotNull] string relativePath,
-            [NotNull] Func<RelativeFileInfo, CompilationResult> compile)
+            string relativePath,
+            Func<RelativeFileInfo, CompilationResult> compile)
         {
+            if (relativePath == null)
+            {
+                throw new ArgumentNullException(nameof(relativePath));
+            }
+
+            if (compile == null)
+            {
+                throw new ArgumentNullException(nameof(compile));
+            }
+
             var normalizedPath = NormalizePath(relativePath);
             CompilerCacheResult cacheResult;
             if (!_cache.TryGetValue(normalizedPath, out cacheResult))

@@ -3,6 +3,7 @@
 
 #if DNXCORE50
 
+using System;
 using Microsoft.AspNet.Mvc;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
@@ -24,8 +25,13 @@ namespace System.Net.Http.Formatting
         /// </summary>
         /// <param name="formatter">The formatter.</param>
         /// <param name="mediaType">The preferred media type. Can be <c>null</c>.</param>
-        public ContentNegotiationResult([NotNull] MediaTypeFormatter formatter, MediaTypeHeaderValue mediaType)
+        public ContentNegotiationResult(MediaTypeFormatter formatter, MediaTypeHeaderValue mediaType)
         {
+            if (formatter == null)
+            {
+                throw new ArgumentNullException(nameof(formatter));
+            }
+
             _formatter = formatter;
             MediaType = mediaType;
         }

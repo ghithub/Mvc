@@ -35,9 +35,17 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="fileName">The path to the file. The path must be an absolute
         /// path. Relative and virtual paths are not supported.</param>
         /// <param name="contentType">The Content-Type header of the response.</param>
-        public FilePathResult([NotNull] string fileName, [NotNull] string contentType)
+        public FilePathResult(string fileName, string contentType)
             : this(fileName, new MediaTypeHeaderValue(contentType))
         {
+            if (fileName == null)
+            {
+                throw new ArgumentNullException(nameof(fileName));
+            }
+            if (contentType == null)
+            {
+                throw new ArgumentNullException(nameof(contentType));
+            }
         }
 
         /// <summary>
@@ -48,9 +56,19 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="fileName">The path to the file. The path must be an absolute
         /// path. Relative and virtual paths are not supported.</param>
         /// <param name="contentType">The Content-Type header of the response.</param>
-        public FilePathResult([NotNull] string fileName, [NotNull] MediaTypeHeaderValue contentType)
+        public FilePathResult(string fileName, MediaTypeHeaderValue contentType)
             : base(contentType)
         {
+            if (fileName == null)
+            {
+                throw new ArgumentNullException(nameof(fileName));
+            }
+
+            if (contentType == null)
+            {
+                throw new ArgumentNullException(nameof(contentType));
+            }
+
             FileName = fileName;
         }
 
@@ -148,8 +166,13 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="path">The path to normalize.</param>
         /// <returns>The normalized path.</returns>
         // Internal for unit testing purposes only
-        protected internal virtual string NormalizePath([NotNull] string path)
+        protected internal virtual string NormalizePath(string path)
         {
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
             // Unix systems support '\' as part of the file name. So '\' is not
             // a valid directory separator in those systems. Here we make the conscious
             // choice of replacing '\' for '/' which means that file names with '\' will
@@ -180,8 +203,13 @@ namespace Microsoft.AspNet.Mvc
         /// <param name="path">The path to examine.</param>
         /// <returns>True if the path is absolute.</returns>
         // Internal for unit testing purposes only
-        protected internal virtual bool IsPathRooted([NotNull] string path)
+        protected internal virtual bool IsPathRooted(string path)
         {
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
             // We consider paths to be rooted if they start with '<<VolumeLetter>>:' and do
             // not start with '\' or '/'. In those cases, even that the paths are 'traditionally'
             // rooted, we consider them to be relative.
@@ -233,7 +261,7 @@ namespace Microsoft.AspNet.Mvc
             else
             {
                 var fileStream = new FileStream(
-                    physicalFilePath, 
+                    physicalFilePath,
                     FileMode.Open,
                     FileAccess.Read,
                     FileShare.ReadWrite,

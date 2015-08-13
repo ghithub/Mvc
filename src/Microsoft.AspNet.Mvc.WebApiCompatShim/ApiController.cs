@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Security.Principal;
@@ -127,8 +128,13 @@ namespace System.Web.Http
         /// <param name="message">The user-visible error message.</param>
         /// <returns>A <see cref="BadRequestErrorMessageResult"/> with the specified error message.</returns>
         [NonAction]
-        public virtual BadRequestErrorMessageResult BadRequest([NotNull] string message)
+        public virtual BadRequestErrorMessageResult BadRequest(string message)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             return new BadRequestErrorMessageResult(message);
         }
 
@@ -138,8 +144,13 @@ namespace System.Web.Http
         /// <param name="modelState">The model state to include in the error.</param>
         /// <returns>An <see cref="InvalidModelStateResult"/> with the specified model state.</returns>
         [NonAction]
-        public virtual InvalidModelStateResult BadRequest([NotNull] ModelStateDictionary modelState)
+        public virtual InvalidModelStateResult BadRequest(ModelStateDictionary modelState)
         {
+            if (modelState == null)
+            {
+                throw new ArgumentNullException(nameof(modelState));
+            }
+
             return new InvalidModelStateResult(modelState, includeErrorDetail: false);
         }
 
@@ -159,8 +170,13 @@ namespace System.Web.Http
         /// <param name="value">The content value to negotiate and format in the entity body.</param>
         /// <returns>A <see cref="NegotiatedContentResult{T}"/> with the specified values.</returns>
         [NonAction]
-        public virtual NegotiatedContentResult<T> Content<T>(HttpStatusCode statusCode, [NotNull] T value)
+        public virtual NegotiatedContentResult<T> Content<T>(HttpStatusCode statusCode, T value)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             return new NegotiatedContentResult<T>(statusCode, value);
         }
 
@@ -173,8 +189,13 @@ namespace System.Web.Http
         /// <param name="content">The content value to format in the entity body.</param>
         /// <returns>A <see cref="CreatedResult"/> with the specified values.</returns>
         [NonAction]
-        public virtual CreatedResult Created([NotNull] string location, object content)
+        public virtual CreatedResult Created(string location, object content)
         {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
             return new CreatedResult(location, content);
         }
 
@@ -185,8 +206,13 @@ namespace System.Web.Http
         /// <param name="content">The content value to format in the entity body.</param>
         /// <returns>A <see cref="CreatedResult"/> with the specified values.</returns>
         [NonAction]
-        public virtual CreatedResult Created([NotNull] Uri uri, object content)
+        public virtual CreatedResult Created(Uri uri, object content)
         {
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
+
             string location;
             if (uri.IsAbsoluteUri)
             {
@@ -208,10 +234,15 @@ namespace System.Web.Http
         /// <returns>A <see cref="CreatedAtRouteResult"/> with the specified values.</returns>
         [NonAction]
         public virtual CreatedAtRouteResult CreatedAtRoute(
-            [NotNull] string routeName,
+            string routeName,
             object routeValues,
             object content)
         {
+            if (routeName == null)
+            {
+                throw new ArgumentNullException(nameof(routeName));
+            }
+
             return new CreatedAtRouteResult(routeName, routeValues, content);
         }
 
@@ -231,8 +262,13 @@ namespace System.Web.Http
         /// <param name="exception">The exception to include in the error.</param>
         /// <returns>An <see cref="ExceptionResult"/> with the specified exception.</returns>
         [NonAction]
-        public virtual ExceptionResult InternalServerError([NotNull] Exception exception)
+        public virtual ExceptionResult InternalServerError(Exception exception)
         {
+            if (exception == null)
+            {
+                throw new ArgumentNullException(nameof(exception));
+            }
+
             return new ExceptionResult(exception, includeErrorDetail: false);
         }
 
@@ -243,8 +279,13 @@ namespace System.Web.Http
         /// <param name="content">The content value to serialize in the entity body.</param>
         /// <returns>A <see cref="JsonResult"/> with the specified value.</returns>
         [NonAction]
-        public virtual JsonResult Json<T>([NotNull] T content)
+        public virtual JsonResult Json<T>(T content)
         {
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+
             return new JsonResult(content);
         }
 
@@ -256,8 +297,18 @@ namespace System.Web.Http
         /// <param name="serializerSettings">The serializer settings.</param>
         /// <returns>A <see cref="JsonResult"/> with the specified values.</returns>
         [NonAction]
-        public virtual JsonResult Json<T>([NotNull] T content, [NotNull] JsonSerializerSettings serializerSettings)
+        public virtual JsonResult Json<T>(T content, JsonSerializerSettings serializerSettings)
         {
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+
+            if (serializerSettings == null)
+            {
+                throw new ArgumentNullException(nameof(serializerSettings));
+            }
+
             return new JsonResult(content, serializerSettings);
         }
 
@@ -271,10 +322,25 @@ namespace System.Web.Http
         /// <returns>A <see cref="JsonResult"/> with the specified values.</returns>
         [NonAction]
         public virtual JsonResult Json<T>(
-            [NotNull] T content,
-            [NotNull] JsonSerializerSettings serializerSettings,
-            [NotNull] Encoding encoding)
+            T content,
+            JsonSerializerSettings serializerSettings,
+            Encoding encoding)
         {
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+
+            if (serializerSettings == null)
+            {
+                throw new ArgumentNullException(nameof(serializerSettings));
+            }
+
+            if (encoding == null)
+            {
+                throw new ArgumentNullException(nameof(encoding));
+            }
+
             var result = new JsonResult(content, serializerSettings);
             result.ContentType = new MediaTypeHeaderValue("application/json")
             {
@@ -322,8 +388,13 @@ namespace System.Web.Http
         /// <param name="location">The location to which to redirect.</param>
         /// <returns>A <see cref="RedirectResult"/> with the specified value.</returns>
         [NonAction]
-        public virtual RedirectResult Redirect([NotNull] string location)
+        public virtual RedirectResult Redirect(string location)
         {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
             // This is how redirect was implemented in legacy webapi - string URIs are assumed to be absolute.
             return Redirect(new Uri(location));
         }
@@ -334,8 +405,13 @@ namespace System.Web.Http
         /// <param name="location">The location to which to redirect.</param>
         /// <returns>A <see cref="RedirectResult"/> with the specified value.</returns>
         [NonAction]
-        public virtual RedirectResult Redirect([NotNull] Uri location)
+        public virtual RedirectResult Redirect(Uri location)
         {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
             string uri;
             if (location.IsAbsoluteUri)
             {
@@ -356,8 +432,18 @@ namespace System.Web.Http
         /// <param name="routeValues">The route data to use for generating the URL.</param>
         /// <returns>A <see cref="RedirectToRouteResult"/> with the specified values.</returns>
         [NonAction]
-        public virtual RedirectToRouteResult RedirectToRoute([NotNull] string routeName, [NotNull] object routeValues)
+        public virtual RedirectToRouteResult RedirectToRoute(string routeName, object routeValues)
         {
+            if (routeName == null)
+            {
+                throw new ArgumentNullException(nameof(routeName));
+            }
+
+            if (routeValues == null)
+            {
+                throw new ArgumentNullException(nameof(routeValues));
+            }
+
             return new RedirectToRouteResult(routeName, routeValues)
             {
                 UrlHelper = Url,
@@ -370,8 +456,13 @@ namespace System.Web.Http
         /// <param name="response">The HTTP response message.</param>
         /// <returns>A <see cref="ResponseMessageResult"/> for the specified response.</returns>
         [NonAction]
-        public virtual ResponseMessageResult ResponseMessage([NotNull] HttpResponseMessage response)
+        public virtual ResponseMessageResult ResponseMessage(HttpResponseMessage response)
         {
+            if (response == null)
+            {
+                throw new ArgumentNullException(nameof(response));
+            }
+
             return new ResponseMessageResult(response);
         }
 

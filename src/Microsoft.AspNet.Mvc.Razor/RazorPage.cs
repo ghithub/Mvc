@@ -224,8 +224,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// All writes to the <see cref="Output"/> or <see cref="ViewContext.Writer"/> after calling this method will
         /// be buffered until <see cref="EndTagHelperWritingScope"/> is called.
         /// </remarks>
-        public void StartTagHelperWritingScope([NotNull] TextWriter writer)
+        public void StartTagHelperWritingScope(TextWriter writer)
         {
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
             // If there isn't a base writer take the ViewContext.Writer
             if (_originalWriter == null)
             {
@@ -294,8 +299,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// <returns>
         /// A <see cref="Task"/> that on completion writes the <paramref name="tagHelperExecutionContext"/> content.
         /// </returns>
-        public async Task WriteTagHelperAsync([NotNull] TagHelperExecutionContext tagHelperExecutionContext)
+        public async Task WriteTagHelperAsync(TagHelperExecutionContext tagHelperExecutionContext)
         {
+            if (tagHelperExecutionContext == null)
+            {
+                throw new ArgumentNullException(nameof(tagHelperExecutionContext));
+            }
+
             await WriteTagHelperToAsync(Output, tagHelperExecutionContext);
         }
 
@@ -310,9 +320,19 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// to the <paramref name="writer"/>.
         /// </returns>
         public async Task WriteTagHelperToAsync(
-            [NotNull] TextWriter writer,
-            [NotNull] TagHelperExecutionContext tagHelperExecutionContext)
+            TextWriter writer,
+            TagHelperExecutionContext tagHelperExecutionContext)
         {
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if (tagHelperExecutionContext == null)
+            {
+                throw new ArgumentNullException(nameof(tagHelperExecutionContext));
+            }
+
             var tagHelperOutput = tagHelperExecutionContext.Output;
             var isTagNameNullOrWhitespace = string.IsNullOrWhiteSpace(tagHelperOutput.TagName);
 
@@ -392,8 +412,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// For all other types, the encoded result of <see cref="object.ToString"/> is written to the
         /// <paramref name="writer"/>.
         /// </remarks>
-        public virtual void WriteTo([NotNull] TextWriter writer, object value)
+        public virtual void WriteTo(TextWriter writer, object value)
         {
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
             WriteTo(writer, HtmlEncoder, value, escapeQuotes: false);
         }
 
@@ -414,11 +439,21 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// <paramref name="writer"/>.
         /// </remarks>
         public static void WriteTo(
-            [NotNull] TextWriter writer,
-            [NotNull] IHtmlEncoder encoder,
+            TextWriter writer,
+            IHtmlEncoder encoder,
             object value,
             bool escapeQuotes)
         {
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if (encoder == null)
+            {
+                throw new ArgumentNullException(nameof(encoder));
+            }
+
             if (value == null || value == HtmlString.Empty)
             {
                 return;
@@ -455,8 +490,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// </summary>
         /// <param name="writer">The <see cref="TextWriter"/> instance to write to.</param>
         /// <param name="value">The <see cref="string"/> to write.</param>
-        public virtual void WriteTo([NotNull] TextWriter writer, string value)
+        public virtual void WriteTo(TextWriter writer, string value)
         {
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
             WriteTo(writer, HtmlEncoder, value);
         }
 
@@ -482,8 +522,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// </summary>
         /// <param name="writer">The <see cref="TextWriter"/> instance to write to.</param>
         /// <param name="value">The <see cref="object"/> to write.</param>
-        public virtual void WriteLiteralTo([NotNull] TextWriter writer, object value)
+        public virtual void WriteLiteralTo(TextWriter writer, object value)
         {
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
             if (value != null)
             {
                 WriteLiteralTo(writer, value.ToString());
@@ -495,8 +540,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// </summary>
         /// <param name="writer">The <see cref="TextWriter"/> instance to write to.</param>
         /// <param name="value">The <see cref="string"/> to write.</param>
-        public virtual void WriteLiteralTo([NotNull] TextWriter writer, string value)
+        public virtual void WriteLiteralTo(TextWriter writer, string value)
         {
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
             if (!string.IsNullOrEmpty(value))
             {
                 writer.Write(value);
@@ -505,20 +555,45 @@ namespace Microsoft.AspNet.Mvc.Razor
 
         public virtual void WriteAttribute(
             string name,
-            [NotNull] PositionTagged<string> prefix,
-            [NotNull] PositionTagged<string> suffix,
+            PositionTagged<string> prefix,
+            PositionTagged<string> suffix,
             params AttributeValue[] values)
         {
+            if (prefix == null)
+            {
+                throw new ArgumentNullException(nameof(prefix));
+            }
+
+            if (suffix == null)
+            {
+                throw new ArgumentNullException(nameof(suffix));
+            }
+
             WriteAttributeTo(Output, name, prefix, suffix, values);
         }
 
         public virtual void WriteAttributeTo(
-            [NotNull] TextWriter writer,
+            TextWriter writer,
             string name,
-            [NotNull] PositionTagged<string> prefix,
-            [NotNull] PositionTagged<string> suffix,
+            PositionTagged<string> prefix,
+            PositionTagged<string> suffix,
             params AttributeValue[] values)
         {
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if (prefix == null)
+            {
+                throw new ArgumentNullException(nameof(prefix));
+            }
+
+            if (suffix == null)
+            {
+                throw new ArgumentNullException(nameof(suffix));
+            }
+
             if (values.Length == 0)
             {
                 // Explicitly empty attribute, so write the prefix
@@ -623,8 +698,13 @@ namespace Microsoft.AspNet.Mvc.Razor
             }
         }
 
-        public virtual string Href([NotNull] string contentPath)
+        public virtual string Href(string contentPath)
         {
+            if (contentPath == null)
+            {
+                throw new ArgumentNullException(nameof(contentPath));
+            }
+
             if (_urlHelper == null)
             {
                 _urlHelper = Context.RequestServices.GetRequiredService<IUrlHelper>();
@@ -701,8 +781,18 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// </summary>
         /// <param name="name">The name of the section to create.</param>
         /// <param name="section">The <see cref="RenderAsyncDelegate"/> to execute when rendering the section.</param>
-        public void DefineSection([NotNull] string name, [NotNull] RenderAsyncDelegate section)
+        public void DefineSection(string name, RenderAsyncDelegate section)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            if (section == null)
+            {
+                throw new ArgumentNullException(nameof(section));
+            }
+
             if (SectionWriters.ContainsKey(name))
             {
                 throw new InvalidOperationException(Resources.FormatSectionAlreadyDefined(name));
@@ -710,8 +800,13 @@ namespace Microsoft.AspNet.Mvc.Razor
             SectionWriters[name] = section;
         }
 
-        public bool IsSectionDefined([NotNull] string name)
+        public bool IsSectionDefined(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             EnsureMethodCanBeInvoked(nameof(IsSectionDefined));
             return PreviousSectionWriters.ContainsKey(name);
         }
@@ -725,8 +820,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// <remarks>The method writes to the <see cref="Output"/> and the value returned is a token
         /// value that allows the Write (produced due to @RenderSection(..)) to succeed. However the
         /// value does not represent the rendered content.</remarks>
-        public HtmlString RenderSection([NotNull] string name)
+        public HtmlString RenderSection(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             return RenderSection(name, required: true);
         }
 
@@ -740,8 +840,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// <remarks>The method writes to the <see cref="Output"/> and the value returned is a token
         /// value that allows the Write (produced due to @RenderSection(..)) to succeed. However the
         /// value does not represent the rendered content.</remarks>
-        public HtmlString RenderSection([NotNull] string name, bool required)
+        public HtmlString RenderSection(string name, bool required)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             EnsureMethodCanBeInvoked(nameof(RenderSection));
 
             var task = RenderSectionAsyncCore(name, required);
@@ -757,8 +862,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// <remarks>The method writes to the <see cref="Output"/> and the value returned is a token
         /// value that allows the Write (produced due to @RenderSection(..)) to succeed. However the
         /// value does not represent the rendered content.</remarks>
-        public Task<HtmlString> RenderSectionAsync([NotNull] string name)
+        public Task<HtmlString> RenderSectionAsync(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             return RenderSectionAsync(name, required: true);
         }
 
@@ -773,8 +883,13 @@ namespace Microsoft.AspNet.Mvc.Razor
         /// value does not represent the rendered content.</remarks>
         /// <exception cref="InvalidOperationException">if <paramref name="required"/> is <c>true</c> and the section
         /// was not registered using the <c>@section</c> in the Razor page.</exception>
-        public async Task<HtmlString> RenderSectionAsync([NotNull] string name, bool required)
+        public async Task<HtmlString> RenderSectionAsync(string name, bool required)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             EnsureMethodCanBeInvoked(nameof(RenderSectionAsync));
             return await RenderSectionAsyncCore(name, required);
         }

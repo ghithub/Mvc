@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Text;
 using Microsoft.AspNet.Mvc.Razor;
 using Microsoft.AspNet.Razor.Runtime.TagHelpers;
@@ -29,11 +30,26 @@ namespace Microsoft.AspNet.Mvc.TagHelpers
         /// is written to the <paramref name="content"/>.
         /// </remarks>
         public static TagHelperContent Append(
-            [NotNull] this TagHelperContent content,
-            [NotNull] IHtmlEncoder encoder,
-            [NotNull] Encoding encoding,
+            this TagHelperContent content,
+            IHtmlEncoder encoder,
+            Encoding encoding,
             object value)
         {
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+
+            if (encoder == null)
+            {
+                throw new ArgumentNullException(nameof(encoder));
+            }
+
+            if (encoding == null)
+            {
+                throw new ArgumentNullException(nameof(encoding));
+            }
+
             using (var writer = new TagHelperContentWrapperTextWriter(encoding, content))
             {
                 RazorPage.WriteTo(writer, encoder, value, escapeQuotes: true);

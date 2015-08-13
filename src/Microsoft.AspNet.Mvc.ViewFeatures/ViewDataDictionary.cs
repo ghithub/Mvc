@@ -28,10 +28,18 @@ namespace Microsoft.AspNet.Mvc
         /// </param>
         /// <param name="modelState"><see cref="ModelStateDictionary"/> instance for this scope.</param>
         /// <remarks>For use when creating a <see cref="ViewDataDictionary"/> for a new top-level scope.</remarks>
-        public ViewDataDictionary([NotNull] IModelMetadataProvider metadataProvider,
-                                  [NotNull] ModelStateDictionary modelState)
+        public ViewDataDictionary(IModelMetadataProvider metadataProvider,
+                                  ModelStateDictionary modelState)
             : this(metadataProvider, modelState, declaredModelType: typeof(object))
         {
+            if (metadataProvider == null)
+            {
+                throw new ArgumentNullException(nameof(metadataProvider));
+            }
+            if (modelState == null)
+            {
+                throw new ArgumentNullException(nameof(modelState));
+            }
         }
 
         /// <summary>
@@ -44,9 +52,13 @@ namespace Microsoft.AspNet.Mvc
         /// <see cref="Type"/> will not change e.g. when copying from a <see cref="ViewDataDictionary{TModel}"/>
         /// instance to a base <see cref="ViewDataDictionary"/> instance.
         /// </remarks>
-        public ViewDataDictionary([NotNull] ViewDataDictionary source)
+        public ViewDataDictionary(ViewDataDictionary source)
             : this(source, source.Model, source._declaredModelType)
         {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
         }
 
         /// <summary>
@@ -61,9 +73,13 @@ namespace Microsoft.AspNet.Mvc
         /// <see cref="Model"/> is known. In this case, <see cref="object"/> is the best possible guess about the
         /// declared type when <paramref name="model"/> is <c>null</c>.
         /// </remarks>
-        public ViewDataDictionary([NotNull] ViewDataDictionary source, object model)
+        public ViewDataDictionary(ViewDataDictionary source, object model)
             : this(source, model, declaredModelType: typeof(object))
         {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
         }
 
         /// <summary>
@@ -74,9 +90,13 @@ namespace Microsoft.AspNet.Mvc
         /// <see cref="ViewDataDictionary.ModelMetadata"/> values.
         /// </param>
         /// <remarks>Internal for testing.</remarks>
-        internal ViewDataDictionary([NotNull] IModelMetadataProvider metadataProvider)
+        internal ViewDataDictionary(IModelMetadataProvider metadataProvider)
             : this(metadataProvider, new ModelStateDictionary())
         {
+            if (metadataProvider == null)
+            {
+                throw new ArgumentNullException(nameof(metadataProvider));
+            }
         }
 
         /// <summary>
@@ -94,10 +114,18 @@ namespace Microsoft.AspNet.Mvc
         /// For use when creating a derived <see cref="ViewDataDictionary"/> for a new top-level scope.
         /// </remarks>
         protected ViewDataDictionary(
-            [NotNull] IModelMetadataProvider metadataProvider,
-            [NotNull] Type declaredModelType)
+            IModelMetadataProvider metadataProvider,
+            Type declaredModelType)
             : this(metadataProvider, new ModelStateDictionary(), declaredModelType)
         {
+            if (metadataProvider == null)
+            {
+                throw new ArgumentNullException(nameof(metadataProvider));
+            }
+            if (declaredModelType == null)
+            {
+                throw new ArgumentNullException(nameof(declaredModelType));
+            }
         }
 
         /// <summary>
@@ -116,15 +144,30 @@ namespace Microsoft.AspNet.Mvc
         /// For use when creating a derived <see cref="ViewDataDictionary"/> for a new top-level scope.
         /// </remarks>
         protected ViewDataDictionary(
-            [NotNull] IModelMetadataProvider metadataProvider,
-            [NotNull] ModelStateDictionary modelState,
-            [NotNull] Type declaredModelType)
+            IModelMetadataProvider metadataProvider,
+            ModelStateDictionary modelState,
+            Type declaredModelType)
             : this(metadataProvider,
                    modelState,
                    declaredModelType,
                    data: new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase),
                    templateInfo: new TemplateInfo())
         {
+            if (metadataProvider == null)
+            {
+                throw new ArgumentNullException(nameof(metadataProvider));
+            }
+
+            if (modelState == null)
+            {
+                throw new ArgumentNullException(nameof(modelState));
+            }
+
+            if (declaredModelType == null)
+            {
+                throw new ArgumentNullException(nameof(declaredModelType));
+            }
+
             // This is the core constructor called when Model is unknown. Base ModelMetadata on the declared type.
             ModelExplorer = _metadataProvider.GetModelExplorerForType(declaredModelType, model: null);
         }
@@ -151,9 +194,13 @@ namespace Microsoft.AspNet.Mvc
         /// <see cref="ViewDataDictionary(ViewDataDictionary, object, Type)"/> to ignore <c>source.Model</c>.
         /// </para>
         /// </remarks>
-        protected ViewDataDictionary([NotNull] ViewDataDictionary source, Type declaredModelType)
+        protected ViewDataDictionary(ViewDataDictionary source, Type declaredModelType)
             : this(source, model: source.Model, declaredModelType: declaredModelType)
         {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
         }
 
         /// <summary>
@@ -177,13 +224,18 @@ namespace Microsoft.AspNet.Mvc
         /// <paramref name="declaredModelType"/>.
         /// </para>
         /// </remarks>
-        protected ViewDataDictionary([NotNull] ViewDataDictionary source, object model, Type declaredModelType)
+        protected ViewDataDictionary(ViewDataDictionary source, object model, Type declaredModelType)
             : this(source._metadataProvider,
                    new ModelStateDictionary(source.ModelState),
                    declaredModelType,
                    data: new CopyOnWriteDictionary<string, object>(source, StringComparer.OrdinalIgnoreCase),
                    templateInfo: new TemplateInfo(source.TemplateInfo))
         {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
             // This is the core constructor called when Model is known.
             var modelType = GetModelType(model);
             if (modelType == source.ModelMetadata.ModelType && model == source.ModelExplorer.Model)
@@ -427,8 +479,13 @@ namespace Microsoft.AspNet.Mvc
             return (value == null) ? _declaredModelType : value.GetType();
         }
 
-        private static bool IsCompatibleWith([NotNull] Type type, object value)
+        private static bool IsCompatibleWith(Type type, object value)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
             if (value == null)
             {
                 return !type.GetTypeInfo().IsValueType || Nullable.GetUnderlyingType(type) != null;
@@ -440,27 +497,47 @@ namespace Microsoft.AspNet.Mvc
         }
 
         #region IDictionary methods
-        public void Add([NotNull] string key, object value)
+        public void Add(string key, object value)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
             _data.Add(key, value);
         }
 
-        public bool ContainsKey([NotNull] string key)
+        public bool ContainsKey(string key)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
             return _data.ContainsKey(key);
         }
 
-        public bool Remove([NotNull] string key)
+        public bool Remove(string key)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
             return _data.Remove(key);
         }
 
-        public bool TryGetValue([NotNull] string key, out object value)
+        public bool TryGetValue(string key, out object value)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
             return _data.TryGetValue(key, out value);
         }
 
-        public void Add([NotNull] KeyValuePair<string, object> item)
+        public void Add(KeyValuePair<string, object> item)
         {
             _data.Add(item);
         }
@@ -470,17 +547,22 @@ namespace Microsoft.AspNet.Mvc
             _data.Clear();
         }
 
-        public bool Contains([NotNull] KeyValuePair<string, object> item)
+        public bool Contains(KeyValuePair<string, object> item)
         {
             return _data.Contains(item);
         }
 
-        public void CopyTo([NotNull] KeyValuePair<string, object>[] array, int arrayIndex)
+        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             _data.CopyTo(array, arrayIndex);
         }
 
-        public bool Remove([NotNull] KeyValuePair<string, object> item)
+        public bool Remove(KeyValuePair<string, object> item)
         {
             return _data.Remove(item);
         }

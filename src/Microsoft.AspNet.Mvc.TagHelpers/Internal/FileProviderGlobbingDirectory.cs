@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNet.FileProviders;
 using Microsoft.Framework.FileSystemGlobbing.Abstractions;
@@ -17,10 +18,15 @@ namespace Microsoft.AspNet.Mvc.TagHelpers.Internal
         private readonly bool _isRoot;
 
         public FileProviderGlobbingDirectory(
-            [NotNull] IFileProvider fileProvider,
+            IFileProvider fileProvider,
             IFileInfo fileInfo,
             FileProviderGlobbingDirectory parent)
         {
+            if (fileProvider == null)
+            {
+                throw new ArgumentNullException(nameof(fileProvider));
+            }
+
             _fileProvider = fileProvider;
             _fileInfo = fileInfo;
             _parent = parent;
@@ -54,7 +60,7 @@ namespace Microsoft.AspNet.Mvc.TagHelpers.Internal
                     // We're the root, so just use our name
                     return Name;
                 }
-                
+
                 return _parent.FullName + DirectorySeparatorChar + Name;
             }
         }

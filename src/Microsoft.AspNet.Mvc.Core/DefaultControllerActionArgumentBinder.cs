@@ -68,10 +68,25 @@ namespace Microsoft.AspNet.Mvc
         }
 
         public async Task<ModelBindingResult> BindModelAsync(
-            [NotNull] ParameterDescriptor parameter,
-            [NotNull] ModelStateDictionary modelState,
-            [NotNull] OperationBindingContext operationContext)
+            ParameterDescriptor parameter,
+            ModelStateDictionary modelState,
+            OperationBindingContext operationContext)
         {
+            if (parameter == null)
+            {
+                throw new ArgumentNullException(nameof(parameter));
+            }
+
+            if (modelState == null)
+            {
+                throw new ArgumentNullException(nameof(modelState));
+            }
+
+            if (operationContext == null)
+            {
+                throw new ArgumentNullException(nameof(operationContext));
+            }
+
             var metadata = _modelMetadataProvider.GetMetadataForType(parameter.ParameterType);
             var modelBindingContext = GetModelBindingContext(
                 parameter.Name,
@@ -219,8 +234,13 @@ namespace Microsoft.AspNet.Mvc
             };
         }
 
-        private static bool AllowsNullValue([NotNull] Type type)
+        private static bool AllowsNullValue(Type type)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
             return !type.GetTypeInfo().IsValueType || Nullable.GetUnderlyingType(type) != null;
         }
     }

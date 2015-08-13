@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Threading.Tasks;
 using Microsoft.Framework.Internal;
 
@@ -21,6 +22,6 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </summary>
         /// <param name="context">The <see cref="ViewContext"/>.</param>
         /// <returns>A <see cref="Task"/> that on completion renders the view.</returns>
-        Task RenderAsync([NotNull] ViewContext context);
+        Task RenderAsync(ViewContext context);
     }
 }

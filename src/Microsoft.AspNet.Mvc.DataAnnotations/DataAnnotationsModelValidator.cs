@@ -11,8 +11,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Validation
 {
     public class DataAnnotationsModelValidator : IModelValidator
     {
-        public DataAnnotationsModelValidator([NotNull] ValidationAttribute attribute)
+        public DataAnnotationsModelValidator(ValidationAttribute attribute)
         {
+            if (attribute == null)
+            {
+                throw new ArgumentNullException(nameof(attribute));
+            }
+
             Attribute = attribute;
         }
 

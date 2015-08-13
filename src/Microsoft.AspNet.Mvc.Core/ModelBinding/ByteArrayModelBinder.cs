@@ -13,8 +13,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
     public class ByteArrayModelBinder : IModelBinder
     {
         /// <inheritdoc />
-        public async Task<ModelBindingResult> BindModelAsync([NotNull] ModelBindingContext bindingContext)
+        public async Task<ModelBindingResult> BindModelAsync(ModelBindingContext bindingContext)
         {
+            if (bindingContext == null)
+            {
+                throw new ArgumentNullException(nameof(bindingContext));
+            }
+
             // Check if this binder applies.
             if (bindingContext.ModelType != typeof(byte[]))
             {

@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
@@ -20,9 +21,14 @@ namespace System.Web.Http
         /// <param name="includeErrorDetail">
         /// <see langword="true"/> if the error should include exception messages; otherwise, <see langword="false"/>.
         /// </param>
-        public InvalidModelStateResult([NotNull] ModelStateDictionary modelState, bool includeErrorDetail)
+        public InvalidModelStateResult(ModelStateDictionary modelState, bool includeErrorDetail)
             : base(new HttpError(modelState, includeErrorDetail))
         {
+            if (modelState == null)
+            {
+                throw new ArgumentNullException(nameof(modelState));
+            }
+
             ModelState = modelState;
             IncludeErrorDetail = includeErrorDetail;
         }

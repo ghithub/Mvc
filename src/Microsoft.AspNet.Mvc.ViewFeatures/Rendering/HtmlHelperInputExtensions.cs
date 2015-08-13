@@ -49,8 +49,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// value "checked" if the <see cref="bool"/> values is <c>true</c>; does not include the attribute otherwise.
         /// </para>
         /// </remarks>
-        public static IHtmlContent CheckBox([NotNull] this IHtmlHelper htmlHelper, string expression)
+        public static IHtmlContent CheckBox(this IHtmlHelper htmlHelper, string expression)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.CheckBox(expression, isChecked: null, htmlAttributes: null);
         }
 
@@ -93,10 +98,15 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent CheckBox(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             bool isChecked)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.CheckBox(expression, isChecked, htmlAttributes: null);
         }
 
@@ -143,10 +153,15 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent CheckBox(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             object htmlAttributes)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.CheckBox(expression, isChecked: null, htmlAttributes: htmlAttributes);
         }
 
@@ -181,9 +196,19 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent CheckBoxFor<TModel>(
-            [NotNull] this IHtmlHelper<TModel> htmlHelper,
-            [NotNull] Expression<Func<TModel, bool>> expression)
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, bool>> expression)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return htmlHelper.CheckBoxFor(expression, htmlAttributes: null);
         }
 
@@ -218,8 +243,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// <item>Otherwise, <c>string.Empty</c>.</item>
         /// </list>
         /// </remarks>
-        public static IHtmlContent Hidden([NotNull] this IHtmlHelper htmlHelper, string expression)
+        public static IHtmlContent Hidden(this IHtmlHelper htmlHelper, string expression)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Hidden(expression, value: null, htmlAttributes: null);
         }
 
@@ -257,10 +287,15 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent Hidden(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             object value)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Hidden(expression, value, htmlAttributes: null);
         }
 
@@ -292,9 +327,19 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent HiddenFor<TModel, TResult>(
-            [NotNull] this IHtmlHelper<TModel> htmlHelper,
-            [NotNull] Expression<Func<TModel, TResult>> expression)
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return htmlHelper.HiddenFor(expression, htmlAttributes: null);
         }
 
@@ -309,8 +354,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// &lt;input&gt; element's "name" attribute. Sanitizes <paramref name="expression"/> to set element's "id"
         /// attribute. Sets &lt;input&gt; element's "value" attribute to <c>string.Empty</c>.
         /// </remarks>
-        public static IHtmlContent Password([NotNull] this IHtmlHelper htmlHelper, string expression)
+        public static IHtmlContent Password(this IHtmlHelper htmlHelper, string expression)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Password(expression, value: null, htmlAttributes: null);
         }
 
@@ -334,10 +384,15 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent Password(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             object value)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.Password(expression, value, htmlAttributes: null);
         }
 
@@ -365,9 +420,19 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent PasswordFor<TModel, TResult>(
-            [NotNull] this IHtmlHelper<TModel> htmlHelper,
-            [NotNull] Expression<Func<TModel, TResult>> expression)
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return htmlHelper.PasswordFor(expression, htmlAttributes: null);
         }
 
@@ -410,10 +475,15 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent RadioButton(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             object value)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.RadioButton(expression, value, isChecked: null, htmlAttributes: null);
         }
 
@@ -471,11 +541,16 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent RadioButton(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             object value,
             object htmlAttributes)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.RadioButton(expression, value, isChecked: null, htmlAttributes: htmlAttributes);
         }
 
@@ -531,11 +606,16 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent RadioButton(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             object value,
             bool isChecked)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.RadioButton(expression, value, isChecked, htmlAttributes: null);
         }
 
@@ -573,10 +653,25 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </para>
         /// </remarks>
         public static IHtmlContent RadioButtonFor<TModel, TResult>(
-            [NotNull] this IHtmlHelper<TModel> htmlHelper,
-            [NotNull] Expression<Func<TModel, TResult>> expression,
-            [NotNull] object value)
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression,
+            object value)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             return htmlHelper.RadioButtonFor(expression, value, htmlAttributes: null);
         }
 
@@ -611,8 +706,13 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// <item>Otherwise, <c>string.Empty</c>.</item>
         /// </list>
         /// </remarks>
-        public static IHtmlContent TextBox([NotNull] this IHtmlHelper htmlHelper, string expression)
+        public static IHtmlContent TextBox(this IHtmlHelper htmlHelper, string expression)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.TextBox(expression, value: null, format: null, htmlAttributes: null);
         }
 
@@ -652,10 +752,15 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent TextBox(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             object value)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.TextBox(expression, value, format: null, htmlAttributes: null);
         }
 
@@ -703,11 +808,16 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent TextBox(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             object value,
             string format)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.TextBox(expression, value, format, htmlAttributes: null);
         }
 
@@ -753,11 +863,16 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent TextBox(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             object value,
             object htmlAttributes)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.TextBox(expression, value, format: null, htmlAttributes: htmlAttributes);
         }
 
@@ -788,9 +903,19 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent TextBoxFor<TModel, TResult>(
-            [NotNull] this IHtmlHelper<TModel> htmlHelper,
-            [NotNull] Expression<Func<TModel, TResult>> expression)
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return htmlHelper.TextBoxFor(expression, format: null, htmlAttributes: null);
         }
 
@@ -826,10 +951,20 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent TextBoxFor<TModel, TResult>(
-            [NotNull] this IHtmlHelper<TModel> htmlHelper,
-            [NotNull] Expression<Func<TModel, TResult>> expression,
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression,
             string format)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return htmlHelper.TextBoxFor(expression, format, htmlAttributes: null);
         }
 
@@ -866,10 +1001,20 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent TextBoxFor<TModel, TResult>(
-            [NotNull] this IHtmlHelper<TModel> htmlHelper,
-            [NotNull] Expression<Func<TModel, TResult>> expression,
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression,
             object htmlAttributes)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return htmlHelper.TextBoxFor(expression, format: null, htmlAttributes: htmlAttributes);
         }
 
@@ -905,9 +1050,14 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent TextArea(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.TextArea(expression, value: null, rows: 0, columns: 0, htmlAttributes: null);
         }
 
@@ -948,10 +1098,15 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent TextArea(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             object htmlAttributes)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.TextArea(expression, value: null, rows: 0, columns: 0, htmlAttributes: htmlAttributes);
         }
 
@@ -989,10 +1144,15 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent TextArea(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             string value)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.TextArea(expression, value, rows: 0, columns: 0, htmlAttributes: null);
         }
 
@@ -1035,11 +1195,16 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent TextArea(
-            [NotNull] this IHtmlHelper htmlHelper,
+            this IHtmlHelper htmlHelper,
             string expression,
             string value,
             object htmlAttributes)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
             return htmlHelper.TextArea(expression, value, rows: 0, columns: 0, htmlAttributes: htmlAttributes);
         }
 
@@ -1070,9 +1235,19 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent TextAreaFor<TModel, TResult>(
-            [NotNull] this IHtmlHelper<TModel> htmlHelper,
-            [NotNull] Expression<Func<TModel, TResult>> expression)
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return htmlHelper.TextAreaFor(expression, rows: 0, columns: 0, htmlAttributes: null);
         }
 
@@ -1108,10 +1283,20 @@ namespace Microsoft.AspNet.Mvc.Rendering
         /// </list>
         /// </remarks>
         public static IHtmlContent TextAreaFor<TModel, TResult>(
-            [NotNull] this IHtmlHelper<TModel> htmlHelper,
-            [NotNull] Expression<Func<TModel, TResult>> expression,
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression,
             object htmlAttributes)
         {
+            if (htmlHelper == null)
+            {
+                throw new ArgumentNullException(nameof(htmlHelper));
+            }
+
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return htmlHelper.TextAreaFor(expression, rows: 0, columns: 0, htmlAttributes: htmlAttributes);
         }
     }

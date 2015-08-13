@@ -16,9 +16,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// exception <paramref name="message"/>.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        public TooManyModelErrorsException([NotNull] string message)
+        public TooManyModelErrorsException(string message)
             : base(message)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
         }
     }
 }

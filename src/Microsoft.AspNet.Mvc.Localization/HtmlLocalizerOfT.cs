@@ -1,6 +1,7 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Microsoft.Framework.Internal;
@@ -33,24 +34,24 @@ namespace Microsoft.AspNet.Mvc.Localization
             _localizer[key, arguments];
 
         /// <inheritdoc />
-        public virtual IHtmlLocalizer WithCulture([NotNull] CultureInfo culture) => _localizer.WithCulture(culture);
+        public virtual IHtmlLocalizer WithCulture(CultureInfo culture) => _localizer.WithCulture(culture);
 
         /// <inheritdoc />
-        IStringLocalizer IStringLocalizer.WithCulture([NotNull] CultureInfo culture) =>
+        IStringLocalizer IStringLocalizer.WithCulture(CultureInfo culture) =>
             _localizer.WithCulture(culture);
 
         /// <inheritdoc />
-        public virtual LocalizedString GetString([NotNull] string key) => _localizer.GetString(key);
+        public virtual LocalizedString GetString(string key) => _localizer.GetString(key);
 
         /// <inheritdoc />
-        public virtual LocalizedString GetString([NotNull] string key, params object[] arguments) =>
+        public virtual LocalizedString GetString(string key, params object[] arguments) =>
             _localizer.GetString(key, arguments);
 
         /// <inheritdoc />
-        public virtual LocalizedHtmlString Html([NotNull] string key) => _localizer.Html(key);
+        public virtual LocalizedHtmlString Html(string key) => _localizer.Html(key);
 
         /// <inheritdoc />
-        public virtual LocalizedHtmlString Html([NotNull] string key, params object[] arguments) =>
+        public virtual LocalizedHtmlString Html(string key, params object[] arguments) =>
             _localizer.Html(key, arguments);
 
         /// <inheritdoc />
