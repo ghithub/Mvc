@@ -17,6 +17,8 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
     /// </summary>
     public class HeaderModelBinder : BindingSourceModelBinder
     {
+        public static readonly string ModelStatePrefix = "$header";
+
         /// <summary>
         /// Creates a new <see cref="HeaderModelBinder"/>.
         /// </summary>
@@ -62,7 +64,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
                     model);
                 
                 bindingContext.ModelState.SetModelValue(
-                    bindingContext.ModelName, 
+                    ModelNames.CreatePropertyModelName(ModelStatePrefix, headerName), 
                     request.Headers.GetCommaSeparatedValues(headerName).ToArray(), 
                     request.Headers.Get(headerName));
             }

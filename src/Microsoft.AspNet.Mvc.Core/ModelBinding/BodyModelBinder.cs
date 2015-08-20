@@ -15,6 +15,8 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
     /// </summary>
     public class BodyModelBinder : BindingSourceModelBinder
     {
+        public static readonly string ModelStateKey = "$body";
+
         /// <summary>
         /// Creates a new <see cref="BodyModelBinder"/>.
         /// </summary>
@@ -27,11 +29,6 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         protected async override Task<ModelBindingResult> BindModelCoreAsync(
             [NotNull] ModelBindingContext bindingContext)
         {
-            // For compatibility with MVC 5.0 for top level object we want to consider an empty key instead of
-            // the parameter name/a custom name. In all other cases (like when binding body to a property) we
-            // consider the entire ModelName as a prefix.
-            var modelBindingKey = bindingContext.IsTopLevelObject ? string.Empty : bindingContext.ModelName;
-
             var httpContext = bindingContext.OperationBindingContext.HttpContext;
 
             var formatterContext = new InputFormatterContext(
@@ -45,12 +42,12 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
             {
                 var unsupportedContentType = Resources.FormatUnsupportedContentType(
                     bindingContext.OperationBindingContext.HttpContext.Request.ContentType);
-                bindingContext.ModelState.AddModelError(modelBindingKey, unsupportedContentType);
+                bindingContext.ModelState.AddModelError(ModelStateKey, unsupportedContentType);
 
                 // This model binder is the only handler for the Body binding source and it cannot run twice. Always
                 // tell the model binding system to skip other model binders and never to fall back i.e. indicate a
                 // fatal error.
-                return new ModelBindingResult(modelBindingKey);
+                return new ModelBindingResult(ModelStateKey);
             }
 
             try
@@ -62,31 +59,28 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
                 {
                     // Formatter added an error. Do not use the model it returned. As above, tell the model binding
                     // system to skip other model binders and never to fall back.
-                    return new ModelBindingResult(modelBindingKey);
+                    return new ModelBindingResult(ModelStateKey);
                 }
-                
-                // We don't have anything useful to put in model state.
-                bindingContext.ModelState.SetModelValue(modelBindingKey, rawValue: null, attemptedValue: null);
 
-                var validationNode = new ModelValidationNode(modelBindingKey, bindingContext.ModelMetadata, model)
+                var validationNode = new ModelValidationNode(ModelStateKey, bindingContext.ModelMetadata, model)
                 {
                     ValidateAllProperties = true
                 };
 
                 return new ModelBindingResult(
                     model,
-                    key: modelBindingKey,
+                    key: ModelStateKey,
                     isModelSet: true,
                     validationNode: validationNode);
             }
             catch (Exception ex)
             {
-                bindingContext.ModelState.AddModelError(modelBindingKey, ex);
+                bindingContext.ModelState.AddModelError(ModelStateKey, ex);
 
                 // This model binder is the only handler for the Body binding source and it cannot run twice. Always
                 // tell the model binding system to skip other model binders and never to fall back i.e. indicate a
                 // fatal error.
-                return new ModelBindingResult(modelBindingKey);
+                return new ModelBindingResult(ModelStateKey);
             }
         }
     }
