@@ -58,7 +58,7 @@ namespace Microsoft.AspNet.Mvc.IntegrationTests
             var boundPerson = Assert.IsType<Person>(modelBindingResult.Model);
             Assert.NotNull(boundPerson);
             var key = Assert.Single(modelState.Keys);
-            Assert.Equal("CustomParameter.Address", key);
+            Assert.Equal("$body", key);
             Assert.False(modelState.IsValid);
             var error = Assert.Single(modelState[key].Errors);
             // Mono issue - https://github.com/aspnet/External/issues/19
@@ -101,7 +101,7 @@ namespace Microsoft.AspNet.Mvc.IntegrationTests
 
             Assert.True(modelState.IsValid);
             var entry = Assert.Single(modelState);
-            Assert.Empty(entry.Key);
+            Assert.Equal("$body", entry.Key);
             Assert.Null(entry.Value.RawValue);
         }
 
@@ -205,10 +205,10 @@ namespace Microsoft.AspNet.Mvc.IntegrationTests
 
             Assert.False(modelState.IsValid);
             Assert.Equal(2, modelState.Keys.Count);
-            var address = Assert.Single(modelState, kvp => kvp.Key == "CustomParameter.Address").Value;
+            var address = Assert.Single(modelState, kvp => kvp.Key == "$body").Value;
             Assert.Equal(ModelValidationState.Unvalidated, address.ValidationState);
 
-            var street = Assert.Single(modelState, kvp => kvp.Key == "CustomParameter.Address.Street").Value;
+            var street = Assert.Single(modelState, kvp => kvp.Key == "$body.Street").Value;
             Assert.Equal(ModelValidationState.Invalid, street.ValidationState);
             var error = Assert.Single(street.Errors);
             // Mono issue - https://github.com/aspnet/External/issues/19
@@ -263,7 +263,7 @@ namespace Microsoft.AspNet.Mvc.IntegrationTests
 
             Assert.True(modelState.IsValid);
             var entry = Assert.Single(modelState);
-            Assert.Equal("CustomParameter.Address", entry.Key);
+            Assert.Equal("$body", entry.Key);
         }
     }
 }

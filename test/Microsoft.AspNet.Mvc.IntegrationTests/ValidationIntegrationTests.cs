@@ -1084,7 +1084,7 @@ namespace Microsoft.AspNet.Mvc.IntegrationTests
             Assert.Equal(new string[] { "46" }, entry.RawValue);
             Assert.Equal(ModelValidationState.Skipped, entry.ValidationState);
 
-            entry = Assert.Single(modelState, e => e.Key == "OfficeAddress").Value;
+            entry = Assert.Single(modelState, e => e.Key == "$body").Value;
             Assert.Null(entry.AttemptedValue);
             Assert.Null(entry.RawValue);
 

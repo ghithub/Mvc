@@ -106,7 +106,7 @@ namespace Microsoft.AspNet.Mvc.IntegrationTests
             // ModelState
             Assert.True(modelState.IsValid);
             var entry = Assert.Single(modelState);
-            Assert.Equal("prefix.Address.Header", entry.Key);
+            Assert.Equal("$header.Header", entry.Key);
             Assert.Empty(entry.Value.Errors);
             Assert.Equal(ModelValidationState.Valid, entry.Value.ValidationState);
             Assert.Equal("someValue", entry.Value.AttemptedValue);
@@ -149,7 +149,7 @@ namespace Microsoft.AspNet.Mvc.IntegrationTests
             // ModelState
             Assert.True(modelState.IsValid);
             var entry = Assert.Single(modelState);
-            Assert.Equal("Address.Header", entry.Key);
+            Assert.Equal("$header.Header", entry.Key);
             Assert.Empty(entry.Value.Errors);
             Assert.Equal(ModelValidationState.Valid, entry.Value.ValidationState);
             Assert.Equal("someValue", entry.Value.AttemptedValue);
@@ -210,7 +210,7 @@ namespace Microsoft.AspNet.Mvc.IntegrationTests
             // ModelState
             Assert.True(modelState.IsValid);
             var entry = Assert.Single(modelState);
-            Assert.Equal("CustomParameter", entry.Key);
+            Assert.Equal("$header.CustomParameter", entry.Key);
             Assert.Empty(entry.Value.Errors);
             Assert.Equal(ModelValidationState.Valid, entry.Value.ValidationState);
             Assert.Equal(value, entry.Value.AttemptedValue);

@@ -62,6 +62,9 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
                     return new ModelBindingResult(ModelStateKey);
                 }
 
+                // Add a model state entry so we can track validation state for the model.
+                bindingContext.ModelState.SetModelValue(ModelStateKey, rawValue: null, attemptedValue: null);
+
                 var validationNode = new ModelValidationNode(ModelStateKey, bindingContext.ModelMetadata, model)
                 {
                     ValidateAllProperties = true

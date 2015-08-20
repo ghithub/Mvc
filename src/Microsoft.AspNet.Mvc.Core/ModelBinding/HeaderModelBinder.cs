@@ -58,13 +58,14 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
             ModelValidationNode validationNode = null;
             if (model != null)
             {
+                var modelStateKey = ModelNames.CreatePropertyModelName(ModelStatePrefix, headerName);
                 validationNode = new ModelValidationNode(
-                    bindingContext.ModelName,
+                    modelStateKey,
                     bindingContext.ModelMetadata,
                     model);
                 
                 bindingContext.ModelState.SetModelValue(
-                    ModelNames.CreatePropertyModelName(ModelStatePrefix, headerName), 
+                    modelStateKey, 
                     request.Headers.GetCommaSeparatedValues(headerName).ToArray(), 
                     request.Headers.Get(headerName));
             }

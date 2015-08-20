@@ -83,7 +83,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
 
             // Key is empty because this was a top-level binding.
             var entry = Assert.Single(bindingContext.ModelState);
-            Assert.Equal(string.Empty, entry.Key);
+            Assert.Equal("$body", entry.Key);
             Assert.Single(entry.Value.Errors);
         }
 
@@ -179,7 +179,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
 
             // Key is empty because this was a top-level binding.
             var entry = Assert.Single(bindingContext.ModelState);
-            Assert.Equal(string.Empty, entry.Key);
+            Assert.Equal("$body", entry.Key);
             var errorMessage = Assert.Single(entry.Value.Errors).Exception.Message;
             Assert.Equal("Your input is bad!", errorMessage);
         }
@@ -216,7 +216,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
 
             // Key is empty because this was a top-level binding.
             var entry = Assert.Single(bindingContext.ModelState);
-            Assert.Equal(string.Empty, entry.Key);
+            Assert.Equal("$body", entry.Key);
             var errorMessage = Assert.Single(entry.Value.Errors).ErrorMessage;
             Assert.Equal("Unsupported content type 'text/xyz'.", errorMessage);
         }

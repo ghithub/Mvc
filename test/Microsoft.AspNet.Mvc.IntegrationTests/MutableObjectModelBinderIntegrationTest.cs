@@ -85,7 +85,7 @@ namespace Microsoft.AspNet.Mvc.IntegrationTests
             Assert.Equal("bill", entry.AttemptedValue);
             Assert.Equal(new string[] { "bill" }, entry.RawValue);
 
-            entry = Assert.Single(modelState, e => e.Key == "parameter.Customer.Address").Value;
+            entry = Assert.Single(modelState, e => e.Key == "$body").Value;
             Assert.Null(entry.AttemptedValue); // ModelState entries for body don't include original text.
             Assert.Null(entry.RawValue); // ModelState entries for body don't include original text.
         }
@@ -131,7 +131,7 @@ namespace Microsoft.AspNet.Mvc.IntegrationTests
             Assert.Equal("bill", entry.AttemptedValue);
             Assert.Equal(new string[] { "bill" }, entry.RawValue);
 
-            entry = Assert.Single(modelState, e => e.Key == "Customer.Address").Value;
+            entry = Assert.Single(modelState, e => e.Key == "$body").Value;
             Assert.Null(entry.AttemptedValue); // ModelState entries for body don't include original text.
             Assert.Null(entry.RawValue); // ModelState entries for body don't include original text.
         }
@@ -172,7 +172,7 @@ namespace Microsoft.AspNet.Mvc.IntegrationTests
             Assert.Equal(0, modelState.ErrorCount);
             Assert.True(modelState.IsValid);
 
-            var entry = Assert.Single(modelState, e => e.Key == "parameter.Customer.Address").Value;
+            var entry = Assert.Single(modelState, e => e.Key == "$body").Value;
             Assert.Null(entry.AttemptedValue);
             Assert.Null(entry.RawValue);
             entry = Assert.Single(modelState, e => e.Key == "parameter.Customer.Name").Value;
@@ -1566,7 +1566,7 @@ namespace Microsoft.AspNet.Mvc.IntegrationTests
             Assert.Equal(0, modelState.ErrorCount);
             Assert.True(modelState.IsValid);
 
-            var entry = Assert.Single(modelState, e => e.Key == "Customer.Address").Value;
+            var entry = Assert.Single(modelState, e => e.Key == "$body").Value;
             Assert.Null(entry.AttemptedValue);
             Assert.Null(entry.RawValue); // ModelState entries for body don't include original text.
         }
