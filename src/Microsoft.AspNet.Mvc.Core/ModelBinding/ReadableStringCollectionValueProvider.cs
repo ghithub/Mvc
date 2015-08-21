@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Primitives;
 using Microsoft.Framework.Internal;
 
 namespace Microsoft.AspNet.Mvc.ModelBinding
@@ -81,16 +82,16 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         public override async Task<ValueProviderResult> GetValueAsync([NotNull] string key)
         {
             var collection = await GetValueCollectionAsync();
-            var values = collection.GetValues(key);
+            var values = collection[key];
 
             ValueProviderResult result;
-            if (values == null)
+            if (values.Count == 0)
             {
                 result = ValueProviderResult.None;
             }
             else
             {
-                result = new ValueProviderResult(values.ToArray(), _culture);
+                result = new ValueProviderResult(values, _culture);
             }
 
             return result;

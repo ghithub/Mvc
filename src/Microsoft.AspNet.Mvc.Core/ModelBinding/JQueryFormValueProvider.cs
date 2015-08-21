@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Primitives;
 using Microsoft.Framework.Internal;
 
 namespace Microsoft.AspNet.Mvc.ModelBinding
@@ -16,10 +17,10 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
     /// </summary>
     public class JQueryFormValueProvider : BindingSourceValueProvider, IEnumerableValueProvider
     {
-        private readonly Func<Task<IDictionary<string, string[]>>> _valuesFactory;
+        private readonly Func<Task<IDictionary<string, StringValues>>> _valuesFactory;
 
         private PrefixContainer _prefixContainer;
-        private IDictionary<string, string[]> _values;
+        private IDictionary<string, StringValues> _values;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DictionaryBasedValueProvider"/> class.
@@ -29,7 +30,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         /// <param name="culture">The culture to return with ValueProviderResult instances.</param>
         public JQueryFormValueProvider(
             [NotNull] BindingSource bindingSource,
-            [NotNull] Func<Task<IDictionary<string, string[]>>> valuesFactory,
+            [NotNull] Func<Task<IDictionary<string, StringValues>>> valuesFactory,
             CultureInfo culture)
             : base(bindingSource)
         {
@@ -40,7 +41,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         // Internal for testing.
         internal JQueryFormValueProvider(
             [NotNull] BindingSource bindingSource,
-            [NotNull] IDictionary<string, string[]> values,
+            [NotNull] IDictionary<string, StringValues> values,
             CultureInfo culture)
             : base(bindingSource)
         {
@@ -70,8 +71,8 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         {
             var dictionary = await GetDictionary();
 
-            string[] values;
-            if (dictionary.TryGetValue(key, out values) && values != null && values.Length > 0)
+            StringValues values;
+            if (dictionary.TryGetValue(key, out values) && values.Count > 0)
             {
                 return new ValueProviderResult(values, Culture);
             }
@@ -79,7 +80,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
             return ValueProviderResult.None;
         }
 
-        private async Task<IDictionary<string, string[]>> GetDictionary()
+        private async Task<IDictionary<string, StringValues>> GetDictionary()
         {
             if (_values == null)
             {

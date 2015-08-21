@@ -15,7 +15,6 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
 
             // Assert
             Assert.Equal(0, result.Length);
-            Assert.Null(result.Value);
             Assert.Empty(result.Values);
             Assert.Null(result.FirstValue);
             Assert.Equal(ValueProviderResult.None, result);
@@ -31,7 +30,6 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
 
             // Assert
             Assert.Equal(0, result.Length);
-            Assert.Null(result.Value);
             Assert.Empty(result.Values);
             Assert.Null(result.FirstValue);
             Assert.Equal(ValueProviderResult.None, result);
@@ -47,7 +45,6 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
 
             // Assert
             Assert.Equal(0, result.Length);
-            Assert.Null(result.Value);
             Assert.Empty(result.Values);
             Assert.Null(result.FirstValue);
             Assert.Equal(ValueProviderResult.None, result);
@@ -63,8 +60,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
 
             // Assert
             Assert.Equal(1, result.Length);
-            Assert.Equal("Hi There", result.Value);
-            Assert.Null(result.Values);
+            Assert.Equal("Hi There", result.Values);
             Assert.Equal("Hi There", result.FirstValue);
             Assert.NotEqual(ValueProviderResult.None, result);
             Assert.Equal("Hi There", (string)result);
@@ -79,7 +75,6 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
 
             // Assert
             Assert.Equal(2, result.Length);
-            Assert.Null(result.Value);
             Assert.Equal(new string[] { "Hi", "There" }, result.Values);
             Assert.Equal("Hi", result.FirstValue);
             Assert.NotEqual(ValueProviderResult.None, result);

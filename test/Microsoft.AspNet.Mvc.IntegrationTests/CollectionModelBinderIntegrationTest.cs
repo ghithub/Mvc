@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Http.Internal;
 using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNet.Primitives;
 using Xunit;
 
 namespace Microsoft.AspNet.Mvc.IntegrationTests
@@ -570,7 +571,7 @@ namespace Microsoft.AspNet.Mvc.IntegrationTests
 
             var operationContext = ModelBindingTestHelper.GetOperationBindingContext(request =>
             {
-                var formCollection = new FormCollection(new Dictionary<string, string[]>()
+                var formCollection = new FormCollection(new Dictionary<string, StringValues>()
                 {
                     { "Addresses.index", new [] { "Key1", "Key2" } },
                     { "Addresses[Key1].Street", new [] { "Street1" } },
@@ -629,7 +630,7 @@ namespace Microsoft.AspNet.Mvc.IntegrationTests
 
             var operationContext = ModelBindingTestHelper.GetOperationBindingContext(request =>
             {
-                var formCollection = new FormCollection(new Dictionary<string, string[]>()
+                var formCollection = new FormCollection(new Dictionary<string, StringValues>()
                 {
                     { "Addresses.index", new [] { "Key1" } },
                     { "Addresses[Key1].Street", new [] { "Street1" } },

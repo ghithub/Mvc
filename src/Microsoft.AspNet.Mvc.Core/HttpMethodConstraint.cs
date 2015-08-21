@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Microsoft.AspNet.Primitives;
 using Microsoft.Framework.Internal;
 
 namespace Microsoft.AspNet.Mvc
@@ -62,12 +63,12 @@ namespace Microsoft.AspNet.Mvc
             if (request.Headers.ContainsKey(OriginHeader))
             {
                 // Update the http method if it is preflight request.
-                var accessControlRequestMethod = request.Headers.Get(AccessControlRequestMethod);
+                var accessControlRequestMethod = request.Headers[AccessControlRequestMethod];
                 if (string.Equals(
                         request.Method,
                         PreflightHttpMethod,
                         StringComparison.Ordinal) &&
-                    accessControlRequestMethod != null)
+                    !StringValues.IsNullOrEmpty(accessControlRequestMethod))
                 {
                     method = accessControlRequestMethod;
                 }

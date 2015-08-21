@@ -391,17 +391,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
             {
                 rawValue = null;
             }
-            else if (valueProviderResult.Value != null)
-            {
-                rawValue = valueProviderResult.Value;
-            }
             else if (valueProviderResult.Length == 1)
             {
                 rawValue = valueProviderResult.Values[0];
             }
             else
             {
-                rawValue = valueProviderResult.Values;
+                rawValue = (string[])valueProviderResult.Values;
             }
 
             SetModelValue(key, rawValue, (string)valueProviderResult);

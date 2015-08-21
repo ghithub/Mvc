@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Http.Internal;
+using Microsoft.AspNet.Primitives;
 using Microsoft.Framework.Internal;
 
 namespace Microsoft.AspNet.Mvc.ModelBinding
@@ -42,7 +43,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
             }
             else
             {
-                model = new FormCollection(new Dictionary<string, string[]>());
+                model = new FormCollection(new Dictionary<string, StringValues>());
             }
 
             var validationNode =

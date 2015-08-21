@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Cors.Core;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Primitives;
 using Microsoft.Framework.Internal;
 
 namespace Microsoft.AspNet.Mvc
@@ -63,12 +64,12 @@ namespace Microsoft.AspNet.Mvc
                 _corsService.ApplyResult(result, context.HttpContext.Response);
 
                 var accessControlRequestMethod = 
-                        httpContext.Request.Headers.Get(CorsConstants.AccessControlRequestMethod);
+                        httpContext.Request.Headers[CorsConstants.AccessControlRequestMethod];
                 if (string.Equals(
                         request.Method,
                         CorsConstants.PreflightHttpMethod,
                         StringComparison.Ordinal) &&
-                    accessControlRequestMethod != null)
+                    !StringValues.IsNullOrEmpty(accessControlRequestMethod))
                 {
                     // If this was a preflight, there is no need to run anything else.
                     // Also the response is always 200 so that anyone after mvc can handle the pre flight request.

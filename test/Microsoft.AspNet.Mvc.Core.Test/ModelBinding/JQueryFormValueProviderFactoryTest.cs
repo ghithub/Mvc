@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http.Internal;
+using Microsoft.AspNet.Primitives;
 using Xunit;
 
 namespace Microsoft.AspNet.Mvc.ModelBinding.Test
 {
     public class JQueryFormValueProviderFactoryTest
     {
-        private static readonly IDictionary<string, string[]> _backingStore = new Dictionary<string, string[]>
+        private static readonly IDictionary<string, StringValues> _backingStore = new Dictionary<string, StringValues>
         {
             { "[]", new[] { "found" } },
             { "[]property1", new[] { "found" } },
@@ -115,7 +116,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Test
 
         private static ValueProviderFactoryContext CreateContext(
             string contentType,
-            IDictionary<string, string[]> formValues)
+            IDictionary<string, StringValues> formValues)
         {
             var context = new DefaultHttpContext();
             context.Request.ContentType = contentType;
